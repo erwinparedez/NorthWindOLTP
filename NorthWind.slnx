@@ -1,4 +1,8 @@
 <Solution>
+  <Project Path="NorthWindDW/NorthWindDW.sqlproj" Id="d42af7c5-df84-4928-9fee-13657e169630">
+    <Build />
+    <Deploy />
+  </Project>
   <Project Path="NorthWindOLTP/NorthWindOLTP.sqlproj" Id="50bf902e-fce4-480e-a52e-ba9edfc8c7f3">
     <Build />
     <Deploy />
