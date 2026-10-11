@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -63,6 +63,7 @@
     <Folder Include="Schema\dbo\Tables" />
     <Folder Include="Schema\dbo\Staging" />
     <Folder Include="Schema\schemas" />
+    <Folder Include="Schema\Programmability\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Schema\dbo\Tables\DimCustomer_1.sql" />
@@ -79,5 +80,21 @@
     <Build Include="Schema\dbo\Staging\staging.shipper.sql" />
     <Build Include="Schema\dbo\Staging\staging.employee.sql" />
     <Build Include="Schema\dbo\Staging\staging.deliverylocatin.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Schema\Programmability\Stored Procedures" />
+    <Folder Include="Scripts" />
+    <Build Include="Schema\Programmability\Stored Procedures\DW_MergeDimCustomer.sql" />
+    <Build Include="Schema\Programmability\Stored Procedures\DW_MergeDimDeliveryLocation.sql" />
+    <Build Include="Schema\Programmability\Stored Procedures\DW_MergeDimEmployee.sql" />
+    <Build Include="Schema\Programmability\Stored Procedures\DW_MergeDimProduct.sql" />
+    <Build Include="Schema\Programmability\Stored Procedures\DW_MergeDimShipper.sql" />
+    <Build Include="Schema\Programmability\Stored Procedures\DW_MergeFactSales.sql" />
+    <Build Include="Schema\Programmability\Stored Procedures\GetLastPackageRowVersion.sql" />
+    <Build Include="Schema\Programmability\Stored Procedures\UpdateLastPackageRowVersion.sql" />
+    <Build Include="Schema\dbo\Tables\PackageConfig.sql" />
+    <Build Include="Schema\dbo\Staging\staging.sales.sql" />
+    <PostDeploy Include="Scripts\Script.PostDeployment.sql" />
+    <None Include="Scripts\PackageConfig.data.sql" />
   </ItemGroup>
 </Project>

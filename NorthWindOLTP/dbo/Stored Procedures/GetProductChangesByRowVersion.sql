@@ -1,28 +1,15 @@
-﻿
 CREATE PROCEDURE [dbo].[GetProductChangesByRowVersion]
-(
-   @startRow BIGINT 
-   ,@endRow  BIGINT 
-)
+    @startRow BIGINT,
+    @endRow BIGINT
 AS
 BEGIN
-  SELECT p.[ProductID]
-      ,p.[ProductName]
-      ,s.[CompanyName]
-      ,c.[CategoryName]
-      ,p.[QuantityPerUnit]
-      ,p.[UnitPrice]
-      ,p.[UnitsInStock]
-      ,p.[UnitsOnOrder]
-      ,p.[ReorderLevel]
-      ,p.[Discontinued]
-  FROM 
-	[dbo].[Products] p
-	INNER JOIN [dbo].[Categories] c ON p.CategoryID=c.CategoryID
-	INNER JOIN [dbo].[Suppliers] s ON p.SupplierID=s.SupplierID
-  WHERE 
-	(p.[rowversion] > CONVERT(ROWVERSION,@startRow) AND p.[rowversion] <= CONVERT(ROWVERSION,@endRow))
-	OR (c.[rowversion] > CONVERT(ROWVERSION,@startRow)	AND c.[rowversion] <= CONVERT(ROWVERSION,@endRow))
-	OR (s.[rowversion] > CONVERT(ROWVERSION,@startRow) AND s.[rowversion] <= CONVERT(ROWVERSION,@endRow))
-
-END
+    SET NOCOUNT ON;
+    IF @startRow < 0 OR @endRow < @startRow
+        THROW 50001, 'Invalid rowversion interval.', 1;
+    SELECT p.ProductID, p.ProductName, p.QuantityPerUnit, p.Discontinued,
+        p.CategoryID, c.CategoryName, p.SupplierID,
+        s.CompanyName AS SupplierName, s.Country AS SupplierCountry
+    FROM dbo.Products AS p LEFT JOIN dbo.Categories AS c ON c.CategoryID=p.CategoryID LEFT JOIN dbo.Suppliers AS s ON s.SupplierID=p.SupplierID
+    WHERE (p.[rowversion] > CONVERT(BINARY(8), @startRow) AND p.[rowversion] <= CONVERT(BINARY(8), @endRow)) OR (c.[rowversion] > CONVERT(BINARY(8), @startRow) AND c.[rowversion] <= CONVERT(BINARY(8), @endRow)) OR (s.[rowversion] > CONVERT(BINARY(8), @startRow) AND s.[rowversion] <= CONVERT(BINARY(8), @endRow));
+END;
+GO
