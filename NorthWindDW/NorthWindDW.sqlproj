@@ -13,7 +13,7 @@
     </RootPath>
     <RootNamespace>NorthWindDW</RootNamespace>
     <AssemblyName>NorthWindDW</AssemblyName>
-    <ModelCollation>1033, CI</ModelCollation>
+    <ModelCollation>3082,CI</ModelCollation>
     <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
     <DeployToDatabase>True</DeployToDatabase>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
@@ -22,6 +22,8 @@
     <SqlServerVerification>False</SqlServerVerification>
     <IncludeCompositeObjects>True</IncludeCompositeObjects>
     <TargetDatabaseSet>True</TargetDatabaseSet>
+    <DefaultCollation>Modern_Spanish_CI_AS</DefaultCollation>
+    <DefaultFilegroup>PRIMARY</DefaultFilegroup>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>bin\Release\</OutputPath>
@@ -56,7 +58,17 @@
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
-    <Folder Include="Tables" />
     <Folder Include="Schema" />
+    <Folder Include="Schema\dbo" />
+    <Folder Include="Schema\dbo\Tables" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="Schema\dbo\Tables\DimCustomer_1.sql" />
+    <Build Include="Schema\dbo\Tables\DimDate_1.sql" />
+    <Build Include="Schema\dbo\Tables\DimDeliveryLocation_1.sql" />
+    <Build Include="Schema\dbo\Tables\DimEmployee_1.sql" />
+    <Build Include="Schema\dbo\Tables\DimProduct_1.sql" />
+    <Build Include="Schema\dbo\Tables\DimShipper_1.sql" />
+    <Build Include="Schema\dbo\Tables\FactSales_1.sql" />
   </ItemGroup>
 </Project>
