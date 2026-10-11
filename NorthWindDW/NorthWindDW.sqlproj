@@ -61,6 +61,8 @@
     <Folder Include="Schema" />
     <Folder Include="Schema\dbo" />
     <Folder Include="Schema\dbo\Tables" />
+    <Folder Include="Schema\dbo\Staging" />
+    <Folder Include="Schema\schemas" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Schema\dbo\Tables\DimCustomer_1.sql" />
@@ -70,5 +72,12 @@
     <Build Include="Schema\dbo\Tables\DimProduct_1.sql" />
     <Build Include="Schema\dbo\Tables\DimShipper_1.sql" />
     <Build Include="Schema\dbo\Tables\FactSales_1.sql" />
+    <Build Include="Schema\dbo\Staging\staging.customer_1.sql" />
+    <Build Include="Schema\schemas\Table1.sql" />
+    <Build Include="Schema\dbo\Staging\staging.date_1.sql" />
+    <Build Include="Schema\dbo\Staging\staging.product.sql" />
+    <Build Include="Schema\dbo\Staging\staging.shipper.sql" />
+    <Build Include="Schema\dbo\Staging\staging.employee.sql" />
+    <Build Include="Schema\dbo\Staging\staging.deliverylocatin.sql" />
   </ItemGroup>
 </Project>
