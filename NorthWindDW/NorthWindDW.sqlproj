@@ -73,7 +73,7 @@
     <Build Include="Schema\dbo\Tables\DimShipper_1.sql" />
     <Build Include="Schema\dbo\Tables\FactSales_1.sql" />
     <Build Include="Schema\dbo\Staging\staging.customer_1.sql" />
-    <Build Include="Schema\schemas\Table1.sql" />
+    <Build Include="Schema\schemas\staging.sql" />
     <Build Include="Schema\dbo\Staging\staging.date_1.sql" />
     <Build Include="Schema\dbo\Staging\staging.product.sql" />
     <Build Include="Schema\dbo\Staging\staging.shipper.sql" />
