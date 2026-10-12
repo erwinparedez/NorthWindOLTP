@@ -7,6 +7,9 @@ BEGIN
     IF @startRow < 0 OR @endRow < @startRow
         THROW 50001, 'Invalid rowversion interval.', 1;
     SELECT o.OrderID, d.ProductID, o.CustomerID, o.EmployeeID, o.ShipVia AS ShipperID,
+        CONVERT(INT, CONVERT(VARCHAR(8), o.OrderDate, 112)) AS OrderDateSK,
+        CASE WHEN o.RequiredDate IS NULL THEN 0 ELSE CONVERT(INT, CONVERT(VARCHAR(8), o.RequiredDate, 112)) END AS RequiredDateSK,
+        CASE WHEN o.ShippedDate IS NULL THEN 0 ELSE CONVERT(INT, CONVERT(VARCHAR(8), o.ShippedDate, 112)) END AS ShippedDateSK,
         CONVERT(DATE,o.OrderDate) AS OrderDate,
         CONVERT(DATE,o.RequiredDate) AS RequiredDate,
         CONVERT(DATE,o.ShippedDate) AS ShippedDate,

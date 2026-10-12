@@ -13,3 +13,6 @@ obj/
 
 # Archivos temporales de compilación
 *.cache
+*.log
+UpgradeLog*.htm
+UpgradeLog*.xml

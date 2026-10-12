@@ -96,5 +96,8 @@
     <Build Include="Schema\dbo\Staging\staging.sales.sql" />
     <PostDeploy Include="Scripts\Script.PostDeployment.sql" />
     <None Include="Scripts\PackageConfig.data.sql" />
+    <None Include="Scripts\DWSeed.data.sql" />
+    <None Include="Scripts\NorthWindETLProcedures.sql" />
+    <None Include="Scripts\NorthWindJob.sql" />
   </ItemGroup>
 </Project>

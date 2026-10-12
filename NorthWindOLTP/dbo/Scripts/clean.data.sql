@@ -11,3 +11,10 @@ DELETE FROM Region;
 DELETE FROM Shippers;
 DELETE FROM Suppliers;
 DELETE FROM Categories;
+
+DBCC CHECKIDENT ('dbo.Categories', RESEED, 0);
+DBCC CHECKIDENT ('dbo.Employees', RESEED, 0);
+DBCC CHECKIDENT ('dbo.Orders', RESEED, 0);
+DBCC CHECKIDENT ('dbo.Products', RESEED, 0);
+DBCC CHECKIDENT ('dbo.Shippers', RESEED, 0);
+DBCC CHECKIDENT ('dbo.Suppliers', RESEED, 0);
