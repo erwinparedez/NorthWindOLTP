@@ -211,7 +211,7 @@
                     <outputColumn
                       refId="Package\Add New Product\Get Row Changes.Outputs[OLE DB Source Output].Columns[ProductName]"
                       dataType="wstr"
-                      length="80"
+                      length="40"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Add New Product\Get Row Changes.Outputs[OLE DB Source Output].ExternalColumns[ProductName]"
@@ -221,7 +221,7 @@
                     <outputColumn
                       refId="Package\Add New Product\Get Row Changes.Outputs[OLE DB Source Output].Columns[QuantityPerUnit]"
                       dataType="wstr"
-                      length="40"
+                      length="20"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Add New Product\Get Row Changes.Outputs[OLE DB Source Output].ExternalColumns[QuantityPerUnit]"
@@ -271,7 +271,7 @@
                     <outputColumn
                       refId="Package\Add New Product\Get Row Changes.Outputs[OLE DB Source Output].Columns[SupplierName]"
                       dataType="wstr"
-                      length="80"
+                      length="40"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Add New Product\Get Row Changes.Outputs[OLE DB Source Output].ExternalColumns[SupplierName]"
@@ -281,7 +281,7 @@
                     <outputColumn
                       refId="Package\Add New Product\Get Row Changes.Outputs[OLE DB Source Output].Columns[SupplierCountry]"
                       dataType="wstr"
-                      length="30"
+                      length="15"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Add New Product\Get Row Changes.Outputs[OLE DB Source Output].ExternalColumns[SupplierCountry]"
@@ -299,12 +299,12 @@
                     <externalMetadataColumn
                       refId="Package\Add New Product\Get Row Changes.Outputs[OLE DB Source Output].ExternalColumns[ProductName]"
                       dataType="wstr"
-                      length="80"
+                      length="40"
                       name="ProductName" />
                     <externalMetadataColumn
                       refId="Package\Add New Product\Get Row Changes.Outputs[OLE DB Source Output].ExternalColumns[QuantityPerUnit]"
                       dataType="wstr"
-                      length="40"
+                      length="20"
                       name="QuantityPerUnit" />
                     <externalMetadataColumn
                       refId="Package\Add New Product\Get Row Changes.Outputs[OLE DB Source Output].ExternalColumns[Discontinued]"
@@ -329,12 +329,12 @@
                     <externalMetadataColumn
                       refId="Package\Add New Product\Get Row Changes.Outputs[OLE DB Source Output].ExternalColumns[SupplierName]"
                       dataType="wstr"
-                      length="80"
+                      length="40"
                       name="SupplierName" />
                     <externalMetadataColumn
                       refId="Package\Add New Product\Get Row Changes.Outputs[OLE DB Source Output].ExternalColumns[SupplierCountry]"
                       dataType="wstr"
-                      length="30"
+                      length="15"
                       name="SupplierCountry" />
                   </externalMetadataColumns>
                 </output>
@@ -352,13 +352,13 @@
                     <outputColumn
                       refId="Package\Add New Product\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[ProductName]"
                       dataType="wstr"
-                      length="80"
+                      length="40"
                       lineageId="Package\Add New Product\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[ProductName]"
                       name="ProductName" />
                     <outputColumn
                       refId="Package\Add New Product\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[QuantityPerUnit]"
                       dataType="wstr"
-                      length="40"
+                      length="20"
                       lineageId="Package\Add New Product\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[QuantityPerUnit]"
                       name="QuantityPerUnit" />
                     <outputColumn
@@ -388,13 +388,13 @@
                     <outputColumn
                       refId="Package\Add New Product\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[SupplierName]"
                       dataType="wstr"
-                      length="80"
+                      length="40"
                       lineageId="Package\Add New Product\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[SupplierName]"
                       name="SupplierName" />
                     <outputColumn
                       refId="Package\Add New Product\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[SupplierCountry]"
                       dataType="wstr"
-                      length="30"
+                      length="15"
                       lineageId="Package\Add New Product\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[SupplierCountry]"
                       name="SupplierCountry" />
                     <outputColumn
@@ -652,14 +652,14 @@ where [refTable].[ProductID] = ?</property>
                     <inputColumn
                       refId="Package\Add New Product\Add New Product.Inputs[OLE DB Destination Input].Columns[ProductName]"
                       cachedDataType="wstr"
-                      length="80"
+                      cachedLength="40"
                       cachedName="ProductName"
                       externalMetadataColumnId="Package\Add New Product\Add New Product.Inputs[OLE DB Destination Input].ExternalColumns[ProductName]"
                       lineageId="Package\Add New Product\Get Row Changes.Outputs[OLE DB Source Output].Columns[ProductName]" />
                     <inputColumn
                       refId="Package\Add New Product\Add New Product.Inputs[OLE DB Destination Input].Columns[QuantityPerUnit]"
                       cachedDataType="wstr"
-                      length="40"
+                      cachedLength="20"
                       cachedName="QuantityPerUnit"
                       externalMetadataColumnId="Package\Add New Product\Add New Product.Inputs[OLE DB Destination Input].ExternalColumns[QuantityPerUnit]"
                       lineageId="Package\Add New Product\Get Row Changes.Outputs[OLE DB Source Output].Columns[QuantityPerUnit]" />
@@ -680,7 +680,7 @@ where [refTable].[ProductID] = ?</property>
                     <inputColumn
                       refId="Package\Add New Product\Add New Product.Inputs[OLE DB Destination Input].Columns[CategoryName]"
                       cachedDataType="wstr"
-                      length="15"
+                      cachedLength="15"
                       cachedName="CategoryName"
                       externalMetadataColumnId="Package\Add New Product\Add New Product.Inputs[OLE DB Destination Input].ExternalColumns[CategoryName]"
                       lineageId="Package\Add New Product\Get Row Changes.Outputs[OLE DB Source Output].Columns[CategoryName]" />
@@ -694,20 +694,24 @@ where [refTable].[ProductID] = ?</property>
                     <inputColumn
                       refId="Package\Add New Product\Add New Product.Inputs[OLE DB Destination Input].Columns[SupplierName]"
                       cachedDataType="wstr"
-                      length="80"
+                      cachedLength="40"
                       cachedName="SupplierName"
                       externalMetadataColumnId="Package\Add New Product\Add New Product.Inputs[OLE DB Destination Input].ExternalColumns[SupplierName]"
                       lineageId="Package\Add New Product\Get Row Changes.Outputs[OLE DB Source Output].Columns[SupplierName]" />
                     <inputColumn
                       refId="Package\Add New Product\Add New Product.Inputs[OLE DB Destination Input].Columns[SupplierCountry]"
                       cachedDataType="wstr"
-                      length="30"
+                      cachedLength="15"
                       cachedName="SupplierCountry"
                       externalMetadataColumnId="Package\Add New Product\Add New Product.Inputs[OLE DB Destination Input].ExternalColumns[SupplierCountry]"
                       lineageId="Package\Add New Product\Get Row Changes.Outputs[OLE DB Source Output].Columns[SupplierCountry]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Add New Product\Add New Product.Inputs[OLE DB Destination Input].ExternalColumns[ProductSK]"
+                      dataType="i4"
+                      name="ProductSK" />
                     <externalMetadataColumn
                       refId="Package\Add New Product\Add New Product.Inputs[OLE DB Destination Input].ExternalColumns[ProductID]"
                       dataType="i4"
@@ -869,14 +873,14 @@ where [refTable].[ProductID] = ?</property>
                     <inputColumn
                       refId="Package\Add New Product\Load staging.Inputs[OLE DB Destination Input].Columns[ProductName]"
                       cachedDataType="wstr"
-                      length="80"
+                      cachedLength="40"
                       cachedName="ProductName"
                       externalMetadataColumnId="Package\Add New Product\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[ProductName]"
                       lineageId="Package\Add New Product\Get Row Changes.Outputs[OLE DB Source Output].Columns[ProductName]" />
                     <inputColumn
                       refId="Package\Add New Product\Load staging.Inputs[OLE DB Destination Input].Columns[QuantityPerUnit]"
                       cachedDataType="wstr"
-                      length="40"
+                      cachedLength="20"
                       cachedName="QuantityPerUnit"
                       externalMetadataColumnId="Package\Add New Product\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[QuantityPerUnit]"
                       lineageId="Package\Add New Product\Get Row Changes.Outputs[OLE DB Source Output].Columns[QuantityPerUnit]" />
@@ -897,7 +901,7 @@ where [refTable].[ProductID] = ?</property>
                     <inputColumn
                       refId="Package\Add New Product\Load staging.Inputs[OLE DB Destination Input].Columns[CategoryName]"
                       cachedDataType="wstr"
-                      length="15"
+                      cachedLength="15"
                       cachedName="CategoryName"
                       externalMetadataColumnId="Package\Add New Product\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[CategoryName]"
                       lineageId="Package\Add New Product\Get Row Changes.Outputs[OLE DB Source Output].Columns[CategoryName]" />
@@ -911,14 +915,14 @@ where [refTable].[ProductID] = ?</property>
                     <inputColumn
                       refId="Package\Add New Product\Load staging.Inputs[OLE DB Destination Input].Columns[SupplierName]"
                       cachedDataType="wstr"
-                      length="80"
+                      cachedLength="40"
                       cachedName="SupplierName"
                       externalMetadataColumnId="Package\Add New Product\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[SupplierName]"
                       lineageId="Package\Add New Product\Get Row Changes.Outputs[OLE DB Source Output].Columns[SupplierName]" />
                     <inputColumn
                       refId="Package\Add New Product\Load staging.Inputs[OLE DB Destination Input].Columns[SupplierCountry]"
                       cachedDataType="wstr"
-                      length="30"
+                      cachedLength="15"
                       cachedName="SupplierCountry"
                       externalMetadataColumnId="Package\Add New Product\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[SupplierCountry]"
                       lineageId="Package\Add New Product\Get Row Changes.Outputs[OLE DB Source Output].Columns[SupplierCountry]" />

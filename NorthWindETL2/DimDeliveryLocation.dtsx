@@ -201,7 +201,7 @@
                     <outputColumn
                       refId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Output].Columns[City]"
                       dataType="wstr"
-                      length="30"
+                      length="15"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Output].ExternalColumns[City]"
@@ -211,7 +211,7 @@
                     <outputColumn
                       refId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Output].Columns[Region]"
                       dataType="wstr"
-                      length="30"
+                      length="15"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Output].ExternalColumns[Region]"
@@ -221,7 +221,7 @@
                     <outputColumn
                       refId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Output].Columns[PostalCode]"
                       dataType="wstr"
-                      length="20"
+                      length="10"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Output].ExternalColumns[PostalCode]"
@@ -231,7 +231,7 @@
                     <outputColumn
                       refId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Output].Columns[Country]"
                       dataType="wstr"
-                      length="30"
+                      length="15"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Output].ExternalColumns[Country]"
@@ -244,22 +244,22 @@
                     <externalMetadataColumn
                       refId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Output].ExternalColumns[City]"
                       dataType="wstr"
-                      length="30"
+                      length="15"
                       name="City" />
                     <externalMetadataColumn
                       refId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Output].ExternalColumns[Region]"
                       dataType="wstr"
-                      length="30"
+                      length="15"
                       name="Region" />
                     <externalMetadataColumn
                       refId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Output].ExternalColumns[PostalCode]"
                       dataType="wstr"
-                      length="20"
+                      length="10"
                       name="PostalCode" />
                     <externalMetadataColumn
                       refId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Output].ExternalColumns[Country]"
                       dataType="wstr"
-                      length="30"
+                      length="15"
                       name="Country" />
                   </externalMetadataColumns>
                 </output>
@@ -271,25 +271,25 @@
                     <outputColumn
                       refId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[City]"
                       dataType="wstr"
-                      length="30"
+                      length="15"
                       lineageId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[City]"
                       name="City" />
                     <outputColumn
                       refId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[Region]"
                       dataType="wstr"
-                      length="30"
+                      length="15"
                       lineageId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[Region]"
                       name="Region" />
                     <outputColumn
                       refId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[PostalCode]"
                       dataType="wstr"
-                      length="20"
+                      length="10"
                       lineageId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[PostalCode]"
                       name="PostalCode" />
                     <outputColumn
                       refId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[Country]"
                       dataType="wstr"
-                      length="30"
+                      length="15"
                       lineageId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[Country]"
                       name="Country" />
                     <outputColumn
@@ -540,34 +540,38 @@ where [refTable].[City] = ?</property>
                     <inputColumn
                       refId="Package\Add New DeliveryLocation\Add New DeliveryLocation.Inputs[OLE DB Destination Input].Columns[City]"
                       cachedDataType="wstr"
-                      length="30"
+                      cachedLength="15"
                       cachedName="City"
                       externalMetadataColumnId="Package\Add New DeliveryLocation\Add New DeliveryLocation.Inputs[OLE DB Destination Input].ExternalColumns[City]"
                       lineageId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Output].Columns[City]" />
                     <inputColumn
                       refId="Package\Add New DeliveryLocation\Add New DeliveryLocation.Inputs[OLE DB Destination Input].Columns[Region]"
                       cachedDataType="wstr"
-                      length="30"
+                      cachedLength="15"
                       cachedName="Region"
                       externalMetadataColumnId="Package\Add New DeliveryLocation\Add New DeliveryLocation.Inputs[OLE DB Destination Input].ExternalColumns[Region]"
                       lineageId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Output].Columns[Region]" />
                     <inputColumn
                       refId="Package\Add New DeliveryLocation\Add New DeliveryLocation.Inputs[OLE DB Destination Input].Columns[PostalCode]"
                       cachedDataType="wstr"
-                      length="20"
+                      cachedLength="10"
                       cachedName="PostalCode"
                       externalMetadataColumnId="Package\Add New DeliveryLocation\Add New DeliveryLocation.Inputs[OLE DB Destination Input].ExternalColumns[PostalCode]"
                       lineageId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Output].Columns[PostalCode]" />
                     <inputColumn
                       refId="Package\Add New DeliveryLocation\Add New DeliveryLocation.Inputs[OLE DB Destination Input].Columns[Country]"
                       cachedDataType="wstr"
-                      length="30"
+                      cachedLength="15"
                       cachedName="Country"
                       externalMetadataColumnId="Package\Add New DeliveryLocation\Add New DeliveryLocation.Inputs[OLE DB Destination Input].ExternalColumns[Country]"
                       lineageId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Output].Columns[Country]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Add New DeliveryLocation\Add New DeliveryLocation.Inputs[OLE DB Destination Input].ExternalColumns[DeliveryLocationSK]"
+                      dataType="i4"
+                      name="DeliveryLocationSK" />
                     <externalMetadataColumn
                       refId="Package\Add New DeliveryLocation\Add New DeliveryLocation.Inputs[OLE DB Destination Input].ExternalColumns[City]"
                       dataType="wstr"
@@ -697,28 +701,28 @@ where [refTable].[City] = ?</property>
                     <inputColumn
                       refId="Package\Add New DeliveryLocation\Load staging.Inputs[OLE DB Destination Input].Columns[City]"
                       cachedDataType="wstr"
-                      length="30"
+                      cachedLength="15"
                       cachedName="City"
                       externalMetadataColumnId="Package\Add New DeliveryLocation\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[City]"
                       lineageId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Output].Columns[City]" />
                     <inputColumn
                       refId="Package\Add New DeliveryLocation\Load staging.Inputs[OLE DB Destination Input].Columns[Region]"
                       cachedDataType="wstr"
-                      length="30"
+                      cachedLength="15"
                       cachedName="Region"
                       externalMetadataColumnId="Package\Add New DeliveryLocation\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[Region]"
                       lineageId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Output].Columns[Region]" />
                     <inputColumn
                       refId="Package\Add New DeliveryLocation\Load staging.Inputs[OLE DB Destination Input].Columns[PostalCode]"
                       cachedDataType="wstr"
-                      length="20"
+                      cachedLength="10"
                       cachedName="PostalCode"
                       externalMetadataColumnId="Package\Add New DeliveryLocation\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[PostalCode]"
                       lineageId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Output].Columns[PostalCode]" />
                     <inputColumn
                       refId="Package\Add New DeliveryLocation\Load staging.Inputs[OLE DB Destination Input].Columns[Country]"
                       cachedDataType="wstr"
-                      length="30"
+                      cachedLength="15"
                       cachedName="Country"
                       externalMetadataColumnId="Package\Add New DeliveryLocation\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[Country]"
                       lineageId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Output].Columns[Country]" />

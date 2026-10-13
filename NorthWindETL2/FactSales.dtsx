@@ -218,7 +218,7 @@
                       truncationRowDisposition="FailComponent" />
                     <outputColumn
                       refId="Package\Add New Orders\Get Sales.Outputs[OLE DB Source Output].Columns[CustomerID]"
-                      dataType="wstr" length="10"
+                      dataType="wstr" length="5"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Add New Orders\Get Sales.Outputs[OLE DB Source Output].ExternalColumns[CustomerID]"
@@ -299,7 +299,7 @@
                       truncationRowDisposition="FailComponent" />
                     <outputColumn
                       refId="Package\Add New Orders\Get Sales.Outputs[OLE DB Source Output].Columns[City]"
-                      dataType="wstr" length="30"
+                      dataType="wstr" length="15"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Add New Orders\Get Sales.Outputs[OLE DB Source Output].ExternalColumns[City]"
@@ -308,7 +308,7 @@
                       truncationRowDisposition="FailComponent" />
                     <outputColumn
                       refId="Package\Add New Orders\Get Sales.Outputs[OLE DB Source Output].Columns[Region]"
-                      dataType="wstr" length="30"
+                      dataType="wstr" length="15"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Add New Orders\Get Sales.Outputs[OLE DB Source Output].ExternalColumns[Region]"
@@ -317,7 +317,7 @@
                       truncationRowDisposition="FailComponent" />
                     <outputColumn
                       refId="Package\Add New Orders\Get Sales.Outputs[OLE DB Source Output].Columns[PostalCode]"
-                      dataType="wstr" length="20"
+                      dataType="wstr" length="10"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Add New Orders\Get Sales.Outputs[OLE DB Source Output].ExternalColumns[PostalCode]"
@@ -326,7 +326,7 @@
                       truncationRowDisposition="FailComponent" />
                     <outputColumn
                       refId="Package\Add New Orders\Get Sales.Outputs[OLE DB Source Output].Columns[Country]"
-                      dataType="wstr" length="30"
+                      dataType="wstr" length="15"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Add New Orders\Get Sales.Outputs[OLE DB Source Output].ExternalColumns[Country]"
@@ -409,7 +409,7 @@
                       name="ProductID" />
                     <externalMetadataColumn
                       refId="Package\Add New Orders\Get Sales.Outputs[OLE DB Source Output].ExternalColumns[CustomerID]"
-                      dataType="wstr" length="10"
+                      dataType="wstr" length="5"
                       name="CustomerID" />
                     <externalMetadataColumn
                       refId="Package\Add New Orders\Get Sales.Outputs[OLE DB Source Output].ExternalColumns[EmployeeID]"
@@ -445,19 +445,19 @@
                       name="ShippedDate" />
                     <externalMetadataColumn
                       refId="Package\Add New Orders\Get Sales.Outputs[OLE DB Source Output].ExternalColumns[City]"
-                      dataType="wstr" length="30"
+                      dataType="wstr" length="15"
                       name="City" />
                     <externalMetadataColumn
                       refId="Package\Add New Orders\Get Sales.Outputs[OLE DB Source Output].ExternalColumns[Region]"
-                      dataType="wstr" length="30"
+                      dataType="wstr" length="15"
                       name="Region" />
                     <externalMetadataColumn
                       refId="Package\Add New Orders\Get Sales.Outputs[OLE DB Source Output].ExternalColumns[PostalCode]"
-                      dataType="wstr" length="20"
+                      dataType="wstr" length="10"
                       name="PostalCode" />
                     <externalMetadataColumn
                       refId="Package\Add New Orders\Get Sales.Outputs[OLE DB Source Output].ExternalColumns[Country]"
-                      dataType="wstr" length="30"
+                      dataType="wstr" length="15"
                       name="Country" />
                     <externalMetadataColumn
                       refId="Package\Add New Orders\Get Sales.Outputs[OLE DB Source Output].ExternalColumns[Quantity]"
@@ -506,7 +506,7 @@
                       name="ProductID" />
                     <outputColumn
                       refId="Package\Add New Orders\Get Sales.Outputs[OLE DB Source Error Output].Columns[CustomerID]"
-                      dataType="wstr" length="10"
+                      dataType="wstr" length="5"
                       lineageId="Package\Add New Orders\Get Sales.Outputs[OLE DB Source Error Output].Columns[CustomerID]"
                       name="CustomerID" />
                     <outputColumn
@@ -551,22 +551,22 @@
                       name="ShippedDate" />
                     <outputColumn
                       refId="Package\Add New Orders\Get Sales.Outputs[OLE DB Source Error Output].Columns[City]"
-                      dataType="wstr" length="30"
+                      dataType="wstr" length="15"
                       lineageId="Package\Add New Orders\Get Sales.Outputs[OLE DB Source Error Output].Columns[City]"
                       name="City" />
                     <outputColumn
                       refId="Package\Add New Orders\Get Sales.Outputs[OLE DB Source Error Output].Columns[Region]"
-                      dataType="wstr" length="30"
+                      dataType="wstr" length="15"
                       lineageId="Package\Add New Orders\Get Sales.Outputs[OLE DB Source Error Output].Columns[Region]"
                       name="Region" />
                     <outputColumn
                       refId="Package\Add New Orders\Get Sales.Outputs[OLE DB Source Error Output].Columns[PostalCode]"
-                      dataType="wstr" length="20"
+                      dataType="wstr" length="10"
                       lineageId="Package\Add New Orders\Get Sales.Outputs[OLE DB Source Error Output].Columns[PostalCode]"
                       name="PostalCode" />
                     <outputColumn
                       refId="Package\Add New Orders\Get Sales.Outputs[OLE DB Source Error Output].Columns[Country]"
-                      dataType="wstr" length="30"
+                      dataType="wstr" length="15"
                       lineageId="Package\Add New Orders\Get Sales.Outputs[OLE DB Source Error Output].Columns[Country]"
                       name="Country" />
                     <outputColumn
