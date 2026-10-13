@@ -201,7 +201,7 @@
                     <outputColumn
                       refId="Package\Add New Customer\Get Row Changes.Outputs[OLE DB Source Output].Columns[CustomerID]"
                       dataType="wstr"
-                      length="10"
+                      length="5"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Add New Customer\Get Row Changes.Outputs[OLE DB Source Output].ExternalColumns[CustomerID]"
@@ -211,7 +211,7 @@
                     <outputColumn
                       refId="Package\Add New Customer\Get Row Changes.Outputs[OLE DB Source Output].Columns[CompanyName]"
                       dataType="wstr"
-                      length="80"
+                      length="40"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Add New Customer\Get Row Changes.Outputs[OLE DB Source Output].ExternalColumns[CompanyName]"
@@ -221,7 +221,7 @@
                     <outputColumn
                       refId="Package\Add New Customer\Get Row Changes.Outputs[OLE DB Source Output].Columns[City]"
                       dataType="wstr"
-                      length="30"
+                      length="15"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Add New Customer\Get Row Changes.Outputs[OLE DB Source Output].ExternalColumns[City]"
@@ -231,7 +231,7 @@
                     <outputColumn
                       refId="Package\Add New Customer\Get Row Changes.Outputs[OLE DB Source Output].Columns[Region]"
                       dataType="wstr"
-                      length="30"
+                      length="15"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Add New Customer\Get Row Changes.Outputs[OLE DB Source Output].ExternalColumns[Region]"
@@ -241,7 +241,7 @@
                     <outputColumn
                       refId="Package\Add New Customer\Get Row Changes.Outputs[OLE DB Source Output].Columns[PostalCode]"
                       dataType="wstr"
-                      length="20"
+                      length="10"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Add New Customer\Get Row Changes.Outputs[OLE DB Source Output].ExternalColumns[PostalCode]"
@@ -251,7 +251,7 @@
                     <outputColumn
                       refId="Package\Add New Customer\Get Row Changes.Outputs[OLE DB Source Output].Columns[Country]"
                       dataType="wstr"
-                      length="30"
+                      length="15"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Add New Customer\Get Row Changes.Outputs[OLE DB Source Output].ExternalColumns[Country]"
@@ -264,32 +264,32 @@
                     <externalMetadataColumn
                       refId="Package\Add New Customer\Get Row Changes.Outputs[OLE DB Source Output].ExternalColumns[CustomerID]"
                       dataType="wstr"
-                      length="10"
+                      length="5"
                       name="CustomerID" />
                     <externalMetadataColumn
                       refId="Package\Add New Customer\Get Row Changes.Outputs[OLE DB Source Output].ExternalColumns[CompanyName]"
                       dataType="wstr"
-                      length="80"
+                      length="40"
                       name="CompanyName" />
                     <externalMetadataColumn
                       refId="Package\Add New Customer\Get Row Changes.Outputs[OLE DB Source Output].ExternalColumns[City]"
                       dataType="wstr"
-                      length="30"
+                      length="15"
                       name="City" />
                     <externalMetadataColumn
                       refId="Package\Add New Customer\Get Row Changes.Outputs[OLE DB Source Output].ExternalColumns[Region]"
                       dataType="wstr"
-                      length="30"
+                      length="15"
                       name="Region" />
                     <externalMetadataColumn
                       refId="Package\Add New Customer\Get Row Changes.Outputs[OLE DB Source Output].ExternalColumns[PostalCode]"
                       dataType="wstr"
-                      length="20"
+                      length="10"
                       name="PostalCode" />
                     <externalMetadataColumn
                       refId="Package\Add New Customer\Get Row Changes.Outputs[OLE DB Source Output].ExternalColumns[Country]"
                       dataType="wstr"
-                      length="30"
+                      length="15"
                       name="Country" />
                   </externalMetadataColumns>
                 </output>
@@ -301,37 +301,37 @@
                     <outputColumn
                       refId="Package\Add New Customer\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[CustomerID]"
                       dataType="wstr"
-                      length="10"
+                      length="5"
                       lineageId="Package\Add New Customer\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[CustomerID]"
                       name="CustomerID" />
                     <outputColumn
                       refId="Package\Add New Customer\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[CompanyName]"
                       dataType="wstr"
-                      length="80"
+                      length="40"
                       lineageId="Package\Add New Customer\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[CompanyName]"
                       name="CompanyName" />
                     <outputColumn
                       refId="Package\Add New Customer\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[City]"
                       dataType="wstr"
-                      length="30"
+                      length="15"
                       lineageId="Package\Add New Customer\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[City]"
                       name="City" />
                     <outputColumn
                       refId="Package\Add New Customer\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[Region]"
                       dataType="wstr"
-                      length="30"
+                      length="15"
                       lineageId="Package\Add New Customer\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[Region]"
                       name="Region" />
                     <outputColumn
                       refId="Package\Add New Customer\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[PostalCode]"
                       dataType="wstr"
-                      length="20"
+                      length="10"
                       lineageId="Package\Add New Customer\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[PostalCode]"
                       name="PostalCode" />
                     <outputColumn
                       refId="Package\Add New Customer\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[Country]"
                       dataType="wstr"
-                      length="30"
+                      length="15"
                       lineageId="Package\Add New Customer\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[Country]"
                       name="Country" />
                     <outputColumn
@@ -582,48 +582,52 @@ where [refTable].[CustomerID] = ?</property>
                     <inputColumn
                       refId="Package\Add New Customer\Add New Customer.Inputs[OLE DB Destination Input].Columns[CustomerID]"
                       cachedDataType="wstr"
-                      length="10"
+                      cachedLength="5"
                       cachedName="CustomerID"
                       externalMetadataColumnId="Package\Add New Customer\Add New Customer.Inputs[OLE DB Destination Input].ExternalColumns[CustomerID]"
                       lineageId="Package\Add New Customer\Get Row Changes.Outputs[OLE DB Source Output].Columns[CustomerID]" />
                     <inputColumn
                       refId="Package\Add New Customer\Add New Customer.Inputs[OLE DB Destination Input].Columns[CompanyName]"
                       cachedDataType="wstr"
-                      length="80"
+                      cachedLength="40"
                       cachedName="CompanyName"
                       externalMetadataColumnId="Package\Add New Customer\Add New Customer.Inputs[OLE DB Destination Input].ExternalColumns[CompanyName]"
                       lineageId="Package\Add New Customer\Get Row Changes.Outputs[OLE DB Source Output].Columns[CompanyName]" />
                     <inputColumn
                       refId="Package\Add New Customer\Add New Customer.Inputs[OLE DB Destination Input].Columns[City]"
                       cachedDataType="wstr"
-                      length="30"
+                      cachedLength="15"
                       cachedName="City"
                       externalMetadataColumnId="Package\Add New Customer\Add New Customer.Inputs[OLE DB Destination Input].ExternalColumns[City]"
                       lineageId="Package\Add New Customer\Get Row Changes.Outputs[OLE DB Source Output].Columns[City]" />
                     <inputColumn
                       refId="Package\Add New Customer\Add New Customer.Inputs[OLE DB Destination Input].Columns[Region]"
                       cachedDataType="wstr"
-                      length="30"
+                      cachedLength="15"
                       cachedName="Region"
                       externalMetadataColumnId="Package\Add New Customer\Add New Customer.Inputs[OLE DB Destination Input].ExternalColumns[Region]"
                       lineageId="Package\Add New Customer\Get Row Changes.Outputs[OLE DB Source Output].Columns[Region]" />
                     <inputColumn
                       refId="Package\Add New Customer\Add New Customer.Inputs[OLE DB Destination Input].Columns[PostalCode]"
                       cachedDataType="wstr"
-                      length="20"
+                      cachedLength="10"
                       cachedName="PostalCode"
                       externalMetadataColumnId="Package\Add New Customer\Add New Customer.Inputs[OLE DB Destination Input].ExternalColumns[PostalCode]"
                       lineageId="Package\Add New Customer\Get Row Changes.Outputs[OLE DB Source Output].Columns[PostalCode]" />
                     <inputColumn
                       refId="Package\Add New Customer\Add New Customer.Inputs[OLE DB Destination Input].Columns[Country]"
                       cachedDataType="wstr"
-                      length="30"
+                      cachedLength="15"
                       cachedName="Country"
                       externalMetadataColumnId="Package\Add New Customer\Add New Customer.Inputs[OLE DB Destination Input].ExternalColumns[Country]"
                       lineageId="Package\Add New Customer\Get Row Changes.Outputs[OLE DB Source Output].Columns[Country]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Add New Customer\Add New Customer.Inputs[OLE DB Destination Input].ExternalColumns[CustomerSK]"
+                      dataType="i4"
+                      name="CustomerSK" />
                     <externalMetadataColumn
                       refId="Package\Add New Customer\Add New Customer.Inputs[OLE DB Destination Input].ExternalColumns[CustomerID]"
                       dataType="wstr"
@@ -763,42 +767,42 @@ where [refTable].[CustomerID] = ?</property>
                     <inputColumn
                       refId="Package\Add New Customer\Load staging.Inputs[OLE DB Destination Input].Columns[CustomerID]"
                       cachedDataType="wstr"
-                      length="10"
+                      cachedLength="5"
                       cachedName="CustomerID"
                       externalMetadataColumnId="Package\Add New Customer\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[CustomerID]"
                       lineageId="Package\Add New Customer\Get Row Changes.Outputs[OLE DB Source Output].Columns[CustomerID]" />
                     <inputColumn
                       refId="Package\Add New Customer\Load staging.Inputs[OLE DB Destination Input].Columns[CompanyName]"
                       cachedDataType="wstr"
-                      length="80"
+                      cachedLength="40"
                       cachedName="CompanyName"
                       externalMetadataColumnId="Package\Add New Customer\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[CompanyName]"
                       lineageId="Package\Add New Customer\Get Row Changes.Outputs[OLE DB Source Output].Columns[CompanyName]" />
                     <inputColumn
                       refId="Package\Add New Customer\Load staging.Inputs[OLE DB Destination Input].Columns[City]"
                       cachedDataType="wstr"
-                      length="30"
+                      cachedLength="15"
                       cachedName="City"
                       externalMetadataColumnId="Package\Add New Customer\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[City]"
                       lineageId="Package\Add New Customer\Get Row Changes.Outputs[OLE DB Source Output].Columns[City]" />
                     <inputColumn
                       refId="Package\Add New Customer\Load staging.Inputs[OLE DB Destination Input].Columns[Region]"
                       cachedDataType="wstr"
-                      length="30"
+                      cachedLength="15"
                       cachedName="Region"
                       externalMetadataColumnId="Package\Add New Customer\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[Region]"
                       lineageId="Package\Add New Customer\Get Row Changes.Outputs[OLE DB Source Output].Columns[Region]" />
                     <inputColumn
                       refId="Package\Add New Customer\Load staging.Inputs[OLE DB Destination Input].Columns[PostalCode]"
                       cachedDataType="wstr"
-                      length="20"
+                      cachedLength="10"
                       cachedName="PostalCode"
                       externalMetadataColumnId="Package\Add New Customer\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[PostalCode]"
                       lineageId="Package\Add New Customer\Get Row Changes.Outputs[OLE DB Source Output].Columns[PostalCode]" />
                     <inputColumn
                       refId="Package\Add New Customer\Load staging.Inputs[OLE DB Destination Input].Columns[Country]"
                       cachedDataType="wstr"
-                      length="30"
+                      cachedLength="15"
                       cachedName="Country"
                       externalMetadataColumnId="Package\Add New Customer\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[Country]"
                       lineageId="Package\Add New Customer\Get Row Changes.Outputs[OLE DB Source Output].Columns[Country]" />

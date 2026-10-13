@@ -211,7 +211,7 @@
                     <outputColumn
                       refId="Package\Add New Employee\Get Row Changes.Outputs[OLE DB Source Output].Columns[EmployeeName]"
                       dataType="wstr"
-                      length="61"
+                      length="31"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Add New Employee\Get Row Changes.Outputs[OLE DB Source Output].ExternalColumns[EmployeeName]"
@@ -221,7 +221,7 @@
                     <outputColumn
                       refId="Package\Add New Employee\Get Row Changes.Outputs[OLE DB Source Output].Columns[Title]"
                       dataType="wstr"
-                      length="60"
+                      length="30"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Add New Employee\Get Row Changes.Outputs[OLE DB Source Output].ExternalColumns[Title]"
@@ -230,8 +230,8 @@
                       truncationRowDisposition="FailComponent" />
                     <outputColumn
                       refId="Package\Add New Employee\Get Row Changes.Outputs[OLE DB Source Output].Columns[HireDate]"
-                      dataType="dbDate"
-                      
+                      dataType="wstr"
+                      length="10"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Add New Employee\Get Row Changes.Outputs[OLE DB Source Output].ExternalColumns[HireDate]"
@@ -251,7 +251,7 @@
                     <outputColumn
                       refId="Package\Add New Employee\Get Row Changes.Outputs[OLE DB Source Output].Columns[ManagerName]"
                       dataType="wstr"
-                      length="61"
+                      length="31"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Add New Employee\Get Row Changes.Outputs[OLE DB Source Output].ExternalColumns[ManagerName]"
@@ -261,7 +261,7 @@
                     <outputColumn
                       refId="Package\Add New Employee\Get Row Changes.Outputs[OLE DB Source Output].Columns[City]"
                       dataType="wstr"
-                      length="30"
+                      length="15"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Add New Employee\Get Row Changes.Outputs[OLE DB Source Output].ExternalColumns[City]"
@@ -271,7 +271,7 @@
                     <outputColumn
                       refId="Package\Add New Employee\Get Row Changes.Outputs[OLE DB Source Output].Columns[Region]"
                       dataType="wstr"
-                      length="30"
+                      length="15"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Add New Employee\Get Row Changes.Outputs[OLE DB Source Output].ExternalColumns[Region]"
@@ -281,7 +281,7 @@
                     <outputColumn
                       refId="Package\Add New Employee\Get Row Changes.Outputs[OLE DB Source Output].Columns[Country]"
                       dataType="wstr"
-                      length="30"
+                      length="15"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Add New Employee\Get Row Changes.Outputs[OLE DB Source Output].ExternalColumns[Country]"
@@ -299,17 +299,17 @@
                     <externalMetadataColumn
                       refId="Package\Add New Employee\Get Row Changes.Outputs[OLE DB Source Output].ExternalColumns[EmployeeName]"
                       dataType="wstr"
-                      length="61"
+                      length="31"
                       name="EmployeeName" />
                     <externalMetadataColumn
                       refId="Package\Add New Employee\Get Row Changes.Outputs[OLE DB Source Output].ExternalColumns[Title]"
                       dataType="wstr"
-                      length="60"
+                      length="30"
                       name="Title" />
                     <externalMetadataColumn
                       refId="Package\Add New Employee\Get Row Changes.Outputs[OLE DB Source Output].ExternalColumns[HireDate]"
-                      dataType="dbDate"
-                      
+                      dataType="wstr"
+                      length="10"
                       name="HireDate" />
                     <externalMetadataColumn
                       refId="Package\Add New Employee\Get Row Changes.Outputs[OLE DB Source Output].ExternalColumns[ManagerEmployeeID]"
@@ -319,22 +319,22 @@
                     <externalMetadataColumn
                       refId="Package\Add New Employee\Get Row Changes.Outputs[OLE DB Source Output].ExternalColumns[ManagerName]"
                       dataType="wstr"
-                      length="61"
+                      length="31"
                       name="ManagerName" />
                     <externalMetadataColumn
                       refId="Package\Add New Employee\Get Row Changes.Outputs[OLE DB Source Output].ExternalColumns[City]"
                       dataType="wstr"
-                      length="30"
+                      length="15"
                       name="City" />
                     <externalMetadataColumn
                       refId="Package\Add New Employee\Get Row Changes.Outputs[OLE DB Source Output].ExternalColumns[Region]"
                       dataType="wstr"
-                      length="30"
+                      length="15"
                       name="Region" />
                     <externalMetadataColumn
                       refId="Package\Add New Employee\Get Row Changes.Outputs[OLE DB Source Output].ExternalColumns[Country]"
                       dataType="wstr"
-                      length="30"
+                      length="15"
                       name="Country" />
                   </externalMetadataColumns>
                 </output>
@@ -352,19 +352,19 @@
                     <outputColumn
                       refId="Package\Add New Employee\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[EmployeeName]"
                       dataType="wstr"
-                      length="61"
+                      length="31"
                       lineageId="Package\Add New Employee\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[EmployeeName]"
                       name="EmployeeName" />
                     <outputColumn
                       refId="Package\Add New Employee\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[Title]"
                       dataType="wstr"
-                      length="60"
+                      length="30"
                       lineageId="Package\Add New Employee\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[Title]"
                       name="Title" />
                     <outputColumn
                       refId="Package\Add New Employee\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[HireDate]"
-                      dataType="dbDate"
-                      
+                      dataType="wstr"
+                      length="10"
                       lineageId="Package\Add New Employee\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[HireDate]"
                       name="HireDate" />
                     <outputColumn
@@ -376,25 +376,25 @@
                     <outputColumn
                       refId="Package\Add New Employee\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[ManagerName]"
                       dataType="wstr"
-                      length="61"
+                      length="31"
                       lineageId="Package\Add New Employee\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[ManagerName]"
                       name="ManagerName" />
                     <outputColumn
                       refId="Package\Add New Employee\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[City]"
                       dataType="wstr"
-                      length="30"
+                      length="15"
                       lineageId="Package\Add New Employee\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[City]"
                       name="City" />
                     <outputColumn
                       refId="Package\Add New Employee\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[Region]"
                       dataType="wstr"
-                      length="30"
+                      length="15"
                       lineageId="Package\Add New Employee\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[Region]"
                       name="Region" />
                     <outputColumn
                       refId="Package\Add New Employee\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[Country]"
                       dataType="wstr"
-                      length="30"
+                      length="15"
                       lineageId="Package\Add New Employee\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[Country]"
                       name="Country" />
                     <outputColumn
@@ -466,7 +466,7 @@ where [refTable].[EmployeeID] = ?</property>
                 <property
                   dataType="System.String"
                   description="Indicates whether to reference metadata in an XML format."
-                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;<referenceColumn name="EmployeeSK" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/><referenceColumn name="EmployeeID" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/><referenceColumn name="EmployeeName" dataType="DT_WSTR" length="61" precision="0" scale="0" codePage="0"/><referenceColumn name="Title" dataType="DT_WSTR" length="60" precision="0" scale="0" codePage="0"/><referenceColumn name="HireDate" dataType="DT_DBDATE" length="0" precision="0" scale="0" codePage="0"/><referenceColumn name="ManagerEmployeeID" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/><referenceColumn name="ManagerName" dataType="DT_WSTR" length="61" precision="0" scale="0" codePage="0"/><referenceColumn name="City" dataType="DT_WSTR" length="30" precision="0" scale="0" codePage="0"/><referenceColumn name="Region" dataType="DT_WSTR" length="30" precision="0" scale="0" codePage="0"/><referenceColumn name="Country" dataType="DT_WSTR" length="30" precision="0" scale="0" codePage="0"/>&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;<referenceColumn name="EmployeeSK" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/><referenceColumn name="EmployeeID" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/><referenceColumn name="EmployeeName" dataType="DT_WSTR" length="61" precision="0" scale="0" codePage="0"/><referenceColumn name="Title" dataType="DT_WSTR" length="60" precision="0" scale="0" codePage="0"/><referenceColumn name="HireDate" dataType="DT_WSTR" length="10" precision="0" scale="0" codePage="0"/><referenceColumn name="ManagerEmployeeID" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/><referenceColumn name="ManagerName" dataType="DT_WSTR" length="61" precision="0" scale="0" codePage="0"/><referenceColumn name="City" dataType="DT_WSTR" length="30" precision="0" scale="0" codePage="0"/><referenceColumn name="Region" dataType="DT_WSTR" length="30" precision="0" scale="0" codePage="0"/><referenceColumn name="Country" dataType="DT_WSTR" length="30" precision="0" scale="0" codePage="0"/>&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
                 <property
                   dataType="System.String"
                   description="The parameter map for the SQL command."
@@ -652,21 +652,21 @@ where [refTable].[EmployeeID] = ?</property>
                     <inputColumn
                       refId="Package\Add New Employee\Add New Employee.Inputs[OLE DB Destination Input].Columns[EmployeeName]"
                       cachedDataType="wstr"
-                      length="61"
+                      cachedLength="31"
                       cachedName="EmployeeName"
                       externalMetadataColumnId="Package\Add New Employee\Add New Employee.Inputs[OLE DB Destination Input].ExternalColumns[EmployeeName]"
                       lineageId="Package\Add New Employee\Get Row Changes.Outputs[OLE DB Source Output].Columns[EmployeeName]" />
                     <inputColumn
                       refId="Package\Add New Employee\Add New Employee.Inputs[OLE DB Destination Input].Columns[Title]"
                       cachedDataType="wstr"
-                      length="60"
+                      cachedLength="30"
                       cachedName="Title"
                       externalMetadataColumnId="Package\Add New Employee\Add New Employee.Inputs[OLE DB Destination Input].ExternalColumns[Title]"
                       lineageId="Package\Add New Employee\Get Row Changes.Outputs[OLE DB Source Output].Columns[Title]" />
                     <inputColumn
                       refId="Package\Add New Employee\Add New Employee.Inputs[OLE DB Destination Input].Columns[HireDate]"
-                      cachedDataType="dbDate"
-                      
+                      cachedDataType="wstr"
+                      cachedLength="10"
                       cachedName="HireDate"
                       externalMetadataColumnId="Package\Add New Employee\Add New Employee.Inputs[OLE DB Destination Input].ExternalColumns[HireDate]"
                       lineageId="Package\Add New Employee\Get Row Changes.Outputs[OLE DB Source Output].Columns[HireDate]" />
@@ -680,34 +680,38 @@ where [refTable].[EmployeeID] = ?</property>
                     <inputColumn
                       refId="Package\Add New Employee\Add New Employee.Inputs[OLE DB Destination Input].Columns[ManagerName]"
                       cachedDataType="wstr"
-                      length="61"
+                      cachedLength="31"
                       cachedName="ManagerName"
                       externalMetadataColumnId="Package\Add New Employee\Add New Employee.Inputs[OLE DB Destination Input].ExternalColumns[ManagerName]"
                       lineageId="Package\Add New Employee\Get Row Changes.Outputs[OLE DB Source Output].Columns[ManagerName]" />
                     <inputColumn
                       refId="Package\Add New Employee\Add New Employee.Inputs[OLE DB Destination Input].Columns[City]"
                       cachedDataType="wstr"
-                      length="30"
+                      cachedLength="15"
                       cachedName="City"
                       externalMetadataColumnId="Package\Add New Employee\Add New Employee.Inputs[OLE DB Destination Input].ExternalColumns[City]"
                       lineageId="Package\Add New Employee\Get Row Changes.Outputs[OLE DB Source Output].Columns[City]" />
                     <inputColumn
                       refId="Package\Add New Employee\Add New Employee.Inputs[OLE DB Destination Input].Columns[Region]"
                       cachedDataType="wstr"
-                      length="30"
+                      cachedLength="15"
                       cachedName="Region"
                       externalMetadataColumnId="Package\Add New Employee\Add New Employee.Inputs[OLE DB Destination Input].ExternalColumns[Region]"
                       lineageId="Package\Add New Employee\Get Row Changes.Outputs[OLE DB Source Output].Columns[Region]" />
                     <inputColumn
                       refId="Package\Add New Employee\Add New Employee.Inputs[OLE DB Destination Input].Columns[Country]"
                       cachedDataType="wstr"
-                      length="30"
+                      cachedLength="15"
                       cachedName="Country"
                       externalMetadataColumnId="Package\Add New Employee\Add New Employee.Inputs[OLE DB Destination Input].ExternalColumns[Country]"
                       lineageId="Package\Add New Employee\Get Row Changes.Outputs[OLE DB Source Output].Columns[Country]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Add New Employee\Add New Employee.Inputs[OLE DB Destination Input].ExternalColumns[EmployeeSK]"
+                      dataType="i4"
+                      name="EmployeeSK" />
                     <externalMetadataColumn
                       refId="Package\Add New Employee\Add New Employee.Inputs[OLE DB Destination Input].ExternalColumns[EmployeeID]"
                       dataType="i4"
@@ -725,8 +729,8 @@ where [refTable].[EmployeeID] = ?</property>
                       name="Title" />
                     <externalMetadataColumn
                       refId="Package\Add New Employee\Add New Employee.Inputs[OLE DB Destination Input].ExternalColumns[HireDate]"
-                      dataType="dbDate"
-                      
+                      dataType="wstr"
+                      length="10"
                       name="HireDate" />
                     <externalMetadataColumn
                       refId="Package\Add New Employee\Add New Employee.Inputs[OLE DB Destination Input].ExternalColumns[ManagerEmployeeID]"
@@ -869,21 +873,21 @@ where [refTable].[EmployeeID] = ?</property>
                     <inputColumn
                       refId="Package\Add New Employee\Load staging.Inputs[OLE DB Destination Input].Columns[EmployeeName]"
                       cachedDataType="wstr"
-                      length="61"
+                      cachedLength="31"
                       cachedName="EmployeeName"
                       externalMetadataColumnId="Package\Add New Employee\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[EmployeeName]"
                       lineageId="Package\Add New Employee\Get Row Changes.Outputs[OLE DB Source Output].Columns[EmployeeName]" />
                     <inputColumn
                       refId="Package\Add New Employee\Load staging.Inputs[OLE DB Destination Input].Columns[Title]"
                       cachedDataType="wstr"
-                      length="60"
+                      cachedLength="30"
                       cachedName="Title"
                       externalMetadataColumnId="Package\Add New Employee\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[Title]"
                       lineageId="Package\Add New Employee\Get Row Changes.Outputs[OLE DB Source Output].Columns[Title]" />
                     <inputColumn
                       refId="Package\Add New Employee\Load staging.Inputs[OLE DB Destination Input].Columns[HireDate]"
-                      cachedDataType="dbDate"
-                      
+                      cachedDataType="wstr"
+                      cachedLength="10"
                       cachedName="HireDate"
                       externalMetadataColumnId="Package\Add New Employee\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[HireDate]"
                       lineageId="Package\Add New Employee\Get Row Changes.Outputs[OLE DB Source Output].Columns[HireDate]" />
@@ -897,28 +901,28 @@ where [refTable].[EmployeeID] = ?</property>
                     <inputColumn
                       refId="Package\Add New Employee\Load staging.Inputs[OLE DB Destination Input].Columns[ManagerName]"
                       cachedDataType="wstr"
-                      length="61"
+                      cachedLength="31"
                       cachedName="ManagerName"
                       externalMetadataColumnId="Package\Add New Employee\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[ManagerName]"
                       lineageId="Package\Add New Employee\Get Row Changes.Outputs[OLE DB Source Output].Columns[ManagerName]" />
                     <inputColumn
                       refId="Package\Add New Employee\Load staging.Inputs[OLE DB Destination Input].Columns[City]"
                       cachedDataType="wstr"
-                      length="30"
+                      cachedLength="15"
                       cachedName="City"
                       externalMetadataColumnId="Package\Add New Employee\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[City]"
                       lineageId="Package\Add New Employee\Get Row Changes.Outputs[OLE DB Source Output].Columns[City]" />
                     <inputColumn
                       refId="Package\Add New Employee\Load staging.Inputs[OLE DB Destination Input].Columns[Region]"
                       cachedDataType="wstr"
-                      length="30"
+                      cachedLength="15"
                       cachedName="Region"
                       externalMetadataColumnId="Package\Add New Employee\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[Region]"
                       lineageId="Package\Add New Employee\Get Row Changes.Outputs[OLE DB Source Output].Columns[Region]" />
                     <inputColumn
                       refId="Package\Add New Employee\Load staging.Inputs[OLE DB Destination Input].Columns[Country]"
                       cachedDataType="wstr"
-                      length="30"
+                      cachedLength="15"
                       cachedName="Country"
                       externalMetadataColumnId="Package\Add New Employee\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[Country]"
                       lineageId="Package\Add New Employee\Get Row Changes.Outputs[OLE DB Source Output].Columns[Country]" />
@@ -946,8 +950,8 @@ where [refTable].[EmployeeID] = ?</property>
                       name="Title" />
                     <externalMetadataColumn
                       refId="Package\Add New Employee\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[HireDate]"
-                      dataType="dbDate"
-                      
+                      dataType="wstr"
+                      length="10"
                       name="HireDate" />
                     <externalMetadataColumn
                       refId="Package\Add New Employee\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[ManagerEmployeeID]"

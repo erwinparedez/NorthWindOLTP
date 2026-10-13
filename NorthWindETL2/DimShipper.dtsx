@@ -211,7 +211,7 @@
                     <outputColumn
                       refId="Package\Add New Shipper\Get Row Changes.Outputs[OLE DB Source Output].Columns[CompanyName]"
                       dataType="wstr"
-                      length="80"
+                      length="40"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Add New Shipper\Get Row Changes.Outputs[OLE DB Source Output].ExternalColumns[CompanyName]"
@@ -229,7 +229,7 @@
                     <externalMetadataColumn
                       refId="Package\Add New Shipper\Get Row Changes.Outputs[OLE DB Source Output].ExternalColumns[CompanyName]"
                       dataType="wstr"
-                      length="80"
+                      length="40"
                       name="CompanyName" />
                   </externalMetadataColumns>
                 </output>
@@ -247,7 +247,7 @@
                     <outputColumn
                       refId="Package\Add New Shipper\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[CompanyName]"
                       dataType="wstr"
-                      length="80"
+                      length="40"
                       lineageId="Package\Add New Shipper\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[CompanyName]"
                       name="CompanyName" />
                     <outputColumn
@@ -505,13 +505,17 @@ where [refTable].[ShipperID] = ?</property>
                     <inputColumn
                       refId="Package\Add New Shipper\Add New Shipper.Inputs[OLE DB Destination Input].Columns[CompanyName]"
                       cachedDataType="wstr"
-                      length="80"
+                      cachedLength="40"
                       cachedName="CompanyName"
                       externalMetadataColumnId="Package\Add New Shipper\Add New Shipper.Inputs[OLE DB Destination Input].ExternalColumns[CompanyName]"
                       lineageId="Package\Add New Shipper\Get Row Changes.Outputs[OLE DB Source Output].Columns[CompanyName]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Add New Shipper\Add New Shipper.Inputs[OLE DB Destination Input].ExternalColumns[ShipperSK]"
+                      dataType="i4"
+                      name="ShipperSK" />
                     <externalMetadataColumn
                       refId="Package\Add New Shipper\Add New Shipper.Inputs[OLE DB Destination Input].ExternalColumns[ShipperID]"
                       dataType="i4"
@@ -638,7 +642,7 @@ where [refTable].[ShipperID] = ?</property>
                     <inputColumn
                       refId="Package\Add New Shipper\Load staging.Inputs[OLE DB Destination Input].Columns[CompanyName]"
                       cachedDataType="wstr"
-                      length="80"
+                      cachedLength="40"
                       cachedName="CompanyName"
                       externalMetadataColumnId="Package\Add New Shipper\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[CompanyName]"
                       lineageId="Package\Add New Shipper\Get Row Changes.Outputs[OLE DB Source Output].Columns[CompanyName]" />
