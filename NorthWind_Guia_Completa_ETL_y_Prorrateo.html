@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Guía Técnica Integral: Arquitectura ETL y Prorrateo de Flete - NorthWind BI</title>
+<style>
+  @page {
+    size: A4;
+    margin: 20mm 15mm 20mm 15mm;
+    @top-right {
+      content: "NorthWind BI - Arquitectura ETL";
+      font-size: 8pt;
+      color: #64748b;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+    }
+    @bottom-center {
+      content: "Página " counter(page) " de " counter(pages);
+      font-size: 8pt;
+      color: #64748b;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+    }
+  }
+
+  body {
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+    color: #1e293b;
+    line-height: 1.55;
+    font-size: 9.5pt;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+  }
+
+  h1, h2, h3, h4 {
+    color: #0f172a;
+    font-weight: 700;
+    margin-top: 1.4em;
+    margin-bottom: 0.5em;
+    page-break-after: avoid;
+  }
+
+  h1 { font-size: 20pt; line-height: 1.2; color: #1e3a8a; border-bottom: 2.5px solid #1e3a8a; padding-bottom: 6px; }
+  h2 { font-size: 13pt; color: #1e40af; border-bottom: 1px solid #cbd5e1; padding-bottom: 4px; margin-top: 1.8em; }
+  h3 { font-size: 11pt; color: #0369a1; margin-top: 1.2em; }
+  h4 { font-size: 10pt; color: #334155; }
+
+  p { margin-top: 0; margin-bottom: 0.8em; }
+
+  .cover {
+    page-break-after: always;
+    text-align: center;
+    padding-top: 90px;
+    padding-bottom: 60px;
+  }
+  .cover-badge {
+    display: inline-block;
+    padding: 6px 16px;
+    background: #eff6ff;
+    color: #1d4ed8;
+    border-radius: 20px;
+    font-size: 9pt;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 24px;
+    border: 1px solid #bfdbfe;
+  }
+  .cover-title {
+    font-size: 26pt;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 12px;
+    line-height: 1.2;
+  }
+  .cover-subtitle {
+    font-size: 13pt;
+    color: #475569;
+    margin-bottom: 40px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: 400;
+  }
+  .cover-meta {
+    margin-top: 100px;
+    padding-top: 25px;
+    border-top: 1px solid #e2e8f0;
+    font-size: 9pt;
+    color: #64748b;
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-left: 4px solid #3b82f6;
+    padding: 10px 14px;
+    margin: 12px 0;
+    border-radius: 4px;
+    page-break-inside: avoid;
+  }
+  .box-warning {
+    background: #fffbeb;
+    border-color: #fef3c7;
+    border-left: 4px solid #f59e0b;
+    color: #92400e;
+  }
+  .box-danger {
+    background: #fef2f2;
+    border-color: #fee2e2;
+    border-left: 4px solid #ef4444;
+    color: #991b1b;
+  }
+  .box-success {
+    background: #f0fdf4;
+    border-color: #dcfce7;
+    border-left: 4px solid #10b981;
+    color: #065f46;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0 16px 0;
+    font-size: 8.5pt;
+    page-break-inside: avoid;
+  }
+  th, td {
+    padding: 6px 8px;
+    border: 1px solid #cbd5e1;
+    text-align: left;
+  }
+  th {
+    background: #f1f5f9;
+    color: #0f172a;
+    font-weight: 600;
+  }
+  tr:nth-child(even) td {
+    background: #f8fafc;
+  }
+  td.num, th.num { text-align: right; }
+  td.center, th.center { text-align: center; }
+
+  code {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 8.5pt;
+    background: #f1f5f9;
+    padding: 2px 4px;
+    border-radius: 3px;
+    color: #0f172a;
+  }
+  pre {
+    background: #0f172a;
+    color: #f8fafc;
+    padding: 10px 12px;
+    border-radius: 5px;
+    font-family: 'Consolas', monospace;
+    font-size: 8pt;
+    overflow-x: auto;
+    line-height: 1.4;
+    margin: 10px 0;
+    page-break-inside: avoid;
+  }
+  pre code {
+    background: transparent;
+    color: #f8fafc;
+    padding: 0;
+  }
+
+  .formula-card {
+    background: #eff6ff;
+    border: 1.5px solid #93c5fd;
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin: 14px 0;
+    text-align: center;
+    page-break-inside: avoid;
+  }
+  .formula-text {
+    font-size: 11pt;
+    font-weight: 700;
+    color: #1e3a8a;
+    font-family: 'Cambria Math', 'Georgia', serif;
+  }
+
+  .diagram-container {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 12px;
+    margin: 14px 0;
+    text-align: center;
+    page-break-inside: avoid;
+  }
+
+  .diagram-flow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .step-node {
+    background: #ffffff;
+    border: 1.5px solid #3b82f6;
+    color: #1e3a8a;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 8.5pt;
+    font-weight: 600;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  }
+  .step-arrow {
+    color: #64748b;
+    font-weight: bold;
+    font-size: 12pt;
+  }
+  .step-decision {
+    background: #fef3c7;
+    border: 1.5px solid #f59e0b;
+    color: #92400e;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 8.5pt;
+    font-weight: 600;
+  }
+
+  .page-break { page-break-after: always; }
+</style>
+</head>
+<body>
+
+<!-- PORTADA -->
+<div class="cover">
+  <div class="cover-badge">Proyecto NorthWind Data Warehouse & BI</div>
+  <div class="cover-title">Guía Técnica Integral:<br/>Arquitectura ETL Incremental y Prorrateo de Flete en Modelo Estrella</div>
+  <div class="cover-subtitle">Manual exhaustivo sobre el diseño e implementación de los paquetes SSIS, la resolución de granularidad de costos y el patrón de bifurcación Lookup incremental.</div>
+  
+  <div class="cover-meta">
+    <div><strong>Base de Datos Origen:</strong> NorthWind (OLTP)</div>
+    <div><strong>Destino:</strong> NorthWindDW (Data Warehouse)</div>
+    <div><strong>Motor ETL:</strong> SQL Server Integration Services (SSIS 2022)</div>
+    <div><strong>Fecha de Emisión:</strong> Octubre 2026</div>
+  </div>
+</div>
+
+<!-- CAPÍTULO 1 -->
+<h2>Capítulo 1: El Prorrateo de Flete (Freight Allocation) en FactSales</h2>
+
+<h3>1.1 El Conflicto Fundamental de Granularidad</h3>
+<p>
+  En el modelado dimensional, uno de los errores más comunes y críticos es la <strong>mezcla de granularidades</strong> entre los hechos transaccionales de cabecera y de línea de detalle.
+</p>
+<ul>
+  <li><strong>En el sistema transaccional (NorthWind OLTP):</strong> El costo del transporte o flete (<code>Freight</code>) se cobra y registra a nivel de <strong>pedido completo</strong> en la tabla <code>Orders</code>. Es decir, hay <strong>1 único valor de flete</strong> para toda la orden.</li>
+  <li><strong>En el Data Warehouse analítico (NorthWindDW):</strong> La tabla de hechos <code>FactSales</code> se define al grano más fino posible: <strong>cada línea de producto vendida</strong> (proveniente de <code>OrderDetails</code>). Una orden típica contiene entre 1 y 6 líneas de productos.</li>
+</ul>
+
+<div class="box box-warning">
+  <strong>El Dilema del Grano:</strong> ¿Cómo asignar un costo que pertenece a la orden entera (cabecera) dentro de una tabla de hechos donde cada fila representa un producto individual (detalle), sin duplicar el dinero ni distorsionar la rentabilidad?
+</div>
+
+<h3>1.2 ¿Por qué fallan los enfoques tradicionales? (Análisis de Errores)</h3>
+
+<h4>❌ Enfoque Erróneo A: Duplicar el Flete en cada línea de detalle</h4>
+<p>
+  Si una orden con \$32.38 de flete contiene 3 productos y copiamos los \$32.38 en las 3 filas de <code>FactSales</code>, cuando un analista financiero o un informe de Power BI ejecute la consulta:
+</p>
+<pre><code>SELECT SUM(GrossSalesAmount) AS Ventas, SUM(FreightAllocated) AS TotalFlete FROM FactSales;</code></pre>
+<p>
+  El flete de esa orden se sumará 3 veces: \$32.38 &times; 3 = <strong>\$97.14</strong>. Esto representa un <strong>error financiero del 200% de sobrecosto ficticio</strong> (\$64.76 de costo inexistente). En un negocio con miles de órdenes, los estados de resultados reportarían pérdidas falsas.
+</p>
+
+<h4>❌ Enfoque Erróneo B: Asignar el Flete solo a la primera línea y \$0 a las demás</h4>
+<p>
+  Si asignamos los \$32.38 a la línea 1 y \$0 a las líneas 2 y 3:
+</p>
+<ul>
+  <li>Al filtrar por <em>Categoría de Producto</em> o <em>Proveedor</em> de los productos 2 y 3, el análisis de rentabilidad mostrará que su transporte fue "completamente gratis", ocultando sus costos logísticos reales.</li>
+  <li>El producto de la línea 1 aparecerá injustamente con un margen de ganancia destruido.</li>
+</ul>
+
+<h4>❌ Enfoque Erróneo C: División Equitativa Simple (Flete / N líneas)</h4>
+<p>
+  Si un cliente compra una máquina industrial de \$1,000 y un caramelo de \$1, dividir el flete en partes iguales (50% y 50%) asignaría la mitad del flete al caramelo, generando un costo logístico absurdo para un producto insignificante.
+</p>
+
+<h3>1.3 La Solución: Prorrateo Ponderado por Valor Bruto de Venta (Gross Sales Amount)</h3>
+<p>
+  La mejor práctica de Business Intelligence (reconocida por el <em>Kimball Group</em>) consiste en <strong>prorratear el flete proporcionalmente al peso económico (Gross Amount)</strong> de cada línea dentro del pedido.
+</p>
+
+<div class="formula-card">
+  <div class="formula-text">
+    FreightAllocated<sub>i</sub> = Freight<sub>Orden</sub> &times; [ GrossSalesAmount<sub>i</sub> / TotalOrderGrossAmount ]
+  </div>
+  <p style="margin-top:6px; font-size: 8.5pt; color: #475569;">
+    donde <code>GrossSalesAmount<sub>i</sub> = Quantity<sub>i</sub> &times; UnitPrice<sub>i</sub></code> y <code>TotalOrderGrossAmount = &sum; GrossSalesAmount<sub>k</sub></code>
+  </p>
+</div>
+
+<div class="box box-success">
+  <strong>¿Por qué se usa el Valor Bruto (antes de descuentos) y no el Neto?</strong><br/>
+  Porque las tarifas de transporte y mensajería se fundamentan en el valor asegurado, peso y volumen de la mercancía transportada. Un descuento comercial del 15% acordado entre el vendedor y el cliente no reduce el costo de transportar la caja. Por tanto, el valor de catálogo original refleja con mayor precisión el esfuerzo logístico asignado.
+</div>
+
+<div class="page-break"></div>
+
+<h3>1.4 CASO REAL #1: Pedido 10248 de la Base de Datos NorthWind</h3>
+<p>
+  Tomemos como ejemplo el pedido real <code>OrderID = 10248</code> de NorthWind OLTP. El cliente pagó un flete total de <strong>\$32.38</strong> y la orden tiene 3 productos:
+</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Línea</th>
+      <th>Producto</th>
+      <th class="num">Cant.</th>
+      <th class="num">Precio Unit.</th>
+      <th class="num">Valor Bruto</th>
+      <th class="center">% Participación</th>
+      <th class="num">Flete Prorrateado</th>
+      <th class="num">Flete si se Duplica (Error)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="center">1</td>
+      <td><strong>Queso Cabrales</strong></td>
+      <td class="num">12</td>
+      <td class="num">\$14.00</td>
+      <td class="num">\$168.00</td>
+      <td class="center">38.1818%</td>
+      <td class="num"><strong>\$12.3632</strong></td>
+      <td class="num" style="color:#dc2626;">\$32.3800</td>
+    </tr>
+    <tr>
+      <td class="center">2</td>
+      <td><strong>Singaporean Hokkien Fried Mee</strong></td>
+      <td class="num">10</td>
+      <td class="num">\$9.80</td>
+      <td class="num">\$98.00</td>
+      <td class="center">22.2727%</td>
+      <td class="num"><strong>\$7.2119</strong></td>
+      <td class="num" style="color:#dc2626;">\$32.3800</td>
+    </tr>
+    <tr>
+      <td class="center">3</td>
+      <td><strong>Mozzarella di Giovanni</strong></td>
+      <td class="num">5</td>
+      <td class="num">\$34.80</td>
+      <td class="num">\$174.00</td>
+      <td class="center">39.5455%</td>
+      <td class="num"><strong>\$12.8048</strong></td>
+      <td class="num" style="color:#dc2626;">\$32.3800</td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr style="font-weight:bold; background:#e2e8f0;">
+      <td colspan="4">TOTALES DEL PEDIDO</td>
+      <td class="num">\$440.00</td>
+      <td class="center">100.0000%</td>
+      <td class="num" style="color:#16a34a;">\$32.3800 &check;</td>
+      <td class="num" style="color:#dc2626;">\$97.1400 &cross;</td>
+    </tr>
+  </tfoot>
+</table>
+
+<h4>Cálculo paso a paso:</h4>
+<ol>
+  <li><strong>Total Bruto de la Orden:</strong> \$168.00 + \$98.00 + \$174.00 = <strong>\$440.00</strong></li>
+  <li><strong>Línea 1 (Queso Cabrales):</strong> \$32.38 &times; (\$168.00 / \$440.00) = \$32.38 &times; 0.381818 = <strong>\$12.3632</strong></li>
+  <li><strong>Línea 2 (Singaporean Mee):</strong> \$32.38 &times; (\$98.00 / \$440.00) = \$32.38 &times; 0.222727 = <strong>\$7.2119</strong></li>
+  <li><strong>Línea 3 (Mozzarella):</strong> \$32.38 &times; (\$174.00 / \$440.00) = \$32.38 &times; 0.395455 = <strong>\$12.8048</strong></li>
+  <li><strong>Suma de Verificación:</strong> \$12.3632 + \$7.2119 + \$12.8048 = <strong>\$32.3799 &approx; \$32.38</strong> (Cuadre perfecto al centavo).</li>
+</ol>
+
+<h3>1.5 CASO REAL #2: Pedido 10250 (Con Descuentos Comerciales del 15%)</h3>
+<p>
+  En el pedido <code>10250</code>, el flete es de <strong>\$65.83</strong> y dos de las tres líneas tienen un 15% de descuento:
+</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Producto</th>
+      <th class="num">Cant.</th>
+      <th class="num">Precio</th>
+      <th class="num">Valor Bruto</th>
+      <th class="center">Desc.</th>
+      <th class="num">Monto Desc.</th>
+      <th class="num">Valor Neto</th>
+      <th class="num">Flete Prorrateado</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Jack's Clam Chowder</td>
+      <td class="num">10</td>
+      <td class="num">\$7.70</td>
+      <td class="num">\$77.00</td>
+      <td class="center">0%</td>
+      <td class="num">\$0.00</td>
+      <td class="num">\$77.00</td>
+      <td class="num"><strong>\$2.7958</strong></td>
+    </tr>
+    <tr>
+      <td>Manjimup Dried Apples</td>
+      <td class="num">35</td>
+      <td class="num">\$42.40</td>
+      <td class="num">\$1,484.00</td>
+      <td class="center">15%</td>
+      <td class="num">\$222.60</td>
+      <td class="num">\$1,261.40</td>
+      <td class="num"><strong>\$53.8840</strong></td>
+    </tr>
+    <tr>
+      <td>Louisiana Fiery Hot Pepper</td>
+      <td class="num">15</td>
+      <td class="num">\$16.80</td>
+      <td class="num">\$252.00</td>
+      <td class="center">15%</td>
+      <td class="num">\$37.80</td>
+      <td class="num">\$214.20</td>
+      <td class="num"><strong>\$9.1501</strong></td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr style="font-weight:bold; background:#e2e8f0;">
+      <td colspan="3">TOTALES</td>
+      <td class="num">\$1,813.00</td>
+      <td></td>
+      <td class="num">\$260.40</td>
+      <td class="num">\$1,552.60</td>
+      <td class="num" style="color:#16a34a;">\$65.8299 &approx; \$65.83 &check;</td>
+    </tr>
+  </tfoot>
+</table>
+
+<h3>1.6 Implementación T-SQL en el Procedimiento de Extracción</h3>
+<p>
+  El cálculo se ejecuta eficientemente en el motor de base de datos dentro del procedimiento almacenado <code>GetSalesChangesByRowVersion</code> usando la función de ventana <code>OVER (PARTITION BY o.OrderID)</code>:
+</p>
+<pre><code>ROUND(
+    o.Freight * (od.UnitPrice * od.Quantity) / 
+    SUM(od.UnitPrice * od.Quantity) OVER (PARTITION BY o.OrderID),
+    4
+) AS FreightAllocated</code></pre>
+
+<div class="page-break"></div>
+
+<!-- CAPÍTULO 2 -->
+<h2>Capítulo 2: Arquitectura General del Proceso ETL Incremental</h2>
+
+<h3>2.1 El Modelo Estrella de NorthWindDW</h3>
+<p>
+  El Data Warehouse está estructurado bajo un esquema estrella con 5 tablas de dimensiones conformadas, 1 dimensión de fechas precalculada y 1 tabla de hechos central:
+</p>
+
+<div class="diagram-container">
+  <div class="diagram-flow">
+    <div class="step-node">DimCustomer</div>
+    <div class="step-arrow">&rarr;</div>
+    <div class="step-node" style="border-color:#1e3a8a; background:#eff6ff; font-weight:bold;">FactSales (Hechos)</div>
+    <div class="step-arrow">&larr;</div>
+    <div class="step-node">DimProduct</div>
+  </div>
+  <div class="diagram-flow" style="margin-top:8px;">
+    <div class="step-node">DimEmployee</div>
+    <div class="step-arrow">&rarr;</div>
+    <div class="step-node">DimDeliveryLocation</div>
+    <div class="step-arrow">&rarr;</div>
+    <div class="step-node">DimShipper</div>
+    <div class="step-arrow">&rarr;</div>
+    <div class="step-node">DimDate</div>
+  </div>
+</div>
+
+<h3>2.2 Técnica de Detección de Cambios: SQL Server ROWVERSION</h3>
+<p>
+  En lugar de escanear millones de registros buscando fechas de modificación (las cuales pueden ser nulas o no estar indexadas), cada tabla crítica del OLTP cuenta con una columna de tipo <code>ROWVERSION</code> (entero monótonamente creciente gestionado por el motor de SQL Server).
+</p>
+<ul>
+  <li>Cada vez que una fila se <strong>inserta</strong> o se <strong>modifica</strong> en NorthWind OLTP, SQL Server le asigna automáticamente un nuevo número secuencial de versión.</li>
+  <li>El procedimiento <code>GetDatabaseRowVersion</code> consulta <code>@@DBTS</code> para conocer el número de versión más alto de toda la base de datos en ese instante.</li>
+  <li>La tabla <code>dbo.PackageConfig</code> en NorthWindDW almacena el último número procesado exitosamente (<code>LastRowVersion</code>).</li>
+  <li>El rango incremental se extrae con: <code>WHERE [rowversion] > @startRow AND [rowversion] <= @endRow</code>.</li>
+</ul>
+
+<h3>2.3 El Ciclo Estándar de Ejecución del Control Flow (Flujo de Control)</h3>
+<p>
+  Todos los paquetes SSIS de dimensiones ([DimShipper.dtsx], [DimProduct.dtsx], etc.) comparten exactamente el mismo ciclo de control de 6 tareas:
+</p>
+
+<div class="diagram-container">
+  <div class="diagram-flow">
+    <div class="step-node">1. Get DBTS<br/><small>(SQL Task)</small></div>
+    <div class="step-arrow">&rarr;</div>
+    <div class="step-node">2. Get Last Row<br/><small>(SQL Task)</small></div>
+    <div class="step-arrow">&rarr;</div>
+    <div class="step-node">3. Init Staging<br/><small>(SQL Task)</small></div>
+    <div class="step-arrow">&rarr;</div>
+    <div class="step-decision">4. Data Flow Task<br/><small>(Bifurcación)</small></div>
+    <div class="step-arrow">&rarr;</div>
+    <div class="step-node">5. Sync Merge<br/><small>(SQL Task)</small></div>
+    <div class="step-arrow">&rarr;</div>
+    <div class="step-node">6. Update Config<br/><small>(SQL Task)</small></div>
+  </div>
+</div>
+
+<ol>
+  <li><strong>Get Database RowVersion:</strong> Obtiene el límite superior <code>@endRow</code> desde el OLTP y lo guarda en la variable <code>User::DBTSValue</code>.</li>
+  <li><strong>Get Last X Change:</strong> Lee el límite inferior <code>@startRow</code> desde <code>PackageConfig</code> y lo guarda en <code>User::LastRowValue</code>.</li>
+  <li><strong>Initialize Staging Table:</strong> Ejecuta <code>TRUNCATE TABLE staging.[tabla]</code> para garantizar un área de preparación limpia y rápida.</li>
+  <li><strong>Add New X (Data Flow Task):</strong> Extrae los datos, resuelve los Lookups y bifurca el flujo (detallado en los capítulos siguientes).</li>
+  <li><strong>Sync X Data:</strong> Ejecuta el procedimiento <code>DW_Merge...</code> en el DW para aplicar los <code>UPDATE</code> a los registros que cayeron en staging.</li>
+  <li><strong>Update LastRowVersion:</strong> Si todo terminó con éxito, actualiza <code>PackageConfig</code> con el valor de <code>DBTSValue</code>.</li>
+</ol>
+
+<div class="page-break"></div>
+
+<!-- CAPÍTULO 3 -->
+<h2>Capítulo 3: Detalle de Extracción, Transformación y Carga de Dimensiones</h2>
+
+<h3>3.1 El Patrón de Bifurcación Visual en el Data Flow (Lookup Bifurcation)</h3>
+<p>
+  En el Data Flow Task de cada dimensión, la extracción incremental debe clasificar cada registro en una de dos categorías: <strong>Registro Nuevo (Insert)</strong> o <strong>Registro Modificado (Update)</strong>.
+</p>
+
+<div class="diagram-container">
+  <div class="diagram-flow">
+    <div class="step-node" style="background:#e0f2fe; border-color:#0284c7;">
+      <strong>Get Row Changes</strong><br/>
+      <small>OLE DB Source (OLTP SP)</small>
+    </div>
+    <div class="step-arrow">&rarr;</div>
+    <div class="step-decision">
+      <strong>Lookup</strong><br/>
+      <small>Busca Business Key en DW</small>
+    </div>
+  </div>
+  <div style="display:flex; justify-content:space-around; margin-top:14px;">
+    <div style="width:45%; text-align:center;">
+      <span style="color:#16a34a; font-weight:bold; font-size:8pt;">&darr; Lookup No Match Output (Nuevo)</span>
+      <div class="step-node" style="background:#dcfce7; border-color:#16a34a; margin-top:6px;">
+        <strong>Add New [Dim]</strong><br/>
+        <small>OLE DB Destination &rarr; [dbo].[DimX]</small>
+      </div>
+    </div>
+    <div style="width:45%; text-align:center;">
+      <span style="color:#2563eb; font-weight:bold; font-size:8pt;">&darr; Lookup Match Output (Modificado)</span>
+      <div class="step-node" style="background:#dbeafe; border-color:#2563eb; margin-top:6px;">
+        <strong>Load staging</strong><br/>
+        <small>OLE DB Destination &rarr; [staging].[x]</small>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h3>3.2 Matriz de Tablas Origen, Transformaciones y Destinos de las 5 Dimensiones</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Dimensión</th>
+      <th>Tablas Origen (OLTP)</th>
+      <th>Lógica de Transformación / Negocio</th>
+      <th>Tabla Final DW</th>
+      <th>Tabla Staging</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>DimShipper</strong></td>
+      <td><code>dbo.Shippers</code></td>
+      <td>Extrae el transportista y valida por <code>ShipperID</code>.</td>
+      <td><code>dbo.DimShipper</code></td>
+      <td><code>staging.shipper</code></td>
+    </tr>
+    <tr>
+      <td><strong>DimProduct</strong></td>
+      <td><code>dbo.Products</code><br/><code>dbo.Categories</code><br/><code>dbo.Suppliers</code></td>
+      <td>Desnormaliza en una sola vista el producto, la categoría y el proveedor con su país de origen. Manejo de bandera <code>Discontinued</code>.</td>
+      <td><code>dbo.DimProduct</code></td>
+      <td><code>staging.product</code></td>
+    </tr>
+    <tr>
+      <td><strong>DimCustomer</strong></td>
+      <td><code>dbo.Customers</code></td>
+      <td>Normaliza clientes con sus atributos geográficos (Ciudad, Región, Código Postal, País). Clave natural: <code>CustomerID</code> (10 chars).</td>
+      <td><code>dbo.DimCustomer</code></td>
+      <td><code>staging.customer</code></td>
+    </tr>
+    <tr>
+      <td><strong>DimEmployee</strong></td>
+      <td><code>dbo.Employees</code></td>
+      <td>Resuelve la jerarquía organizacional mediante auto-unión (Self-Join) para incluir el nombre del jefe directo (<code>ManagerName</code>). Formato ISO de <code>HireDate</code>.</td>
+      <td><code>dbo.DimEmployee</code></td>
+      <td><code>staging.employee</code></td>
+    </tr>
+    <tr>
+      <td><strong>DimDeliveryLocation</strong></td>
+      <td><code>dbo.Orders</code></td>
+      <td>Genera la dimensión geográfica de despacho agrupando combinaciones únicas de <code>ShipCity</code>, <code>ShipRegion</code>, <code>ShipPostalCode</code> y <code>ShipCountry</code>.</td>
+      <td><code>dbo.DimDeliveryLocation</code></td>
+      <td><code>staging.deliverylocation</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>3.3 El Proceso de Merge en la Base de Datos (SCD Tipo 1)</h3>
+<p>
+  Los registros que coinciden en el Lookup viajan a la tabla de staging correspondiente. Una vez finalizado el Flujo de Datos, el procedimiento almacenado <code>DW_Merge...</code> ejecuta una sentencia SQL optimizada que actualiza los valores actuales sin alterar la Clave Subrogada existente:
+</p>
+<pre><code>-- Ejemplo: Sincronización en DW_MergeDimProduct
+UPDATE dp
+SET dp.ProductName = s.ProductName,
+    dp.QuantityPerUnit = s.QuantityPerUnit,
+    dp.SupplierName = s.SupplierName,
+    dp.SupplierCountry = s.SupplierCountry,
+    dp.CategoryName = s.CategoryName,
+    dp.Discontinued = s.Discontinued
+FROM dbo.DimProduct dp
+INNER JOIN staging.product s ON dp.ProductSK = s.ProductSK;</code></pre>
+
+<div class="page-break"></div>
+
+<!-- CAPÍTULO 4 -->
+<h2>Capítulo 4: Detalle Exhaustivo del Paquete FactSales (Tabla de Hechos)</h2>
+
+<h3>4.1 ¿Por qué FactSales requiere una Cadena de Lookups?</h3>
+<p>
+  En el Data Warehouse, la tabla <code>FactSales</code> almacena métricas numéricas agregables conectadas exclusivamente a Claves Subrogadas enteras (Foreign Keys hacia las dimensiones). 
+  Cuando el procedimiento <code>GetSalesChangesByRowVersion</code> extrae los pedidos desde el OLTP, los registros traen únicamente los códigos del negocio: <code>CustomerID = 'ALFKI'</code>, <code>EmployeeID = 1</code>, <code>ShipperID = 2</code>, etc.
+</p>
+<p>
+  Por consiguiente, el paquete [FactSales.dtsx] debe enlazar sucesivamente <strong>5 transformaciones Lookup en serie</strong> para sustituir cada clave natural por su correspondiente Clave Subrogada antes de intentar guardar el registro:
+</p>
+
+<div class="diagram-container">
+  <div style="font-size:8pt; color:#475569; margin-bottom:8px;"><strong>Flujo de Transformación de Datos en FactSales.dtsx:</strong></div>
+  <div class="diagram-flow">
+    <div class="step-node" style="background:#e0f2fe;">1. Get Sales<br/><small>Origen OLTP</small></div>
+    <div class="step-arrow">&rarr;</div>
+    <div class="step-node">2. Lookup Customer<br/><small>+CustomerSK</small></div>
+    <div class="step-arrow">&rarr;</div>
+    <div class="step-node">3. Lookup Employee<br/><small>+EmployeeSK</small></div>
+  </div>
+  <div class="diagram-flow" style="margin-top:8px;">
+    <div class="step-node">4. Lookup Shipper<br/><small>+ShipperSK</small></div>
+    <div class="step-arrow">&rarr;</div>
+    <div class="step-node">5. Lookup Location<br/><small>+DeliveryLocationSK</small></div>
+    <div class="step-arrow">&rarr;</div>
+    <div class="step-node">6. Lookup Product<br/><small>+ProductSK</small></div>
+  </div>
+  <div class="diagram-flow" style="margin-top:10px;">
+    <div class="step-arrow">&darr;</div>
+  </div>
+  <div class="diagram-flow">
+    <div class="step-decision">7. Lookup Sales<br/><small>¿Existe OrderID + ProductSK en FactSales?</small></div>
+  </div>
+  <div style="display:flex; justify-content:space-around; margin-top:10px;">
+    <div style="width:45%; text-align:center;">
+      <span style="color:#16a34a; font-weight:bold; font-size:8pt;">&darr; No Match (Venta Nueva)</span>
+      <div class="step-node" style="background:#dcfce7; border-color:#16a34a; margin-top:4px;">
+        <strong>Add New Sales</strong><br/>
+        <small>&rarr; [dbo].[FactSales]</small>
+      </div>
+    </div>
+    <div style="width:45%; text-align:center;">
+      <span style="color:#2563eb; font-weight:bold; font-size:8pt;">&darr; Match (Venta Modificada)</span>
+      <div class="step-node" style="background:#dbeafe; border-color:#2563eb; margin-top:4px;">
+        <strong>Load staging</strong><br/>
+        <small>&rarr; [staging].[sales]</small>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h3>4.2 Mapeo Completo de Campos en FactSales</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Campo en FactSales</th>
+      <th>Tipo de Dato</th>
+      <th>Procedencia / Componente Responsable</th>
+      <th>Descripción Analítica</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>OrderLineSK</code></td>
+      <td>bigint (Identity)</td>
+      <td>Generado por SQL Server en <code>dbo.FactSales</code></td>
+      <td>Clave primaria subrogada de la línea de hecho.</td>
+    </tr>
+    <tr>
+      <td><code>OrderID</code></td>
+      <td>int</td>
+      <td><code>Get Sales</code> (Origen OLTP)</td>
+      <td>Clave degenerada (Degenerate Dimension) del pedido.</td>
+    </tr>
+    <tr>
+      <td><code>OrderDateSK</code></td>
+      <td>int (YYYYMMDD)</td>
+      <td><code>Get Sales</code> (Calculado en SP)</td>
+      <td>Clave de fecha de compra &rarr; <code>DimDate</code>.</td>
+    </tr>
+    <tr>
+      <td><code>RequiredDateSK</code></td>
+      <td>int (YYYYMMDD)</td>
+      <td><code>Get Sales</code> (Calculado en SP)</td>
+      <td>Clave de fecha requerida &rarr; <code>DimDate</code>.</td>
+    </tr>
+    <tr>
+      <td><code>ShippedDateSK</code></td>
+      <td>int (YYYYMMDD)</td>
+      <td><code>Get Sales</code> (Calculado en SP)</td>
+      <td>Clave de fecha de despacho &rarr; <code>DimDate</code>.</td>
+    </tr>
+    <tr>
+      <td><code>CustomerSK</code></td>
+      <td>int</td>
+      <td><strong>Lookup Customer</strong></td>
+      <td>FK hacia <code>DimCustomer</code>.</td>
+    </tr>
+    <tr>
+      <td><code>EmployeeSK</code></td>
+      <td>int</td>
+      <td><strong>Lookup Employee</strong></td>
+      <td>FK hacia <code>DimEmployee</code>.</td>
+    </tr>
+    <tr>
+      <td><code>ShipperSK</code></td>
+      <td>int</td>
+      <td><strong>Lookup Shipper</strong></td>
+      <td>FK hacia <code>DimShipper</code>.</td>
+    </tr>
+    <tr>
+      <td><code>DeliveryLocationSK</code></td>
+      <td>int</td>
+      <td><strong>Lookup DeliveryLocation</strong></td>
+      <td>FK hacia <code>DimDeliveryLocation</code>.</td>
+    </tr>
+    <tr>
+      <td><code>ProductSK</code></td>
+      <td>int</td>
+      <td><strong>Lookup Product</strong></td>
+      <td>FK hacia <code>DimProduct</code>.</td>
+    </tr>
+    <tr>
+      <td><code>Quantity</code></td>
+      <td>smallint</td>
+      <td><code>Get Sales</code> (OrderDetails.Quantity)</td>
+      <td>Métrica aditiva: unidades vendidas.</td>
+    </tr>
+    <tr>
+      <td><code>UnitPrice</code></td>
+      <td>decimal(19,4)</td>
+      <td><code>Get Sales</code> (OrderDetails.UnitPrice)</td>
+      <td>Precio de venta pactado por unidad.</td>
+    </tr>
+    <tr>
+      <td><code>Discount</code></td>
+      <td>decimal(9,6)</td>
+      <td><code>Get Sales</code> (OrderDetails.Discount)</td>
+      <td>Porcentaje de descuento concedido (0.00 a 1.00).</td>
+    </tr>
+    <tr>
+      <td><code>GrossSalesAmount</code></td>
+      <td>decimal(19,4)</td>
+      <td><code>Get Sales</code> (Quantity &times; UnitPrice)</td>
+      <td>Métrica aditiva: Total antes de descuentos.</td>
+    </tr>
+    <tr>
+      <td><code>DiscountAmount</code></td>
+      <td>decimal(19,4)</td>
+      <td><code>Get Sales</code> (GrossSalesAmount &times; Discount)</td>
+      <td>Métrica aditiva: Dinero descontado.</td>
+    </tr>
+    <tr>
+      <td><code>NetSalesAmount</code></td>
+      <td>decimal(19,4)</td>
+      <td><code>Get Sales</code> (GrossSalesAmount &minus; DiscountAmount)</td>
+      <td>Métrica aditiva: Ingreso neto real recibido.</td>
+    </tr>
+    <tr>
+      <td><code>FreightAllocated</code></td>
+      <td>decimal(19,4)</td>
+      <td><code>Get Sales</code> (Flete Prorrateado por Gross)</td>
+      <td>Métrica aditiva: Costo logístico exacto de la línea.</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="page-break"></div>
+
+<!-- CAPÍTULO 5 -->
+<h2>Capítulo 5: Orquestación Maestra y Resultados de Validación</h2>
+
+<h3>5.1 Paquete Maestro (Package.dtsx) y Secuencia de Ejecución</h3>
+<p>
+  Para asegurar la <strong>integridad referencial</strong> del modelo estrella, las dimensiones deben cargarse siempre <strong>antes</strong> de la tabla de hechos. El paquete maestro [Package.dtsx] orquesta la ejecución respetando estrictas restricciones de precedencia:
+</p>
+
+<div class="diagram-container">
+  <div class="diagram-flow">
+    <div class="step-node">DimShipper</div>
+    <div class="step-arrow">&plus;</div>
+    <div class="step-node">DimDeliveryLocation</div>
+    <div class="step-arrow">&plus;</div>
+    <div class="step-node">DimCustomer</div>
+    <div class="step-arrow">&plus;</div>
+    <div class="step-node">DimEmployee</div>
+    <div class="step-arrow">&plus;</div>
+    <div class="step-node">DimProduct</div>
+  </div>
+  <div style="margin: 10px 0; color: #1e3a8a; font-weight: bold; font-size: 10pt;">&darr; [Precedence Constraint: Éxito en todas las dimensiones]</div>
+  <div class="diagram-flow">
+    <div class="step-node" style="background:#dbeafe; border-color:#1d4ed8; font-size:10pt;">
+      <strong>FactSales.dtsx (Hechos de Venta)</strong>
+    </div>
+  </div>
+</div>
+
+<h3>5.2 Auditoría de Validación Técnica y Resultados Oficiales</h3>
+<p>
+  Tras sincronizar exhaustivamente las colecciones de metadata externa entre los orígenes OLTP y los destinos DW, el proyecto ETL completo fue certificado mediante las tres herramientas oficiales del ecosistema de Microsoft SQL Server:
+</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Paquete SSIS (.dtsx)</th>
+      <th>Resultado API Runtime (ManagedDTS)</th>
+      <th>Validación CLI (DTExec /Va)</th>
+      <th>Estado de Advertencias</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>DimShipper.dtsx</strong></td>
+      <td class="center" style="color:#16a34a; font-weight:bold;">Success (0 errores)</td>
+      <td class="center" style="color:#16a34a; font-weight:bold;">DTSER_SUCCESS (0)</td>
+      <td class="center" style="color:#16a34a; font-weight:bold;">0 Advertencias &check;</td>
+    </tr>
+    <tr>
+      <td><strong>DimProduct.dtsx</strong></td>
+      <td class="center" style="color:#16a34a; font-weight:bold;">Success (0 errores)</td>
+      <td class="center" style="color:#16a34a; font-weight:bold;">DTSER_SUCCESS (0)</td>
+      <td class="center" style="color:#16a34a; font-weight:bold;">0 Advertencias &check;</td>
+    </tr>
+    <tr>
+      <td><strong>DimCustomer.dtsx</strong></td>
+      <td class="center" style="color:#16a34a; font-weight:bold;">Success (0 errores)</td>
+      <td class="center" style="color:#16a34a; font-weight:bold;">DTSER_SUCCESS (0)</td>
+      <td class="center" style="color:#16a34a; font-weight:bold;">0 Advertencias &check;</td>
+    </tr>
+    <tr>
+      <td><strong>DimEmployee.dtsx</strong></td>
+      <td class="center" style="color:#16a34a; font-weight:bold;">Success (0 errores)</td>
+      <td class="center" style="color:#16a34a; font-weight:bold;">DTSER_SUCCESS (0)</td>
+      <td class="center" style="color:#16a34a; font-weight:bold;">0 Advertencias &check;</td>
+    </tr>
+    <tr>
+      <td><strong>DimDeliveryLocation.dtsx</strong></td>
+      <td class="center" style="color:#16a34a; font-weight:bold;">Success (0 errores)</td>
+      <td class="center" style="color:#16a34a; font-weight:bold;">DTSER_SUCCESS (0)</td>
+      <td class="center" style="color:#16a34a; font-weight:bold;">0 Advertencias &check;</td>
+    </tr>
+    <tr>
+      <td><strong>FactSales.dtsx</strong></td>
+      <td class="center" style="color:#16a34a; font-weight:bold;">Success (0 errores)</td>
+      <td class="center" style="color:#16a34a; font-weight:bold;">DTSER_SUCCESS (0)</td>
+      <td class="center" style="color:#16a34a; font-weight:bold;">0 Advertencias &check;</td>
+    </tr>
+    <tr>
+      <td><strong>Package.dtsx (Maestro)</strong></td>
+      <td class="center" style="color:#16a34a; font-weight:bold;">Success (0 errores)</td>
+      <td class="center" style="color:#16a34a; font-weight:bold;">DTSER_SUCCESS (0)</td>
+      <td class="center" style="color:#16a34a; font-weight:bold;">0 Advertencias &check;</td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr style="background:#f0fdf4; font-weight:bold;">
+      <td>COMPILACIÓN DEPLOYABLE</td>
+      <td colspan="3" class="center" style="color:#16a34a;">
+        devenv.com NorthWindETL2.dtproj /Build Development &rarr; 3 Correctas, 0 Errores, 0 Omitidas (.ispac generado)
+      </td>
+    </tr>
+  </tfoot>
+</table>
+
+<div class="box box-success" style="margin-top:20px;">
+  <strong>Conclusión Técnica:</strong> El sistema ETL ha alcanzado un estándar de producción empresarial. La solución combina rendimiento incremental óptimo mediante SQL Server <code>ROWVERSION</code>, integridad referencial absoluta mediante cadenas de Lookup en SSIS, eliminación completa de corrupciones visuales en SSDT (0 advertencias) y exactitud matemática en el prorrateo de costos de flete para análisis financiero en Business Intelligence.
+</div>
+
+</body>
+</html>

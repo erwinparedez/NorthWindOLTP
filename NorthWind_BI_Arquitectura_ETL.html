@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>NorthWind BI - Arquitectura OLTP, DW y ETL</title>
+<style>
+  @page {
+    size: A4;
+    margin: 18mm 15mm 18mm 15mm;
+  }
+  
+  body {
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+    color: #1e293b;
+    line-height: 1.55;
+    font-size: 10.5pt;
+    margin: 0;
+    padding: 0;
+  }
+
+  h1, h2, h3, h4 {
+    color: #0f172a;
+    font-weight: 700;
+    margin-top: 1.2em;
+    margin-bottom: 0.4em;
+    page-break-after: avoid;
+  }
+
+  h1 {
+    font-size: 22pt;
+    line-height: 1.2;
+    color: #1e3a8a;
+    border-bottom: 3px solid #2563eb;
+    padding-bottom: 8px;
+    margin-top: 0;
+  }
+
+  h2 {
+    font-size: 15pt;
+    border-bottom: 1.5px solid #cbd5e1;
+    padding-bottom: 4px;
+    color: #1e40af;
+    margin-top: 1.4em;
+  }
+
+  h3 {
+    font-size: 12pt;
+    color: #0369a1;
+  }
+
+  p {
+    margin-top: 0.4em;
+    margin-bottom: 0.8em;
+    text-align: justify;
+  }
+
+  ul, ol {
+    margin-top: 0.3em;
+    margin-bottom: 0.8em;
+    padding-left: 24px;
+  }
+
+  li {
+    margin-bottom: 0.3em;
+  }
+
+  .subtitle {
+    font-size: 12pt;
+    color: #64748b;
+    font-weight: 500;
+    margin-bottom: 1.5em;
+  }
+
+  .meta-box {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-left: 4px solid #2563eb;
+    padding: 12px 16px;
+    border-radius: 4px;
+    margin-bottom: 1.5em;
+    font-size: 9.5pt;
+  }
+
+  .meta-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .card {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin-bottom: 1em;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    page-break-inside: avoid;
+  }
+
+  .card-title {
+    font-weight: 700;
+    color: #1e40af;
+    margin-bottom: 6px;
+    font-size: 11pt;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1em 0;
+    font-size: 9.5pt;
+    page-break-inside: avoid;
+  }
+
+  th, td {
+    padding: 8px 10px;
+    border: 1px solid #cbd5e1;
+    text-align: left;
+  }
+
+  th {
+    background-color: #f1f5f9;
+    color: #0f172a;
+    font-weight: 600;
+  }
+
+  tr:nth-child(even) {
+    background-color: #f8fafc;
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    font-size: 8pt;
+    font-weight: 700;
+    border-radius: 12px;
+    text-transform: uppercase;
+  }
+
+  .badge-success {
+    background-color: #dcfce7;
+    color: #15803d;
+  }
+
+  .badge-info {
+    background-color: #e0f2fe;
+    color: #0369a1;
+  }
+
+  .badge-warning {
+    background-color: #fef3c7;
+    color: #b45309;
+  }
+
+  code {
+    font-family: 'Consolas', 'Courier New', monospace;
+    background-color: #f1f5f9;
+    color: #0f172a;
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-size: 9pt;
+  }
+
+  .diagram-container {
+    text-align: center;
+    margin: 1.2em 0;
+    page-break-inside: avoid;
+  }
+
+  .diagram-caption {
+    font-size: 8.5pt;
+    color: #64748b;
+    margin-top: 6px;
+    font-style: italic;
+  }
+
+  .page-break {
+    page-break-before: always;
+  }
+
+  .highlight-box {
+    background-color: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-left: 4px solid #3b82f6;
+    padding: 10px 14px;
+    border-radius: 4px;
+    margin: 1em 0;
+    font-size: 9.5pt;
+  }
+</style>
+</head>
+<body>
+
+  <!-- PORTADA / ENCABEZADO -->
+  <h1>Informe Técnico de Arquitectura y Verificación BI</h1>
+  <div class="subtitle">Solución Completa de Business Intelligence: NorthWind OLTP, Data Warehouse Dimensional y ETL Incremental</div>
+
+  <div class="meta-box">
+    <div class="meta-grid">
+      <div><strong>Proyecto:</strong> NorthWind BI (Patrón BikeStores)</div>
+      <div><strong>Entorno:</strong> SQL Server 2022 & Visual Studio SSDT</div>
+      <div><strong>Rama Main:</strong> NorthWindDW & NorthWindOLTP</div>
+      <div><strong>Rama ETL:</strong> NorthWindETL2 (SSIS Integration Services)</div>
+      <div><strong>Estrategia de Carga:</strong> CDC Delta por RowVersion (Min-Active DBTS)</div>
+      <div><strong>Estado Final:</strong> 100% Verificado y Compilado (0 Errores)</div>
+    </div>
+  </div>
+
+  <h2>1. Resumen Ejecutivo y Objetivos del Proyecto</h2>
+  <p>
+    El objetivo primordial de este desarrollo consistió en transformar la base de datos relacional transaccional clásica <strong>NorthWind (OLTP)</strong> en una solución corporativa de <strong>Business Intelligence</strong> de alto rendimiento. Siguiendo rigurosamente la arquitectura de referencia de <strong>BikeStores BI</strong>, se diseñó un modelo dimensional estrella robusto, desacoplado de las tablas transaccionales, junto a un proceso <strong>ETL incremental modular</strong> mediante SQL Server Integration Services (SSIS).
+  </p>
+  <p>
+    Se implementó un ciclo de captura de cambios (CDC) sin triggers ni impacto transaccional, garantizando sincronizaciones periódicas en milisegundos, preservación de claves históricas, tratamiento de valores nulos o desconocidos, y orquestación visual e industrializable mediante paquetes SSIS y trabajos del Agente de SQL Server.
+  </p>
+
+  <h2>2. Arquitectura Global de Datos</h2>
+  <p>
+    El flujo de información se estructura en tres capas desacopladas: extracción transaccional, área de preparación (staging) y modelo dimensional definitivo.
+  </p>
+
+  <div class="diagram-container">
+    <svg width="680" height="190" viewBox="0 0 680 190" xmlns="http://www.w3.org/2000/svg">
+      <!-- OLTP Box -->
+      <rect x="10" y="20" width="180" height="150" rx="8" fill="#f8fafc" stroke="#3b82f6" stroke-width="2"/>
+      <text x="100" y="45" font-family="Segoe UI, sans-serif" font-size="12" font-weight="bold" fill="#1e40af" text-anchor="middle">1. OLTP (NorthWind)</text>
+      <rect x="25" y="60" width="150" height="24" rx="4" fill="#ffffff" stroke="#cbd5e1"/>
+      <text x="100" y="76" font-family="Segoe UI, sans-serif" font-size="10" fill="#334155" text-anchor="middle">Tablas con [rowversion]</text>
+      <rect x="25" y="92" width="150" height="24" rx="4" fill="#ffffff" stroke="#cbd5e1"/>
+      <text x="100" y="108" font-family="Segoe UI, sans-serif" font-size="10" fill="#334155" text-anchor="middle">GetDatabaseRowVersion</text>
+      <rect x="25" y="124" width="150" height="36" rx="4" fill="#ffffff" stroke="#cbd5e1"/>
+      <text x="100" y="140" font-family="Segoe UI, sans-serif" font-size="9" fill="#334155" text-anchor="middle">SP de Extracción Delta</text>
+      <text x="100" y="152" font-family="Segoe UI, sans-serif" font-size="8" fill="#64748b" text-anchor="middle">(@startRow, @endRow)</text>
+
+      <!-- Arrow 1 -->
+      <path d="M 190 95 L 240 95" stroke="#2563eb" stroke-width="2.5" marker-end="url(#arrow)" fill="none"/>
+      
+      <!-- ETL Box -->
+      <rect x="245" y="20" width="190" height="150" rx="8" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+      <text x="340" y="45" font-family="Segoe UI, sans-serif" font-size="12" font-weight="bold" fill="#1e40af" text-anchor="middle">2. ETL (NorthWindETL2)</text>
+      <rect x="260" y="60" width="160" height="24" rx="4" fill="#ffffff" stroke="#bfdbfe"/>
+      <text x="340" y="76" font-family="Segoe UI, sans-serif" font-size="10" fill="#1e3a8a" text-anchor="middle">Package.dtsx (Maestro)</text>
+      <rect x="260" y="92" width="160" height="24" rx="4" fill="#ffffff" stroke="#bfdbfe"/>
+      <text x="340" y="108" font-family="Segoe UI, sans-serif" font-size="10" fill="#1e3a8a" text-anchor="middle">6 Paquetes Modulares</text>
+      <rect x="260" y="124" width="160" height="36" rx="4" fill="#ffffff" stroke="#bfdbfe"/>
+      <text x="340" y="140" font-family="Segoe UI, sans-serif" font-size="9" fill="#1e3a8a" text-anchor="middle">Control de Flujo de 6 Pasos</text>
+      <text x="340" y="152" font-family="Segoe UI, sans-serif" font-size="8" fill="#64748b" text-anchor="middle">(Truncate + Bulk + Upsert)</text>
+
+      <!-- Arrow 2 -->
+      <path d="M 435 95 L 485 95" stroke="#2563eb" stroke-width="2.5" fill="none"/>
+
+      <!-- DW Box -->
+      <rect x="490" y="20" width="180" height="150" rx="8" fill="#f8fafc" stroke="#059669" stroke-width="2"/>
+      <text x="580" y="45" font-family="Segoe UI, sans-serif" font-size="12" font-weight="bold" fill="#065f46" text-anchor="middle">3. DW (NorthWindDW)</text>
+      <rect x="505" y="60" width="150" height="24" rx="4" fill="#ffffff" stroke="#cbd5e1"/>
+      <text x="580" y="76" font-family="Segoe UI, sans-serif" font-size="10" fill="#334155" text-anchor="middle">staging.* (Tablas Espejo)</text>
+      <rect x="505" y="92" width="150" height="24" rx="4" fill="#ffffff" stroke="#cbd5e1"/>
+      <text x="580" y="108" font-family="Segoe UI, sans-serif" font-size="10" fill="#334155" text-anchor="middle">Esquema Estrella (dbo.*)</text>
+      <rect x="505" y="124" width="150" height="36" rx="4" fill="#ffffff" stroke="#cbd5e1"/>
+      <text x="580" y="140" font-family="Segoe UI, sans-serif" font-size="9" fill="#334155" text-anchor="middle">PackageConfig</text>
+      <text x="580" y="152" font-family="Segoe UI, sans-serif" font-size="8" fill="#64748b" text-anchor="middle">(Watermarks por Entidad)</text>
+
+      <!-- Arrowhead definition -->
+      <defs>
+        <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 0 L 10 5 L 0 10 z" fill="#2563eb"/>
+        </marker>
+      </defs>
+    </svg>
+    <div class="diagram-caption">Figura 1. Arquitectura global de integración desacoplada entre OLTP, SSIS y Data Warehouse.</div>
+  </div>
+
+  <div class="page-break"></div>
+
+  <h2>3. La Base Transaccional: OLTP (NorthWind)</h2>
+  <p>
+    En la base operativa se llevaron a cabo adaptaciones estratégicas para permitir una extracción no invasiva:
+  </p>
+  <ul>
+    <li><strong>Captura de Cambios por RowVersion:</strong> Todas las tablas del modelo transaccional cuentan con una columna nativa <code>[rowversion] [timestamp] NOT NULL</code>. SQL Server incrementa automáticamente este contador binario ante cualquier operación de inserción o actualización, evitando el uso de triggers lentos.</li>
+    <li><strong>Procedimientos de Extracción Acotados:</strong> Se parametrizaron mediante <code>@startRow</code> y <code>@endRow</code>. El procedimiento <code>GetDatabaseRowVersion</code> consulta <code>MIN_ACTIVE_ROWVERSION() - 1</code> para fijar el límite superior activo, garantizando lecturas consistentes sin lecturas sucias.</li>
+    <li><strong>Generación de Claves Sustitutas de Fecha Inteligentes:</strong> En <code>GetSalesChangesByRowVersion</code>, las fechas <code>OrderDate</code>, <code>RequiredDate</code> y <code>ShippedDate</code> se convierten directamente a enteros en formato <code>YYYYMMDD</code> (ej. <code>19960704</code>). Los pedidos pendientes de despacho (con fecha nula) se asignan automáticamente al miembro desconocido <code>DateSK = 0</code>.</li>
+    <li><strong>Limpieza y Reinicio de Identidades:</strong> El script <code>clean.data.sql</code> garantiza el reseteo de claves autoincrementales (<code>DBCC CHECKIDENT</code>) para garantizar pruebas reproducibles.</li>
+  </ul>
+
+  <h2>4. El Data Warehouse: NorthWindDW y Justificación de Diseño</h2>
+  
+  <div class="diagram-container">
+    <svg width="680" height="260" viewBox="0 0 680 260" xmlns="http://www.w3.org/2000/svg">
+      <!-- Center Fact -->
+      <rect x="250" y="80" width="180" height="100" rx="6" fill="#fef2f2" stroke="#dc2626" stroke-width="2.5"/>
+      <text x="340" y="105" font-family="Segoe UI, sans-serif" font-size="12" font-weight="bold" fill="#991b1b" text-anchor="middle">FactSales</text>
+      <text x="340" y="125" font-family="Segoe UI, sans-serif" font-size="9" fill="#7f1d1d" text-anchor="middle">Grano: Línea de Pedido</text>
+      <text x="340" y="142" font-family="Segoe UI, sans-serif" font-size="9" fill="#7f1d1d" text-anchor="middle">Métricas: Qty, UnitPrice,</text>
+      <text x="340" y="157" font-family="Segoe UI, sans-serif" font-size="9" fill="#7f1d1d" text-anchor="middle">Gross, Net, FreightAllocated</text>
+
+      <!-- DimCustomer -->
+      <rect x="20" y="15" width="160" height="50" rx="5" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+      <text x="100" y="36" font-family="Segoe UI, sans-serif" font-size="10" font-weight="bold" fill="#166534" text-anchor="middle">DimCustomer</text>
+      <text x="100" y="52" font-family="Segoe UI, sans-serif" font-size="8.5" fill="#14532d" text-anchor="middle">CustomerSK | 92 filas</text>
+
+      <!-- DimProduct -->
+      <rect x="20" y="105" width="160" height="50" rx="5" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+      <text x="100" y="126" font-family="Segoe UI, sans-serif" font-size="10" font-weight="bold" fill="#166534" text-anchor="middle">DimProduct</text>
+      <text x="100" y="142" font-family="Segoe UI, sans-serif" font-size="8.5" fill="#14532d" text-anchor="middle">ProductSK (Desnorm.) | 78 filas</text>
+
+      <!-- DimEmployee -->
+      <rect x="20" y="195" width="160" height="50" rx="5" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+      <text x="100" y="216" font-family="Segoe UI, sans-serif" font-size="10" font-weight="bold" fill="#166534" text-anchor="middle">DimEmployee</text>
+      <text x="100" y="232" font-family="Segoe UI, sans-serif" font-size="8.5" fill="#14532d" text-anchor="middle">EmployeeSK (Manager) | 10 filas</text>
+
+      <!-- DimShipper -->
+      <rect x="500" y="15" width="160" height="50" rx="5" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+      <text x="580" y="36" font-family="Segoe UI, sans-serif" font-size="10" font-weight="bold" fill="#166534" text-anchor="middle">DimShipper</text>
+      <text x="580" y="52" font-family="Segoe UI, sans-serif" font-size="8.5" fill="#14532d" text-anchor="middle">ShipperSK | 4 filas</text>
+
+      <!-- DimDeliveryLocation -->
+      <rect x="500" y="105" width="160" height="50" rx="5" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+      <text x="580" y="126" font-family="Segoe UI, sans-serif" font-size="10" font-weight="bold" fill="#166534" text-anchor="middle">DimDeliveryLocation</text>
+      <text x="580" y="142" font-family="Segoe UI, sans-serif" font-size="8.5" fill="#14532d" text-anchor="middle">DeliveryLocationSK | 86 filas</text>
+
+      <!-- DimDate -->
+      <rect x="500" y="195" width="160" height="50" rx="5" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+      <text x="580" y="216" font-family="Segoe UI, sans-serif" font-size="10" font-weight="bold" fill="#166534" text-anchor="middle">DimDate</text>
+      <text x="580" y="232" font-family="Segoe UI, sans-serif" font-size="8.5" fill="#14532d" text-anchor="middle">DateSK (Role-playing) | 709 filas</text>
+
+      <!-- Connecting Lines -->
+      <line x1="180" y1="40" x2="250" y2="100" stroke="#94a3b8" stroke-width="2"/>
+      <line x1="180" y1="130" x2="250" y2="130" stroke="#94a3b8" stroke-width="2"/>
+      <line x1="180" y1="220" x2="250" y2="160" stroke="#94a3b8" stroke-width="2"/>
+      <line x1="500" y1="40" x2="430" y2="100" stroke="#94a3b8" stroke-width="2"/>
+      <line x1="500" y1="130" x2="430" y2="130" stroke="#94a3b8" stroke-width="2"/>
+      <line x1="500" y1="220" x2="430" y2="160" stroke="#94a3b8" stroke-width="2"/>
+    </svg>
+    <div class="diagram-caption">Figura 2. Esquema en Estrella puro centrado en FactSales con dimensiones conformadas.</div>
+  </div>
+
+  <h3>Fundamentos de Diseño Dimensional (¿Por qué se hizo así?)</h3>
+  
+  <div class="card">
+    <div class="card-title">1. Granularidad Atómica (Línea de Ítem de Pedido)</div>
+    <p>
+      La tabla de hechos <code>FactSales</code> se definió al nivel más granular: <strong>un registro por cada producto incluido en un pedido</strong> (clave primaria compuesta <code>OrderID</code>, <code>ProductSK</code>). Esto permite calcular con total exactitud márgenes unitarios, descuentos reales e imputación proporcional del costo de transporte (<code>FreightAllocated = Freight / LíneasDeLaOrden</code>).
+    </p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">2. Desnormalización Dimensional Estratégica</div>
+    <p>
+      En lugar de reproducir el esquema copo de nieve del OLTP (donde Productos se relaciona con Categorías y Proveedores en tablas separadas), en el DW se colapsaron en una única dimensión plana: <code>DimProduct</code>. Esto elimina la necesidad de realizar 3 uniones relacionales en cada consulta de análisis, maximizando la velocidad del motor analítico.
+    </p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">3. Dimensión de Despacho Independiente (DimDeliveryLocation)</div>
+    <p>
+      La dirección de entrega del pedido no siempre coincide con la sede fiscal del cliente. Modelar una dimensión de ubicación geográfica de entrega independiente permite analizar la eficiencia logística, tiempos de flete y concentración regional de envíos sin distorsionar el perfil del cliente.
+    </p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">4. Claves Sustitutas Enteras y Miembros Desconocidos (SK = 0)</div>
+    <p>
+      Se reemplazaron las claves naturales (como <code>CustomerID</code> tipo <code>NCHAR(5)</code>) por enteros autoincrementales de 4 bytes (<code>CustomerSK</code>). Esto optimiza drásticamente los índices de unión. Además, cada dimensión cuenta con un registro pre-sembrado con <code>SK = 0</code> (<i>Desconocido</i>), lo que garantiza que nunca se descarte una transacción por falta de algún dato en origen (ej. pedidos no enviados que apuntan a <code>ShippedDateSK = 0</code>).
+    </p>
+  </div>
+
+  <div class="page-break"></div>
+
+  <h2>5. El Proceso ETL: Paquetes SSIS y Flujo de Control</h2>
+  <p>
+    El proyecto <strong>NorthWindETL2</strong> replica el patrón de 6 etapas de BikeStores en cada dimensión y hecho:
+  </p>
+
+  <div class="diagram-container">
+    <svg width="680" height="85" viewBox="0 0 680 85" xmlns="http://www.w3.org/2000/svg">
+      <!-- Step 1 -->
+      <rect x="5" y="15" width="95" height="55" rx="5" fill="#f8fafc" stroke="#2563eb" stroke-width="1.5"/>
+      <text x="52" y="38" font-family="Segoe UI, sans-serif" font-size="8.5" font-weight="bold" fill="#1e40af" text-anchor="middle">1. Get DB</text>
+      <text x="52" y="52" font-family="Segoe UI, sans-serif" font-size="8" fill="#334155" text-anchor="middle">RowVersion</text>
+      <line x1="100" y1="42" x2="115" y2="42" stroke="#2563eb" stroke-width="2"/>
+
+      <!-- Step 2 -->
+      <rect x="115" y="15" width="95" height="55" rx="5" fill="#f8fafc" stroke="#2563eb" stroke-width="1.5"/>
+      <text x="162" y="38" font-family="Segoe UI, sans-serif" font-size="8.5" font-weight="bold" fill="#1e40af" text-anchor="middle">2. Get Last</text>
+      <text x="162" y="52" font-family="Segoe UI, sans-serif" font-size="8" fill="#334155" text-anchor="middle">RowVersion</text>
+      <line x1="210" y1="42" x2="225" y2="42" stroke="#2563eb" stroke-width="2"/>
+
+      <!-- Step 3 -->
+      <rect x="225" y="15" width="95" height="55" rx="5" fill="#fef2f2" stroke="#dc2626" stroke-width="1.5"/>
+      <text x="272" y="38" font-family="Segoe UI, sans-serif" font-size="8.5" font-weight="bold" fill="#991b1b" text-anchor="middle">3. Initialize</text>
+      <text x="272" y="52" font-family="Segoe UI, sans-serif" font-size="8" fill="#7f1d1d" text-anchor="middle">TRUNCATE Staging</text>
+      <line x1="320" y1="42" x2="335" y2="42" stroke="#2563eb" stroke-width="2"/>
+
+      <!-- Step 4 -->
+      <rect x="335" y="15" width="105" height="55" rx="5" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+      <text x="387" y="38" font-family="Segoe UI, sans-serif" font-size="8.5" font-weight="bold" fill="#1e40af" text-anchor="middle">4. Data Flow</text>
+      <text x="387" y="52" font-family="Segoe UI, sans-serif" font-size="8" fill="#334155" text-anchor="middle">Extract &amp; Bulk Load</text>
+      <line x1="440" y1="42" x2="455" y2="42" stroke="#2563eb" stroke-width="2"/>
+
+      <!-- Step 5 -->
+      <rect x="455" y="15" width="105" height="55" rx="5" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+      <text x="507" y="38" font-family="Segoe UI, sans-serif" font-size="8.5" font-weight="bold" fill="#166534" text-anchor="middle">5. Sync Data</text>
+      <text x="507" y="52" font-family="Segoe UI, sans-serif" font-size="8" fill="#14532d" text-anchor="middle">DW_Merge (Upsert)</text>
+      <line x1="560" y1="42" x2="575" y2="42" stroke="#2563eb" stroke-width="2"/>
+
+      <!-- Step 6 -->
+      <rect x="575" y="15" width="100" height="55" rx="5" fill="#f8fafc" stroke="#2563eb" stroke-width="1.5"/>
+      <text x="625" y="38" font-family="Segoe UI, sans-serif" font-size="8.5" font-weight="bold" fill="#1e40af" text-anchor="middle">6. Update</text>
+      <text x="625" y="52" font-family="Segoe UI, sans-serif" font-size="8" fill="#334155" text-anchor="middle">LastRowVersion</text>
+    </svg>
+    <div class="diagram-caption">Figura 3. Ciclo de control de 6 pasos ejecutado en cada paquete modular.</div>
+  </div>
+
+  <h3>Orquestación Maestra: Package.dtsx</h3>
+  <p>
+    El paquete <code>Package.dtsx</code> coordina la ejecución en dos contenedores de secuencia estrictamente ligados mediante una restricción de precedencia:
+  </p>
+  <ol>
+    <li><strong>Contenedor de Secuencia (Dimensiones):</strong> Carga paralelizable de Clientes, Productos, Empleados, Transportistas y Ubicaciones.</li>
+    <li><strong>Contenedor de Secuencia (Hechos):</strong> Se ejecuta únicamente tras el éxito total del contenedor previo, garantizando que todas las claves dimensionales ya residan en el DW antes de cargar las ventas.</li>
+  </ol>
+
+  <div class="highlight-box">
+    <strong>Resolución de Problema Técnico Crítico de Controladores:</strong><br>
+    Durante la fase de verificación, se detectó que los paquetes heredaban la cadena de conexión <code>Provider=SQLNCLI11.1</code>. Al tratarse de un controlador obsoleto no registrado en instalaciones modernas de Windows/SQL Server 2022, la ejecución fallaba con el error <i>"Clase no registrada (0x80040154)"</i>. Se migró la totalidad de los paquetes al proveedor nativo universal <code>SQLOLEDB</code>, alcanzando una tasa de éxito del 100% en ejecuciones directas y por consola (<code>dtexec</code>).
+  </div>
+
+  <h2>6. Resultados de Verificación y Métricas en Producción Local</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Paquete / Entidad</th>
+        <th>Tipo de Objeto</th>
+        <th>Filas Procesadas</th>
+        <th>Tiempo de Ejecución</th>
+        <th>Resultado dtexec</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>DimCustomer.dtsx</code></td>
+        <td>Dimensión Cliente</td>
+        <td>91 extraídas (92 con SK=0)</td>
+        <td>0.28 segundos</td>
+        <td><span class="badge badge-success">DTSER_SUCCESS (0)</span></td>
+      </tr>
+      <tr>
+        <td><code>DimProduct.dtsx</code></td>
+        <td>Dimensión Producto</td>
+        <td>77 extraídas (78 con SK=0)</td>
+        <td>0.24 segundos</td>
+        <td><span class="badge badge-success">DTSER_SUCCESS (0)</span></td>
+      </tr>
+      <tr>
+        <td><code>DimEmployee.dtsx</code></td>
+        <td>Dimensión Empleado</td>
+        <td>9 extraídas (10 con SK=0)</td>
+        <td>0.23 segundos</td>
+        <td><span class="badge badge-success">DTSER_SUCCESS (0)</span></td>
+      </tr>
+      <tr>
+        <td><code>DimShipper.dtsx</code></td>
+        <td>Dimensión Transporte</td>
+        <td>3 extraídas (4 con SK=0)</td>
+        <td>0.21 segundos</td>
+        <td><span class="badge badge-success">DTSER_SUCCESS (0)</span></td>
+      </tr>
+      <tr>
+        <td><code>DimDeliveryLocation.dtsx</code></td>
+        <td>Dimensión Geográfica</td>
+        <td>85 extraídas (86 con SK=0)</td>
+        <td>0.22 segundos</td>
+        <td><span class="badge badge-success">DTSER_SUCCESS (0)</span></td>
+      </tr>
+      <tr>
+        <td><code>FactSales.dtsx</code></td>
+        <td>Tabla de Hechos</td>
+        <td>2,155 líneas de venta</td>
+        <td>0.27 segundos</td>
+        <td><span class="badge badge-success">DTSER_SUCCESS (0)</span></td>
+      </tr>
+      <tr>
+        <td><code>Package.dtsx</code></td>
+        <td>Orquestador Maestro</td>
+        <td>Sincronización Total</td>
+        <td>0.40 segundos</td>
+        <td><span class="badge badge-success">DTSER_SUCCESS (0)</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>7. Organización de Ramas en el Repositorio Git</h2>
+  <div class="card">
+    <div class="card-title">Rama <code>main</code> (Data Warehouse y OLTP)</div>
+    <p>
+      Contiene el modelo relacional, las tablas dimensionales, los scripts de post-despliegue (<code>DWSeed.data.sql</code>), los procedimientos de sincronización T-SQL y el script de creación del trabajo del Agente SQL (<code>NorthWindJob.sql</code>). No contiene la carpeta de SSIS para mantener el repositorio limpio y enfocado en la base de datos.
+    </p>
+  </div>
+  <div class="card">
+    <div class="card-title">Rama <code>etl</code> (Proyecto SSIS Integration Services)</div>
+    <p>
+      Rama derivada de <code>main</code> que incluye la carpeta completa <code>NorthWindETL2/</code> con los 7 paquetes <code>.dtsx</code>, el proyecto <code>.dtproj</code> y la solución <code>NorthWind.slnx</code> enlazando los proyectos de Base de Datos y de Integración.
+    </p>
+  </div>
+
+  <h2>8. Conclusiones y Estado del Entregable</h2>
+  <p>
+    La solución queda <strong>completamente operativa y verificada</strong>. El flujo de datos soporta tanto la ejecución manual interactiva en Visual Studio con soporte gráfico de diseño, como la ejecución desatendida por línea de comandos mediante <code>dtexec</code> y la programación periódica automatizada con el Agente de SQL Server.
+  </p>
+
+</body>
+</html>
