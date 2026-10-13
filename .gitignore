@@ -16,3 +16,4 @@ obj/
 *.log
 UpgradeLog*.htm
 UpgradeLog*.xml
+scratch/
