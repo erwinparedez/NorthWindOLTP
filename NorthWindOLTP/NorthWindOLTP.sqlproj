@@ -126,6 +126,7 @@
   <ItemGroup>
     <Build Include="dbo\Stored Procedures\GetShipperChangesByRowVersion.sql" />
     <Build Include="dbo\Stored Procedures\GetDeliveryLocationChangesByRowVersion.sql" />
+    <Build Include="dbo\Stored Procedures\GetSupplierChangesByRowVersion.sql" />
     <Build Include="dbo\Stored Procedures\GetSalesChangesByRowVersion.sql" />
   </ItemGroup>
 </Project>

@@ -10,7 +10,9 @@ BEGIN
 	SET NOCOUNT ON;
 	SET XACT_ABORT ON;
 
-	IF @tableName NOT IN ('Customer', 'Product', 'Employee', 'Shipper', 'DeliveryLocation', 'Sales')
+	IF @tableName = 'DeliveryLocation' SET @tableName = 'Geography';
+
+	IF @tableName NOT IN ('Customer', 'Product', 'Employee', 'Shipper', 'Geography', 'Supplier', 'Sales')
 		THROW 50014, 'Unknown NorthWind ETL package name.', 1;
 
 	DECLARE @dbts TABLE (DBTS BIGINT NOT NULL);
@@ -29,7 +31,7 @@ BEGIN
 		IF EXISTS
 		(
 			SELECT required.TableName
-			FROM (VALUES ('Customer'), ('Product'), ('Employee'), ('Shipper'), ('DeliveryLocation'), ('Sales')) AS required(TableName)
+			FROM (VALUES ('Customer'), ('Product'), ('Employee'), ('Shipper'), ('Geography'), ('Supplier'), ('Sales')) AS required(TableName)
 			LEFT JOIN dbo.PackageConfig AS config ON config.TableName = required.TableName
 			WHERE config.TableName IS NULL
 		)
@@ -80,15 +82,15 @@ BEGIN
 		INSERT INTO @products EXEC [NorthWind].[dbo].[GetProductChangesByRowVersion] @startRow, @endRow;
 		TRUNCATE TABLE staging.product;
 		INSERT INTO dbo.DimProduct
-			(ProductID, ProductName, QuantityPerUnit, Discontinued, CategoryID, CategoryName, SupplierID, SupplierName, SupplierCountry)
+			(ProductID, ProductName, QuantityPerUnit, Discontinued, CategoryID, CategoryName)
 		SELECT changes.ProductID, changes.ProductName, changes.QuantityPerUnit, changes.Discontinued,
-			   changes.CategoryID, changes.CategoryName, changes.SupplierID, changes.SupplierName, changes.SupplierCountry
+			   changes.CategoryID, changes.CategoryName
 		FROM @products AS changes
 		WHERE NOT EXISTS (SELECT 1 FROM dbo.DimProduct AS target WHERE target.ProductID = changes.ProductID);
 		INSERT INTO staging.product
-			(ProductSK, ProductID, ProductName, QuantityPerUnit, Discontinued, CategoryID, CategoryName, SupplierID, SupplierName, SupplierCountry)
+			(ProductSK, ProductID, ProductName, QuantityPerUnit, Discontinued, CategoryID, CategoryName)
 		SELECT target.ProductSK, changes.ProductID, changes.ProductName, changes.QuantityPerUnit, changes.Discontinued,
-			   changes.CategoryID, changes.CategoryName, changes.SupplierID, changes.SupplierName, changes.SupplierCountry
+			   changes.CategoryID, changes.CategoryName
 		FROM @products AS changes
 		INNER JOIN dbo.DimProduct AS target ON target.ProductID = changes.ProductID
 		WHERE target.ProductSK <> 0;
@@ -146,9 +148,9 @@ BEGIN
 		EXEC dbo.UpdateLastPackageRowVersion @tableName = 'Shipper', @lastRowVersion = @endRow;
 		END;
 
-		IF @tableName = 'DeliveryLocation'
+		IF @tableName = 'Geography'
 		BEGIN
-		SELECT @startRow = LastRowVersion FROM dbo.PackageConfig WHERE TableName = 'DeliveryLocation';
+		SELECT @startRow = LastRowVersion FROM dbo.PackageConfig WHERE TableName = 'Geography';
 		SET @endRow = CASE WHEN @highWater < @startRow THEN @startRow ELSE @highWater END;
 		DECLARE @locations TABLE
 		(
@@ -156,29 +158,53 @@ BEGIN
 			PostalCode NVARCHAR(10) NULL, Country NVARCHAR(15) NULL
 		);
 		INSERT INTO @locations EXEC [NorthWind].[dbo].[GetDeliveryLocationChangesByRowVersion] @startRow, @endRow;
-		TRUNCATE TABLE staging.deliverylocation;
-		INSERT INTO dbo.DimDeliveryLocation (City, Region, PostalCode, Country)
+		TRUNCATE TABLE staging.geography;
+		INSERT INTO dbo.DimGeography (City, Region, PostalCode, Country)
 		SELECT DISTINCT changes.City, changes.Region, changes.PostalCode, changes.Country
 		FROM @locations AS changes
 		WHERE NOT EXISTS
 		(
-			SELECT 1 FROM dbo.DimDeliveryLocation AS target
+			SELECT 1 FROM dbo.DimGeography AS target
 			WHERE (target.City = changes.City OR (target.City IS NULL AND changes.City IS NULL))
 			  AND (target.Region = changes.Region OR (target.Region IS NULL AND changes.Region IS NULL))
 			  AND (target.PostalCode = changes.PostalCode OR (target.PostalCode IS NULL AND changes.PostalCode IS NULL))
 			  AND (target.Country = changes.Country OR (target.Country IS NULL AND changes.Country IS NULL))
 		);
-		INSERT INTO staging.deliverylocation (DeliveryLocationSK, City, Region, PostalCode, Country)
-		SELECT target.DeliveryLocationSK, changes.City, changes.Region, changes.PostalCode, changes.Country
+		INSERT INTO staging.geography (GeographySK, City, Region, PostalCode, Country)
+		SELECT target.GeographySK, changes.City, changes.Region, changes.PostalCode, changes.Country
 		FROM @locations AS changes
-		INNER JOIN dbo.DimDeliveryLocation AS target
+		INNER JOIN dbo.DimGeography AS target
 			ON (target.City = changes.City OR (target.City IS NULL AND changes.City IS NULL))
 		   AND (target.Region = changes.Region OR (target.Region IS NULL AND changes.Region IS NULL))
 		   AND (target.PostalCode = changes.PostalCode OR (target.PostalCode IS NULL AND changes.PostalCode IS NULL))
 		   AND (target.Country = changes.Country OR (target.Country IS NULL AND changes.Country IS NULL))
-		WHERE target.DeliveryLocationSK <> 0;
-		EXEC dbo.DW_MergeDimDeliveryLocation;
-		EXEC dbo.UpdateLastPackageRowVersion @tableName = 'DeliveryLocation', @lastRowVersion = @endRow;
+		WHERE target.GeographySK <> 0;
+		EXEC dbo.DW_MergeDimGeography;
+		EXEC dbo.UpdateLastPackageRowVersion @tableName = 'Geography', @lastRowVersion = @endRow;
+		END;
+
+		IF @tableName = 'Supplier'
+		BEGIN
+		SELECT @startRow = LastRowVersion FROM dbo.PackageConfig WHERE TableName = 'Supplier';
+		SET @endRow = CASE WHEN @highWater < @startRow THEN @startRow ELSE @highWater END;
+		DECLARE @suppliers TABLE
+		(
+			SupplierID INT NOT NULL, SupplierName NVARCHAR(40) NOT NULL,
+			SupplierCountry NVARCHAR(15) NULL
+		);
+		INSERT INTO @suppliers EXEC [NorthWind].[dbo].[GetSupplierChangesByRowVersion] @startRow, @endRow;
+		TRUNCATE TABLE staging.supplier;
+		INSERT INTO dbo.DimSupplier (SupplierID, SupplierName, SupplierCountry)
+		SELECT changes.SupplierID, changes.SupplierName, changes.SupplierCountry
+		FROM @suppliers AS changes
+		WHERE NOT EXISTS (SELECT 1 FROM dbo.DimSupplier AS target WHERE target.SupplierID = changes.SupplierID);
+		INSERT INTO staging.supplier (SupplierSK, SupplierID, SupplierName, SupplierCountry)
+		SELECT target.SupplierSK, changes.SupplierID, changes.SupplierName, changes.SupplierCountry
+		FROM @suppliers AS changes
+		INNER JOIN dbo.DimSupplier AS target ON target.SupplierID = changes.SupplierID
+		WHERE target.SupplierSK <> 0;
+		EXEC dbo.DW_MergeDimSupplier;
+		EXEC dbo.UpdateLastPackageRowVersion @tableName = 'Supplier', @lastRowVersion = @endRow;
 		END;
 
 		IF @tableName = 'Sales'
@@ -220,14 +246,16 @@ BEGIN
 
 		INSERT INTO staging.sales
 			(OrderID, OrderDateSK, RequiredDateSK, ShippedDateSK, CustomerSK, ProductSK,
-			 EmployeeSK, ShipperSK, DeliveryLocationSK, Quantity, UnitPrice, Discount,
+			 EmployeeSK, ShipperSK, GeographySK, SupplierSK, Quantity, UnitPrice, Discount,
 			 GrossSalesAmount, DiscountAmount, NetSalesAmount, FreightAllocated)
 		SELECT changes.OrderID,
 			   COALESCE(changes.OrderDateSK, orderDate.DateSK, 0),
 			   COALESCE(changes.RequiredDateSK, requiredDate.DateSK, 0),
 			   COALESCE(changes.ShippedDateSK, shippedDate.DateSK, 0),
 			   COALESCE(customer.CustomerSK, 0), product.ProductSK,
-			   COALESCE(employee.EmployeeSK, 0), COALESCE(shipper.ShipperSK, 0), COALESCE(location.DeliveryLocationSK, 0),
+			   COALESCE(employee.EmployeeSK, 0), COALESCE(shipper.ShipperSK, 0),
+			   COALESCE(location.GeographySK, 0),
+			   COALESCE(supplier.SupplierSK, 0),
 			   changes.Quantity, changes.UnitPrice, changes.Discount, changes.GrossSalesAmount,
 			   changes.DiscountAmount, changes.NetSalesAmount, changes.FreightAllocated
 		FROM @sales AS changes
@@ -240,22 +268,30 @@ BEGIN
 		LEFT JOIN dbo.DimDate AS shippedDate ON shippedDate.FullDate = changes.ShippedDate
 		OUTER APPLY
 		(
-			SELECT TOP (1) target.DeliveryLocationSK
-			FROM dbo.DimDeliveryLocation AS target
+			SELECT TOP (1) target.GeographySK
+			FROM dbo.DimGeography AS target
 			WHERE (target.City = changes.City OR (target.City IS NULL AND changes.City IS NULL))
 			  AND (target.Region = changes.Region OR (target.Region IS NULL AND changes.Region IS NULL))
 			  AND (target.PostalCode = changes.PostalCode OR (target.PostalCode IS NULL AND changes.PostalCode IS NULL))
 			  AND (target.Country = changes.Country OR (target.Country IS NULL AND changes.Country IS NULL))
-			ORDER BY target.DeliveryLocationSK
-		) AS location;
+			ORDER BY target.GeographySK
+		) AS location
+		OUTER APPLY
+		(
+			SELECT TOP (1) target.SupplierSK
+			FROM [NorthWind].[dbo].[Products] AS p
+			INNER JOIN dbo.DimSupplier AS target ON target.SupplierID = p.SupplierID
+			WHERE p.ProductID = changes.ProductID
+			ORDER BY target.SupplierSK
+		) AS supplier;
 
 		INSERT INTO dbo.FactSales
 			(OrderID, OrderDateSK, RequiredDateSK, ShippedDateSK, CustomerSK, ProductSK,
-			 EmployeeSK, ShipperSK, DeliveryLocationSK, Quantity, UnitPrice, Discount,
+			 EmployeeSK, ShipperSK, GeographySK, SupplierSK, Quantity, UnitPrice, Discount,
 			 GrossSalesAmount, DiscountAmount, NetSalesAmount, FreightAllocated)
 		SELECT staging.OrderID, staging.OrderDateSK, staging.RequiredDateSK, staging.ShippedDateSK,
 			   staging.CustomerSK, staging.ProductSK, staging.EmployeeSK, staging.ShipperSK,
-			   staging.DeliveryLocationSK, staging.Quantity, staging.UnitPrice, staging.Discount,
+			   staging.GeographySK, staging.SupplierSK, staging.Quantity, staging.UnitPrice, staging.Discount,
 			   staging.GrossSalesAmount, staging.DiscountAmount, staging.NetSalesAmount, staging.FreightAllocated
 		FROM staging.sales AS staging
 		WHERE NOT EXISTS

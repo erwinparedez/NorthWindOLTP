@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[DimProduct] (
+CREATE TABLE [dbo].[DimProduct] (
     [ProductSK]       INT           IDENTITY (0, 1) NOT NULL,
     [ProductID]       INT           NULL,
     [ProductName]     NVARCHAR (80) NULL,
@@ -6,9 +6,6 @@
     [Discontinued]    BIT           NULL,
     [CategoryID]      INT           NULL,
     [CategoryName]    NVARCHAR (15) NULL,
-    [SupplierID]      INT           NULL,
-    [SupplierName]    NVARCHAR (80) NULL,
-    [SupplierCountry] NVARCHAR (30) NULL,
     CONSTRAINT [PK_DimProduct] PRIMARY KEY CLUSTERED ([ProductSK] ASC)
 );
 
