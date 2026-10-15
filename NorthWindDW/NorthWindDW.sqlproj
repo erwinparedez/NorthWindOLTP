@@ -66,32 +66,33 @@
     <Folder Include="Schema\Programmability\" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="Schema\dbo\Tables\DimCustomer.sql" />
-    <Build Include="Schema\dbo\Tables\DimDate.sql" />
+    <Build Include="Schema\dbo\Tables\DimCustomer_1.sql" />
+    <Build Include="Schema\dbo\Tables\DimDate_1.sql" />
     <Build Include="Schema\dbo\Tables\DimGeography.sql" />
-    <Build Include="Schema\dbo\Tables\DimEmployee.sql" />
-    <Build Include="Schema\dbo\Tables\DimProduct.sql" />
-    <Build Include="Schema\dbo\Tables\DimShipper.sql" />
     <Build Include="Schema\dbo\Tables\DimSupplier.sql" />
-    <Build Include="Schema\dbo\Tables\FactSales.sql" />
-    <Build Include="Schema\dbo\Staging\staging.customer.sql" />
+    <Build Include="Schema\dbo\Tables\DimEmployee_1.sql" />
+    <Build Include="Schema\dbo\Tables\DimProduct_1.sql" />
+    <Build Include="Schema\dbo\Tables\DimShipper_1.sql" />
+    <Build Include="Schema\dbo\Tables\FactSales_1.sql" />
+    <Build Include="Schema\dbo\Staging\staging.customer_1.sql" />
     <Build Include="Schema\schemas\staging.sql" />
-    <Build Include="Schema\dbo\Staging\staging.date.sql" />
-    <Build Include="Schema\dbo\Staging\staging.geography.sql" />
+    <Build Include="Schema\dbo\Staging\staging.date_1.sql" />
     <Build Include="Schema\dbo\Staging\staging.product.sql" />
-    <Build Include="Schema\dbo\Staging\staging.shipper.sql" />
     <Build Include="Schema\dbo\Staging\staging.supplier.sql" />
+    <Build Include="Schema\dbo\Staging\staging.shipper.sql" />
     <Build Include="Schema\dbo\Staging\staging.employee.sql" />
+    <Build Include="Schema\dbo\Staging\staging.geography.sql" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Schema\Programmability\Stored Procedures" />
     <Folder Include="Scripts" />
     <Build Include="Schema\Programmability\Stored Procedures\DW_MergeDimCustomer.sql" />
     <Build Include="Schema\Programmability\Stored Procedures\DW_MergeDimGeography.sql" />
+    <Build Include="Schema\Programmability\Stored Procedures\DW_MergeDimDeliveryLocation.sql" />
     <Build Include="Schema\Programmability\Stored Procedures\DW_MergeDimEmployee.sql" />
     <Build Include="Schema\Programmability\Stored Procedures\DW_MergeDimProduct.sql" />
-    <Build Include="Schema\Programmability\Stored Procedures\DW_MergeDimShipper.sql" />
     <Build Include="Schema\Programmability\Stored Procedures\DW_MergeDimSupplier.sql" />
+    <Build Include="Schema\Programmability\Stored Procedures\DW_MergeDimShipper.sql" />
     <Build Include="Schema\Programmability\Stored Procedures\DW_MergeFactSales.sql" />
     <Build Include="Schema\Programmability\Stored Procedures\GetLastPackageRowVersion.sql" />
     <Build Include="Schema\Programmability\Stored Procedures\UpdateLastPackageRowVersion.sql" />

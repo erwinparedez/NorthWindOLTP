@@ -1,9 +1,10 @@
 CREATE TABLE [dbo].[DimSupplier] (
-    [SupplierSK]      INT           IDENTITY (0, 1) NOT NULL,
+    [SupplierKey]     INT           IDENTITY (0, 1) NOT NULL,
     [SupplierID]      INT           NULL,
     [SupplierName]    NVARCHAR (80) NULL,
     [SupplierCountry] NVARCHAR (30) NULL,
-    CONSTRAINT [PK_DimSupplier] PRIMARY KEY CLUSTERED ([SupplierSK] ASC)
+    [SupplierSK]      AS [SupplierKey],
+    CONSTRAINT [PK_DimSupplier] PRIMARY KEY CLUSTERED ([SupplierKey] ASC)
 );
 
 

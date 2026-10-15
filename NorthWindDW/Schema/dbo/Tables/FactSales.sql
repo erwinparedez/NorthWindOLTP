@@ -8,8 +8,8 @@ CREATE TABLE [dbo].[FactSales] (
     [ProductSK]          INT             NOT NULL,
     [EmployeeSK]         INT             NOT NULL,
     [ShipperSK]          INT             NOT NULL,
-    [GeographySK]        INT             NOT NULL,
-    [SupplierSK]         INT             NOT NULL,
+    [GeographyKey]       INT             NOT NULL,
+    [SupplierKey]        INT             NOT NULL,
     [Quantity]           SMALLINT        NOT NULL,
     [UnitPrice]          DECIMAL (19, 4) NOT NULL,
     [Discount]           DECIMAL (9, 6)  NOT NULL,
@@ -17,16 +17,19 @@ CREATE TABLE [dbo].[FactSales] (
     [DiscountAmount]     DECIMAL (19, 4) NOT NULL,
     [NetSalesAmount]     DECIMAL (19, 4) NOT NULL,
     [FreightAllocated]   DECIMAL (19, 4) NOT NULL,
+    [DeliveryLocationSK] AS [GeographyKey],
+    [GeographySK]        AS [GeographyKey],
+    [SupplierSK]         AS [SupplierKey],
     CONSTRAINT [PK_FactSales] PRIMARY KEY CLUSTERED ([OrderLineSK] ASC),
     CONSTRAINT [FK_DimCustomer] FOREIGN KEY ([CustomerSK]) REFERENCES [dbo].[DimCustomer] ([CustomerSK]),
     CONSTRAINT [FK_DimDate_OrderDate] FOREIGN KEY ([OrderDateSK]) REFERENCES [dbo].[DimDate] ([DateSK]),
     CONSTRAINT [FK_DimDate_RequiredDate] FOREIGN KEY ([RequiredDateSK]) REFERENCES [dbo].[DimDate] ([DateSK]),
     CONSTRAINT [FK_DimDate_ShippedDate] FOREIGN KEY ([ShippedDateSK]) REFERENCES [dbo].[DimDate] ([DateSK]),
-    CONSTRAINT [FK_DimGeography] FOREIGN KEY ([GeographySK]) REFERENCES [dbo].[DimGeography] ([GeographySK]),
+    CONSTRAINT [FK_DimGeography] FOREIGN KEY ([GeographyKey]) REFERENCES [dbo].[DimGeography] ([GeographyKey]),
+    CONSTRAINT [FK_DimSupplier] FOREIGN KEY ([SupplierKey]) REFERENCES [dbo].[DimSupplier] ([SupplierKey]),
     CONSTRAINT [FK_DimEmployee] FOREIGN KEY ([EmployeeSK]) REFERENCES [dbo].[DimEmployee] ([EmployeeSK]),
     CONSTRAINT [FK_DimProduct] FOREIGN KEY ([ProductSK]) REFERENCES [dbo].[DimProduct] ([ProductSK]),
     CONSTRAINT [FK_DimShipper] FOREIGN KEY ([ShipperSK]) REFERENCES [dbo].[DimShipper] ([ShipperSK]),
-    CONSTRAINT [FK_DimSupplier] FOREIGN KEY ([SupplierSK]) REFERENCES [dbo].[DimSupplier] ([SupplierSK]),
     CONSTRAINT [UQ_FactSales_Order_Product] UNIQUE NONCLUSTERED ([OrderID] ASC, [ProductSK] ASC)
 );
 
@@ -52,13 +55,13 @@ CREATE NONCLUSTERED INDEX [IX_FactSales_ShipperSK]
 
 
 GO
-CREATE NONCLUSTERED INDEX [IX_FactSales_GeographySK]
-    ON [dbo].[FactSales]([GeographySK] ASC);
+CREATE NONCLUSTERED INDEX [IX_FactSales_GeographyKey]
+    ON [dbo].[FactSales]([GeographyKey] ASC);
 
 
 GO
-CREATE NONCLUSTERED INDEX [IX_FactSales_SupplierSK]
-    ON [dbo].[FactSales]([SupplierSK] ASC);
+CREATE NONCLUSTERED INDEX [IX_FactSales_SupplierKey]
+    ON [dbo].[FactSales]([SupplierKey] ASC);
 
 
 GO
@@ -74,4 +77,3 @@ CREATE NONCLUSTERED INDEX [IX_FactSales_RequiredDateSK]
 GO
 CREATE NONCLUSTERED INDEX [IX_FactSales_ShippedDateSK]
     ON [dbo].[FactSales]([ShippedDateSK] ASC);
-
