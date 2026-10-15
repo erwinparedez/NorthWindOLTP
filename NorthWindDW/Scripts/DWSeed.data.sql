@@ -60,12 +60,12 @@ BEGIN
 	SET IDENTITY_INSERT dbo.DimCustomer OFF;
 END;
 
-IF NOT EXISTS (SELECT 1 FROM dbo.DimDeliveryLocation WHERE DeliveryLocationSK = 0)
+IF NOT EXISTS (SELECT 1 FROM dbo.DimGeography WHERE GeographyKey = 0)
 BEGIN
-	SET IDENTITY_INSERT dbo.DimDeliveryLocation ON;
-	INSERT INTO dbo.DimDeliveryLocation (DeliveryLocationSK, City, Region, PostalCode, Country)
+	SET IDENTITY_INSERT dbo.DimGeography ON;
+	INSERT INTO dbo.DimGeography (GeographyKey, City, Region, PostalCode, Country)
 	VALUES (0, NULL, NULL, NULL, NULL);
-	SET IDENTITY_INSERT dbo.DimDeliveryLocation OFF;
+	SET IDENTITY_INSERT dbo.DimGeography OFF;
 END;
 
 IF NOT EXISTS (SELECT 1 FROM dbo.DimEmployee WHERE EmployeeSK = 0)
@@ -81,9 +81,17 @@ IF NOT EXISTS (SELECT 1 FROM dbo.DimProduct WHERE ProductSK = 0)
 BEGIN
 	SET IDENTITY_INSERT dbo.DimProduct ON;
 	INSERT INTO dbo.DimProduct
-		(ProductSK, ProductID, ProductName, QuantityPerUnit, Discontinued, CategoryID, CategoryName, SupplierID, SupplierName, SupplierCountry)
-	VALUES (0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+		(ProductSK, ProductID, ProductName, QuantityPerUnit, Discontinued, CategoryID, CategoryName)
+	VALUES (0, NULL, NULL, NULL, NULL, NULL, NULL);
 	SET IDENTITY_INSERT dbo.DimProduct OFF;
+END;
+
+IF NOT EXISTS (SELECT 1 FROM dbo.DimSupplier WHERE SupplierKey = 0)
+BEGIN
+	SET IDENTITY_INSERT dbo.DimSupplier ON;
+	INSERT INTO dbo.DimSupplier (SupplierKey, SupplierID, SupplierName, SupplierCountry)
+	VALUES (0, NULL, NULL, NULL);
+	SET IDENTITY_INSERT dbo.DimSupplier OFF;
 END;
 
 IF NOT EXISTS (SELECT 1 FROM dbo.DimShipper WHERE ShipperSK = 0)

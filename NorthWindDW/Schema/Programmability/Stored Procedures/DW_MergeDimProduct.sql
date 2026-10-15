@@ -10,10 +10,7 @@ BEGIN
         [QuantityPerUnit] = s.[QuantityPerUnit],
         [Discontinued] = s.[Discontinued],
         [CategoryID] = s.[CategoryID],
-        [CategoryName] = s.[CategoryName],
-        [SupplierID] = s.[SupplierID],
-        [SupplierName] = s.[SupplierName],
-        [SupplierCountry] = s.[SupplierCountry]
+        [CategoryName] = s.[CategoryName]
     FROM [dbo].[DimProduct] AS target
     INNER JOIN [staging].[product] AS s ON target.[ProductSK]=s.[ProductSK];
 END;

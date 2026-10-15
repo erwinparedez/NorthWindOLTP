@@ -1,16 +1,16 @@
-CREATE PROCEDURE [dbo].[DW_MergeDimDeliveryLocation]
+CREATE PROCEDURE [dbo].[DW_MergeDimGeography]
 AS
 BEGIN
     SET NOCOUNT ON;
     SET XACT_ABORT ON;
-    IF EXISTS (SELECT [DeliveryLocationSK] FROM [staging].[deliverylocation] GROUP BY [DeliveryLocationSK] HAVING COUNT(*)>1)
+    IF EXISTS (SELECT [GeographyKey] FROM [staging].[geography] GROUP BY [GeographyKey] HAVING COUNT(*)>1)
         THROW 50002, 'Duplicate staging surrogate keys.', 1;
     UPDATE target
     SET [City] = s.[City],
         [Region] = s.[Region],
         [PostalCode] = s.[PostalCode],
         [Country] = s.[Country]
-    FROM [dbo].[DimDeliveryLocation] AS target
-    INNER JOIN [staging].[deliverylocation] AS s ON target.[DeliveryLocationSK]=s.[DeliveryLocationSK];
+    FROM [dbo].[DimGeography] AS target
+    INNER JOIN [staging].[geography] AS s ON target.[GeographyKey]=s.[GeographyKey];
 END;
 GO
