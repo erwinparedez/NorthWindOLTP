@@ -10,7 +10,7 @@ BEGIN
 	SET NOCOUNT ON;
 	SET XACT_ABORT ON;
 
-	IF @tableName NOT IN ('Customer', 'Product', 'Employee', 'Shipper', 'DeliveryLocation', 'Geography', 'Supplier', 'Sales')
+	IF @tableName NOT IN ('Customer', 'Product', 'Employee', 'Shipper', 'Geography', 'Supplier', 'Sales')
 		THROW 50014, 'Unknown NorthWind ETL package name.', 1;
 
 	DECLARE @dbts TABLE (DBTS BIGINT NOT NULL);
@@ -117,11 +117,11 @@ BEGIN
 		FROM @suppliers AS changes
 		WHERE NOT EXISTS (SELECT 1 FROM dbo.DimSupplier AS target WHERE target.SupplierID = changes.SupplierID);
 
-		INSERT INTO staging.supplier (SupplierKey, SupplierID, SupplierName, SupplierCountry)
-		SELECT target.SupplierKey, changes.SupplierID, changes.SupplierName, changes.SupplierCountry
+		INSERT INTO staging.supplier (SupplierSK, SupplierID, SupplierName, SupplierCountry)
+		SELECT target.SupplierSK, changes.SupplierID, changes.SupplierName, changes.SupplierCountry
 		FROM @suppliers AS changes
 		INNER JOIN dbo.DimSupplier AS target ON target.SupplierID = changes.SupplierID
-		WHERE target.SupplierKey <> 0;
+		WHERE target.SupplierSK <> 0;
 
 		EXEC dbo.DW_MergeDimSupplier;
 		EXEC dbo.UpdateLastPackageRowVersion @tableName = 'Supplier', @lastRowVersion = @endRow;
@@ -177,17 +177,16 @@ BEGIN
 		EXEC dbo.UpdateLastPackageRowVersion @tableName = 'Shipper', @lastRowVersion = @endRow;
 		END;
 
-		IF @tableName IN ('DeliveryLocation', 'Geography')
+		IF @tableName = 'Geography'
 		BEGIN
-		SELECT @startRow = LastRowVersion FROM dbo.PackageConfig WHERE TableName = @tableName;
-		IF @startRow IS NULL SELECT @startRow = LastRowVersion FROM dbo.PackageConfig WHERE TableName IN ('Geography', 'DeliveryLocation');
+		SELECT @startRow = LastRowVersion FROM dbo.PackageConfig WHERE TableName = 'Geography';
 		SET @endRow = CASE WHEN @highWater < @startRow THEN @startRow ELSE @highWater END;
 		DECLARE @locations TABLE
 		(
 			City NVARCHAR(15) NULL, Region NVARCHAR(15) NULL,
 			PostalCode NVARCHAR(10) NULL, Country NVARCHAR(15) NULL
 		);
-		INSERT INTO @locations EXEC [NorthWind].[dbo].[GetDeliveryLocationChangesByRowVersion] @startRow, @endRow;
+		INSERT INTO @locations EXEC [NorthWind].[dbo].[GetGeographyChangesByRowVersion] @startRow, @endRow;
 		TRUNCATE TABLE staging.geography;
 		INSERT INTO dbo.DimGeography (City, Region, PostalCode, Country)
 		SELECT DISTINCT changes.City, changes.Region, changes.PostalCode, changes.Country
@@ -200,15 +199,15 @@ BEGIN
 			  AND (target.PostalCode = changes.PostalCode OR (target.PostalCode IS NULL AND changes.PostalCode IS NULL))
 			  AND (target.Country = changes.Country OR (target.Country IS NULL AND changes.Country IS NULL))
 		);
-		INSERT INTO staging.geography (GeographyKey, City, Region, PostalCode, Country)
-		SELECT target.GeographyKey, changes.City, changes.Region, changes.PostalCode, changes.Country
+		INSERT INTO staging.geography (GeographySK, City, Region, PostalCode, Country)
+		SELECT target.GeographySK, changes.City, changes.Region, changes.PostalCode, changes.Country
 		FROM @locations AS changes
 		INNER JOIN dbo.DimGeography AS target
 			ON (target.City = changes.City OR (target.City IS NULL AND changes.City IS NULL))
 		   AND (target.Region = changes.Region OR (target.Region IS NULL AND changes.Region IS NULL))
 		   AND (target.PostalCode = changes.PostalCode OR (target.PostalCode IS NULL AND changes.PostalCode IS NULL))
 		   AND (target.Country = changes.Country OR (target.Country IS NULL AND changes.Country IS NULL))
-		WHERE target.GeographyKey <> 0;
+		WHERE target.GeographySK <> 0;
 		EXEC dbo.DW_MergeDimGeography;
 		EXEC dbo.UpdateLastPackageRowVersion @tableName = @tableName, @lastRowVersion = @endRow;
 		END;
@@ -252,7 +251,7 @@ BEGIN
 
 		INSERT INTO staging.sales
 			(OrderID, OrderDateSK, RequiredDateSK, ShippedDateSK, CustomerSK, ProductSK,
-			 EmployeeSK, ShipperSK, GeographyKey, SupplierKey, Quantity, UnitPrice, Discount,
+				 EmployeeSK, ShipperSK, GeographySK, SupplierSK, Quantity, UnitPrice, Discount,
 			 GrossSalesAmount, DiscountAmount, NetSalesAmount, FreightAllocated)
 		SELECT changes.OrderID,
 			   COALESCE(changes.OrderDateSK, orderDate.DateSK, 0),
@@ -260,7 +259,7 @@ BEGIN
 			   COALESCE(changes.ShippedDateSK, shippedDate.DateSK, 0),
 			   COALESCE(customer.CustomerSK, 0), product.ProductSK,
 			   COALESCE(employee.EmployeeSK, 0), COALESCE(shipper.ShipperSK, 0),
-			   COALESCE(location.GeographyKey, 0), COALESCE(supplier.SupplierKey, 0),
+			   COALESCE(location.GeographySK, 0), COALESCE(supplier.SupplierSK, 0),
 			   changes.Quantity, changes.UnitPrice, changes.Discount, changes.GrossSalesAmount,
 			   changes.DiscountAmount, changes.NetSalesAmount, changes.FreightAllocated
 		FROM @sales AS changes
@@ -275,22 +274,22 @@ BEGIN
 		LEFT JOIN dbo.DimDate AS shippedDate ON shippedDate.FullDate = changes.ShippedDate
 		OUTER APPLY
 		(
-			SELECT TOP (1) target.GeographyKey
+			SELECT TOP (1) target.GeographySK
 			FROM dbo.DimGeography AS target
 			WHERE (target.City = changes.City OR (target.City IS NULL AND changes.City IS NULL))
 			  AND (target.Region = changes.Region OR (target.Region IS NULL AND changes.Region IS NULL))
 			  AND (target.PostalCode = changes.PostalCode OR (target.PostalCode IS NULL AND changes.PostalCode IS NULL))
 			  AND (target.Country = changes.Country OR (target.Country IS NULL AND changes.Country IS NULL))
-			ORDER BY target.GeographyKey
+			ORDER BY target.GeographySK
 		) AS location;
 
 		INSERT INTO dbo.FactSales
 			(OrderID, OrderDateSK, RequiredDateSK, ShippedDateSK, CustomerSK, ProductSK,
-			 EmployeeSK, ShipperSK, GeographyKey, SupplierKey, Quantity, UnitPrice, Discount,
+				 EmployeeSK, ShipperSK, GeographySK, SupplierSK, Quantity, UnitPrice, Discount,
 			 GrossSalesAmount, DiscountAmount, NetSalesAmount, FreightAllocated)
 		SELECT staging.OrderID, staging.OrderDateSK, staging.RequiredDateSK, staging.ShippedDateSK,
 			   staging.CustomerSK, staging.ProductSK, staging.EmployeeSK, staging.ShipperSK,
-			   staging.GeographyKey, staging.SupplierKey, staging.Quantity, staging.UnitPrice, staging.Discount,
+			   staging.GeographySK, staging.SupplierSK, staging.Quantity, staging.UnitPrice, staging.Discount,
 			   staging.GrossSalesAmount, staging.DiscountAmount, staging.NetSalesAmount, staging.FreightAllocated
 		FROM staging.sales AS staging
 		WHERE NOT EXISTS

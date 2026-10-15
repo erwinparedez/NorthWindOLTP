@@ -3,7 +3,7 @@ AS
 BEGIN
     SET NOCOUNT ON;
     SET XACT_ABORT ON;
-    IF EXISTS (SELECT [GeographyKey] FROM [staging].[geography] GROUP BY [GeographyKey] HAVING COUNT(*)>1)
+    IF EXISTS (SELECT [GeographySK] FROM [staging].[geography] GROUP BY [GeographySK] HAVING COUNT(*)>1)
         THROW 50002, 'Duplicate staging surrogate keys.', 1;
     UPDATE target
     SET [City] = s.[City],
@@ -11,6 +11,6 @@ BEGIN
         [PostalCode] = s.[PostalCode],
         [Country] = s.[Country]
     FROM [dbo].[DimGeography] AS target
-    INNER JOIN [staging].[geography] AS s ON target.[GeographyKey]=s.[GeographyKey];
+        INNER JOIN [staging].[geography] AS s ON target.[GeographySK]=s.[GeographySK];
 END;
 GO
