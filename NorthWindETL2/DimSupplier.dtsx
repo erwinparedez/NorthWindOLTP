@@ -161,6 +161,13 @@
                       cachedName="SupplierName"
                       externalMetadataColumnId="Package\Add New Supplier\Add New Supplier.Inputs[OLE DB Destination Input].ExternalColumns[SupplierName]"
                       lineageId="Package\Add New Supplier\Get Row Changes.Outputs[OLE DB Source Output].Columns[SupplierName]" />
+                    <inputColumn
+                      refId="Package\Add New Supplier\Add New Supplier.Inputs[OLE DB Destination Input].Columns[SupplierCountry]"
+                      cachedDataType="wstr"
+                      cachedLength="15"
+                      cachedName="SupplierCountry"
+                      externalMetadataColumnId="Package\Add New Supplier\Add New Supplier.Inputs[OLE DB Destination Input].ExternalColumns[SupplierCountry]"
+                      lineageId="Package\Add New Supplier\Get Row Changes.Outputs[OLE DB Source Output].Columns[SupplierCountry]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">

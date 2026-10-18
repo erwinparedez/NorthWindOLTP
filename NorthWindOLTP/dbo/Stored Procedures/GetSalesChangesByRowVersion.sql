@@ -26,6 +26,15 @@ BEGIN
     CROSS APPLY (SELECT COUNT(*) AS LineCount FROM dbo.OrderDetails AS allLines WHERE allLines.OrderID=o.OrderID) AS totals
     CROSS APPLY (SELECT CONVERT(DECIMAL(9,6),d.Discount) AS Discount,
         CONVERT(DECIMAL(19,4),d.UnitPrice*d.Quantity) AS GrossSalesAmount) AS amounts
-    WHERE (o.[rowversion] > CONVERT(BINARY(8), @startRow) AND o.[rowversion] <= CONVERT(BINARY(8), @endRow)) OR EXISTS (SELECT 1 FROM dbo.OrderDetails AS changed WHERE changed.OrderID=o.OrderID AND (changed.[rowversion] > CONVERT(BINARY(8), @startRow) AND changed.[rowversion] <= CONVERT(BINARY(8), @endRow)));
+    WHERE (o.[rowversion] > CONVERT(BINARY(8), @startRow) AND o.[rowversion] <= CONVERT(BINARY(8), @endRow))
+       OR (d.[rowversion] > CONVERT(BINARY(8), @startRow) AND d.[rowversion] <= CONVERT(BINARY(8), @endRow))
+       OR EXISTS
+       (
+           SELECT 1
+           FROM dbo.Products AS changedProduct
+           WHERE changedProduct.ProductID = d.ProductID
+             AND changedProduct.[rowversion] > CONVERT(BINARY(8), @startRow)
+             AND changedProduct.[rowversion] <= CONVERT(BINARY(8), @endRow)
+       );
 END;
 GO

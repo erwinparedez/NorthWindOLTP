@@ -12,7 +12,7 @@
   DTS:ObjectName="DimCustomer"
   DTS:PackageType="5"
   DTS:VersionBuild="4"
-  DTS:VersionGUID="{11A7F3D3-D0AA-4B4A-AB09-6EF9338AB8A5}">
+  DTS:VersionGUID="{AF607CC2-736E-49B7-B8D2-9D96D67CB569}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -25,7 +25,7 @@
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=localhost;Initial Catalog=NorthWindOLTP;Provider=SQLOLEDB.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-DimCustomer-Source;" />
+          DTS:ConnectionString="Data Source=DESKTOP-A0CP3D4;Initial Catalog=NorthWindOLTP;Provider=SQLOLEDB.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-DimCustomer-Source;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
@@ -37,7 +37,7 @@
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=localhost;Initial Catalog=NorthWindDW;Provider=SQLOLEDB.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-DimCustomer-Target;" />
+          DTS:ConnectionString="Data Source=DESKTOP-A0CP3D4;Initial Catalog=NorthWindDW;Provider=SQLOLEDB.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-DimCustomer-Target;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
