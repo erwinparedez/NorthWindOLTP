@@ -62,7 +62,7 @@
     <Folder Include="Schema\dbo" />
     <Folder Include="Schema\dbo\Tables" />
     <Folder Include="Schema\dbo\Staging" />
-    <Folder Include="Schema\schemas" />
+    <Folder Include="Schema\Schema de staging" />
     <Folder Include="Schema\Programmability\" />
   </ItemGroup>
   <ItemGroup>
@@ -75,7 +75,7 @@
     <Build Include="Schema\dbo\Tables\DimShipper.sql" />
     <Build Include="Schema\dbo\Tables\FactSales.sql" />
     <Build Include="Schema\dbo\Staging\staging.customer.sql" />
-    <Build Include="Schema\schemas\staging.sql" />
+    <Build Include="Schema\Schema de staging\staging.sql" />
     <Build Include="Schema\dbo\Staging\staging.date.sql" />
     <Build Include="Schema\dbo\Staging\staging.product.sql" />
     <Build Include="Schema\dbo\Staging\staging.supplier.sql" />
