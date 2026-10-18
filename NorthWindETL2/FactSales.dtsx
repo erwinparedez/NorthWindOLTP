@@ -1696,13 +1696,13 @@ where [refTable].[City] = ?</property>
                   description="Specifies the SQL statement that generates the lookup table."
                   expressionType="Notify"
                   name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT p.ProductID, p.ProductSK, s.SupplierSK FROM dbo.DimProduct AS p INNER JOIN NorthWindOLTP.dbo.Products AS o ON o.ProductID = p.ProductID INNER JOIN dbo.DimSupplier AS s ON s.SupplierID = o.SupplierID;</property>
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT p.ProductID, p.ProductSK, COALESCE(s.SupplierSK, 0) AS SupplierSK FROM dbo.DimProduct AS p INNER JOIN NorthWindOLTP.dbo.Products AS o ON o.ProductID = p.ProductID LEFT JOIN dbo.DimSupplier AS s ON s.SupplierID = o.SupplierID;</property>
                 <property
                   dataType="System.String"
                   description="Specifies a SQL statement that uses parameters to generate the lookup table."
                   expressionType="Notify"
                   name="SqlCommandParam"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT [refTable].[ProductID], [refTable].[ProductSK], [refTable].[SupplierSK] FROM (SELECT p.ProductID, p.ProductSK, s.SupplierSK FROM dbo.DimProduct AS p INNER JOIN NorthWindOLTP.dbo.Products AS o ON o.ProductID = p.ProductID INNER JOIN dbo.DimSupplier AS s ON s.SupplierID = o.SupplierID) AS [refTable] WHERE [refTable].[ProductID] = ?;</property>
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT [refTable].[ProductID], [refTable].[ProductSK], [refTable].[SupplierSK] FROM (SELECT p.ProductID, p.ProductSK, COALESCE(s.SupplierSK, 0) AS SupplierSK FROM dbo.DimProduct AS p INNER JOIN NorthWindOLTP.dbo.Products AS o ON o.ProductID = p.ProductID LEFT JOIN dbo.DimSupplier AS s ON s.SupplierID = o.SupplierID) AS [refTable] WHERE [refTable].[ProductID] = ?;</property>
                 <property
                   dataType="System.Int32"
                   description="Specifies the type of connection used to access the reference dataset."

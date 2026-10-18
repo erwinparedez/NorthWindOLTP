@@ -14,7 +14,7 @@ BEGIN
 		THROW 50014, 'Unknown NorthWind ETL package name.', 1;
 
 	DECLARE @dbts TABLE (DBTS BIGINT NOT NULL);
-	INSERT INTO @dbts EXEC [NorthWind].[dbo].[GetDatabaseRowVersion];
+	INSERT INTO @dbts EXEC [NorthWindOLTP].[dbo].[GetDatabaseRowVersion];
 
 	DECLARE @highWater BIGINT;
 	SELECT @highWater = MAX(DBTS) FROM @dbts;
@@ -29,7 +29,7 @@ BEGIN
 		IF EXISTS
 		(
 			SELECT required.TableName
-			FROM (VALUES ('Customer'), ('Product'), ('Employee'), ('Shipper'), ('Sales')) AS required(TableName)
+			FROM (VALUES ('Customer'), ('Product'), ('Employee'), ('Shipper'), ('Geography'), ('Supplier'), ('Sales')) AS required(TableName)
 			LEFT JOIN dbo.PackageConfig AS config ON config.TableName = required.TableName
 			WHERE config.TableName IS NULL
 		)
@@ -51,7 +51,7 @@ BEGIN
 			City NVARCHAR(15) NULL, Region NVARCHAR(15) NULL,
 			PostalCode NVARCHAR(10) NULL, Country NVARCHAR(15) NULL
 		);
-		INSERT INTO @customers EXEC [NorthWind].[dbo].[GetCustomerChangesByRowVersion] @startRow, @endRow;
+		INSERT INTO @customers EXEC [NorthWindOLTP].[dbo].[GetCustomerChangesByRowVersion] @startRow, @endRow;
 		TRUNCATE TABLE staging.customer;
 		INSERT INTO dbo.DimCustomer (CustomerID, CompanyName, City, Region, PostalCode, Country)
 		SELECT changes.CustomerID, changes.CompanyName, changes.City, changes.Region, changes.PostalCode, changes.Country
@@ -77,7 +77,7 @@ BEGIN
 			CategoryID INT NULL, CategoryName NVARCHAR(15) NULL,
 			SupplierID INT NULL, SupplierName NVARCHAR(40) NULL, SupplierCountry NVARCHAR(15) NULL
 		);
-		INSERT INTO @products EXEC [NorthWind].[dbo].[GetProductChangesByRowVersion] @startRow, @endRow;
+		INSERT INTO @products EXEC [NorthWindOLTP].[dbo].[GetProductChangesByRowVersion] @startRow, @endRow;
 		TRUNCATE TABLE staging.product;
 		INSERT INTO dbo.DimProduct
 			(ProductID, ProductName, QuantityPerUnit, Discontinued, CategoryID, CategoryName)
@@ -107,7 +107,7 @@ BEGIN
 		);
 		INSERT INTO @suppliers
 		SELECT s.SupplierID, s.CompanyName, s.Country
-		FROM [NorthWind].[dbo].[Suppliers] AS s
+		FROM [NorthWindOLTP].[dbo].[Suppliers] AS s
 		WHERE (s.[rowversion] > CONVERT(BINARY(8), @startRow) AND s.[rowversion] <= CONVERT(BINARY(8), @endRow));
 
 		TRUNCATE TABLE staging.supplier;
@@ -138,7 +138,7 @@ BEGIN
 			ManagerName NVARCHAR(61) NULL, City NVARCHAR(15) NULL,
 			Region NVARCHAR(15) NULL, Country NVARCHAR(15) NULL
 		);
-		INSERT INTO @employees EXEC [NorthWind].[dbo].[GetEmployeeChangesByRowVersion] @startRow, @endRow;
+		INSERT INTO @employees EXEC [NorthWindOLTP].[dbo].[GetEmployeeChangesByRowVersion] @startRow, @endRow;
 		TRUNCATE TABLE staging.employee;
 		INSERT INTO dbo.DimEmployee
 			(EmployeeID, EmployeeName, Title, HireDate, ManagerEmployeeID, ManagerName, City, Region, Country)
@@ -162,7 +162,7 @@ BEGIN
 		SELECT @startRow = LastRowVersion FROM dbo.PackageConfig WHERE TableName = 'Shipper';
 		SET @endRow = CASE WHEN @highWater < @startRow THEN @startRow ELSE @highWater END;
 		DECLARE @shippers TABLE (ShipperID INT NOT NULL, CompanyName NVARCHAR(40) NOT NULL);
-		INSERT INTO @shippers EXEC [NorthWind].[dbo].[GetShipperChangesByRowVersion] @startRow, @endRow;
+		INSERT INTO @shippers EXEC [NorthWindOLTP].[dbo].[GetShipperChangesByRowVersion] @startRow, @endRow;
 		TRUNCATE TABLE staging.shipper;
 		INSERT INTO dbo.DimShipper (ShipperID, CompanyName)
 		SELECT changes.ShipperID, changes.CompanyName
@@ -186,7 +186,7 @@ BEGIN
 			City NVARCHAR(15) NULL, Region NVARCHAR(15) NULL,
 			PostalCode NVARCHAR(10) NULL, Country NVARCHAR(15) NULL
 		);
-		INSERT INTO @locations EXEC [NorthWind].[dbo].[GetGeographyChangesByRowVersion] @startRow, @endRow;
+		INSERT INTO @locations EXEC [NorthWindOLTP].[dbo].[GetGeographyChangesByRowVersion] @startRow, @endRow;
 		TRUNCATE TABLE staging.geography;
 		INSERT INTO dbo.DimGeography (City, Region, PostalCode, Country)
 		SELECT DISTINCT changes.City, changes.Region, changes.PostalCode, changes.Country
@@ -229,7 +229,7 @@ BEGIN
 			DiscountAmount DECIMAL(19,4) NOT NULL, NetSalesAmount DECIMAL(19,4) NOT NULL,
 			FreightAllocated DECIMAL(19,4) NOT NULL
 		);
-		INSERT INTO @sales EXEC [NorthWind].[dbo].[GetSalesChangesByRowVersion] @startRow, @endRow;
+		INSERT INTO @sales EXEC [NorthWindOLTP].[dbo].[GetSalesChangesByRowVersion] @startRow, @endRow;
 		TRUNCATE TABLE staging.sales;
 
 		IF EXISTS
@@ -265,7 +265,7 @@ BEGIN
 		FROM @sales AS changes
 		LEFT JOIN dbo.DimCustomer AS customer ON customer.CustomerID = changes.CustomerID
 		INNER JOIN dbo.DimProduct AS product ON product.ProductID = changes.ProductID
-		LEFT JOIN [NorthWind].[dbo].[Products] AS oltpProduct ON oltpProduct.ProductID = changes.ProductID
+		LEFT JOIN [NorthWindOLTP].[dbo].[Products] AS oltpProduct ON oltpProduct.ProductID = changes.ProductID
 		LEFT JOIN dbo.DimSupplier AS supplier ON supplier.SupplierID = oltpProduct.SupplierID
 		LEFT JOIN dbo.DimEmployee AS employee ON employee.EmployeeID = changes.EmployeeID
 		LEFT JOIN dbo.DimShipper AS shipper ON shipper.ShipperID = changes.ShipperID
