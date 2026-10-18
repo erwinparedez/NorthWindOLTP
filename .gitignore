@@ -17,3 +17,6 @@ obj/
 UpgradeLog*.htm
 UpgradeLog*.xml
 scratch/
+
+# Registros de importación de esquema de VS
+NorthWindDW/Registros de importaci*/
