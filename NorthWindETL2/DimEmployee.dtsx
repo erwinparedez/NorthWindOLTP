@@ -11,8 +11,8 @@
   DTS:LocaleID="3082"
   DTS:ObjectName="DimEmployee"
   DTS:PackageType="5"
-  DTS:VersionBuild="3"
-  DTS:VersionGUID="{F1FB205C-4E78-48EB-B2D6-5A5770133E20}">
+  DTS:VersionBuild="4"
+  DTS:VersionGUID="{525DCFD9-F10B-4143-9901-3FD366C7C104}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -25,7 +25,7 @@
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=LAPTOP-V2TIPM69;Initial Catalog=NorthWindOLTP;Provider=SQLOLEDB.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-DimEmployee-Source;" />
+          DTS:ConnectionString="Data Source=localhost;Initial Catalog=NorthWindOLTP;Provider=SQLOLEDB.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-DimEmployee-Source;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
@@ -37,7 +37,7 @@
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=LAPTOP-V2TIPM69;Initial Catalog=NorthWindDW;Provider=SQLOLEDB.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-DimEmployee-Target;" />
+          DTS:ConnectionString="Data Source=localhost;Initial Catalog=NorthWindDW;Provider=SQLOLEDB.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-DimEmployee-Target;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
@@ -1110,27 +1110,27 @@ where [refTable].[EmployeeID] = ?</property>
       <GraphLayout
         Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
-          Size="210,42"
+          Size="209.6,41.6"
           Id="Package\Add New Employee"
           TopLeft="370,315" />
         <NodeLayout
-          Size="210,42"
+          Size="209.6,41.6"
           Id="Package\Get Database RowVersion"
           TopLeft="370,60" />
         <NodeLayout
-          Size="210,42"
+          Size="209.6,41.6"
           Id="Package\Get Last Employee Change"
           TopLeft="370,145" />
         <NodeLayout
-          Size="210,42"
+          Size="209.6,41.6"
           Id="Package\Initialize Staging Table"
           TopLeft="370,230" />
         <NodeLayout
-          Size="210,42"
+          Size="209.6,41.6"
           Id="Package\Sync Employee Data"
           TopLeft="370,400" />
         <NodeLayout
-          Size="210,42"
+          Size="209.6,41.6"
           Id="Package\Update LastRowVersion"
           TopLeft="370,485" />
         <EdgeLayout
