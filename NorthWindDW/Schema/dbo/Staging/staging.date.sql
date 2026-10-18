@@ -1,4 +1,4 @@
-﻿CREATE TABLE [staging].[date_1]
+CREATE TABLE [staging].[date]
 (
     [DateSK]            [int]           NOT NULL,
     [FullDate]          [date]          NULL,

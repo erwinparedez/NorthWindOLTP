@@ -74,9 +74,9 @@
     <Build Include="Schema\dbo\Tables\DimProduct.sql" />
     <Build Include="Schema\dbo\Tables\DimShipper.sql" />
     <Build Include="Schema\dbo\Tables\FactSales.sql" />
-    <Build Include="Schema\dbo\Staging\staging.customer_1.sql" />
+    <Build Include="Schema\dbo\Staging\staging.customer.sql" />
     <Build Include="Schema\schemas\staging.sql" />
-    <Build Include="Schema\dbo\Staging\staging.date_1.sql" />
+    <Build Include="Schema\dbo\Staging\staging.date.sql" />
     <Build Include="Schema\dbo\Staging\staging.product.sql" />
     <Build Include="Schema\dbo\Staging\staging.supplier.sql" />
     <Build Include="Schema\dbo\Staging\staging.shipper.sql" />
