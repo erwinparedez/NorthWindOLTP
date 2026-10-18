@@ -8,6 +8,7 @@ BEGIN
         [RequiredDateSK] = s.[RequiredDateSK],
         [ShippedDateSK] = s.[ShippedDateSK],
         [CustomerSK] = s.[CustomerSK],
+        [ProductSK] = s.[ProductSK],
         [EmployeeSK] = s.[EmployeeSK],
         [ShipperSK] = s.[ShipperSK],
         [GeographySK] = s.[GeographySK],

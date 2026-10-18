@@ -5,46 +5,46 @@
   DTS:CreationName="Microsoft.Package"
   DTS:CreatorComputerName="YE"
   DTS:CreatorName="YE\olive"
-  DTS:DTSID="{C6925F92-500B-40E3-ACE1-039C5696CF99}"
+  DTS:DTSID="{E38265AB-1DB1-4EE1-AB76-455E7FD357F0}"
   DTS:ExecutableType="Microsoft.Package"
   DTS:LastModifiedProductVersion="17.0.1016.0"
   DTS:LocaleID="3082"
-  DTS:ObjectName="DimDeliveryLocation"
+  DTS:ObjectName="DimShipper"
   DTS:PackageType="5"
   DTS:VersionBuild="2"
-  DTS:VersionGUID="{8698C32A-4E48-4E2B-A9D8-EFAC5A18A241}">
+  DTS:VersionGUID="{461906A6-EBB9-4143-8DCF-FB8A89C892F3}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[Source.NorthWindOLTP]"
       DTS:CreationName="OLEDB"
-      DTS:DTSID="{3866FAA3-CC80-444E-BC95-E643DCE9F2D5}"
+      DTS:DTSID="{DC8E79D4-D5A3-4A0E-B52E-C4EC3E13EF9A}"
       DTS:ObjectName="Source.NorthWindOLTP">
       <DTS:ObjectData>
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=localhost;Initial Catalog=NorthWindOLTP;Provider=SQLOLEDB.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-DimDeliveryLocation-Source;" />
+          DTS:ConnectionString="Data Source=localhost;Initial Catalog=NorthWindOLTP;Provider=SQLOLEDB.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-DimShipper-Source;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[Target.NorthWindDW]"
       DTS:CreationName="OLEDB"
-      DTS:DTSID="{3F075429-F4B3-4AD1-A4A7-137F02E9E671}"
+      DTS:DTSID="{9E217611-3A83-4C6D-901F-9A61FE397B93}"
       DTS:ObjectName="Target.NorthWindDW">
       <DTS:ObjectData>
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=localhost;Initial Catalog=NorthWindDW;Provider=SQLOLEDB;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-DimDeliveryLocation-Target;" />
+          DTS:ConnectionString="Data Source=localhost;Initial Catalog=NorthWindDW;Provider=SQLOLEDB.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-DimShipper-Target;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
   <DTS:Variables>
     <DTS:Variable
       DTS:CreationName=""
-      DTS:DTSID="{E9BD25D0-1A74-44D4-9847-F974AF5E1C7C}"
+      DTS:DTSID="{327D4FAF-68B4-4FD4-9CE4-0B21CF9BD3F7}"
       DTS:IncludeInDebugDump="6789"
       DTS:Namespace="User"
       DTS:ObjectName="DBTSValue">
@@ -53,7 +53,7 @@
     </DTS:Variable>
     <DTS:Variable
       DTS:CreationName=""
-      DTS:DTSID="{C3C106EB-226A-4C8A-A278-37FE1DEED3C5}"
+      DTS:DTSID="{EE6F8F98-10BE-4FC5-8149-A81828E5C5D2}"
       DTS:IncludeInDebugDump="6789"
       DTS:Namespace="User"
       DTS:ObjectName="LastRowValue">
@@ -63,13 +63,13 @@
   </DTS:Variables>
   <DTS:Executables>
     <DTS:Executable
-      DTS:refId="Package\Add New DeliveryLocation"
+      DTS:refId="Package\Add New Shipper"
       DTS:CreationName="Microsoft.Pipeline"
       DTS:Description="Data Flow Task"
-      DTS:DTSID="{56F7B335-8AA9-4EC2-90B6-54C317709B8B}"
+      DTS:DTSID="{C4CE0A96-E9D5-4AFF-B446-A24372336B3A}"
       DTS:ExecutableType="Microsoft.Pipeline"
       DTS:LocaleID="-1"
-      DTS:ObjectName="Add New DeliveryLocation"
+      DTS:ObjectName="Add New Shipper"
       DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
       <DTS:Variables />
       <DTS:ObjectData>
@@ -77,11 +77,11 @@
           version="1">
           <components>
             <component
-              refId="Package\Add New DeliveryLocation\Add New DeliveryLocation"
+              refId="Package\Add New Shipper\Add New Shipper"
               componentClassID="Microsoft.OLEDBDestination"
               contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
               description="OLE DB Destination"
-              name="Add New DeliveryLocation"
+              name="Add New Shipper"
               usesDispositions="true"
               version="4">
               <properties>
@@ -92,7 +92,7 @@
                 <property
                   dataType="System.String"
                   description="Specifies the name of the database object used to open a rowset."
-                  name="OpenRowset">[dbo].[DimDeliveryLocation]</property>
+                  name="OpenRowset">[dbo].[DimShipper]</property>
                 <property
                   dataType="System.String"
                   description="Specifies the variable that contains the name of the database object used to open a rowset."
@@ -134,7 +134,7 @@
               </properties>
               <connections>
                 <connection
-                  refId="Package\Add New DeliveryLocation\Add New DeliveryLocation.Connections[OleDbConnection]"
+                  refId="Package\Add New Shipper\Add New Shipper.Connections[OleDbConnection]"
                   connectionManagerID="Package.ConnectionManagers[Target.NorthWindDW]"
                   connectionManagerRefId="Package.ConnectionManagers[Target.NorthWindDW]"
                   description="The OLE DB runtime connection used to access the database."
@@ -142,88 +142,62 @@
               </connections>
               <inputs>
                 <input
-                  refId="Package\Add New DeliveryLocation\Add New DeliveryLocation.Inputs[OLE DB Destination Input]"
+                  refId="Package\Add New Shipper\Add New Shipper.Inputs[OLE DB Destination Input]"
                   errorOrTruncationOperation="Insert"
                   errorRowDisposition="FailComponent"
                   hasSideEffects="true"
                   name="OLE DB Destination Input">
                   <inputColumns>
                     <inputColumn
-                      refId="Package\Add New DeliveryLocation\Add New DeliveryLocation.Inputs[OLE DB Destination Input].Columns[City]"
-                      cachedDataType="wstr"
-                      cachedLength="15"
-                      cachedName="City"
-                      externalMetadataColumnId="Package\Add New DeliveryLocation\Add New DeliveryLocation.Inputs[OLE DB Destination Input].ExternalColumns[City]"
-                      lineageId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Output].Columns[City]" />
+                      refId="Package\Add New Shipper\Add New Shipper.Inputs[OLE DB Destination Input].Columns[ShipperID]"
+                      cachedDataType="i4"
+                      cachedName="ShipperID"
+                      externalMetadataColumnId="Package\Add New Shipper\Add New Shipper.Inputs[OLE DB Destination Input].ExternalColumns[ShipperID]"
+                      lineageId="Package\Add New Shipper\Get Row Changes.Outputs[OLE DB Source Output].Columns[ShipperID]" />
                     <inputColumn
-                      refId="Package\Add New DeliveryLocation\Add New DeliveryLocation.Inputs[OLE DB Destination Input].Columns[Region]"
+                      refId="Package\Add New Shipper\Add New Shipper.Inputs[OLE DB Destination Input].Columns[CompanyName]"
                       cachedDataType="wstr"
-                      cachedLength="15"
-                      cachedName="Region"
-                      externalMetadataColumnId="Package\Add New DeliveryLocation\Add New DeliveryLocation.Inputs[OLE DB Destination Input].ExternalColumns[Region]"
-                      lineageId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Output].Columns[Region]" />
-                    <inputColumn
-                      refId="Package\Add New DeliveryLocation\Add New DeliveryLocation.Inputs[OLE DB Destination Input].Columns[PostalCode]"
-                      cachedDataType="wstr"
-                      cachedLength="10"
-                      cachedName="PostalCode"
-                      externalMetadataColumnId="Package\Add New DeliveryLocation\Add New DeliveryLocation.Inputs[OLE DB Destination Input].ExternalColumns[PostalCode]"
-                      lineageId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Output].Columns[PostalCode]" />
-                    <inputColumn
-                      refId="Package\Add New DeliveryLocation\Add New DeliveryLocation.Inputs[OLE DB Destination Input].Columns[Country]"
-                      cachedDataType="wstr"
-                      cachedLength="15"
-                      cachedName="Country"
-                      externalMetadataColumnId="Package\Add New DeliveryLocation\Add New DeliveryLocation.Inputs[OLE DB Destination Input].ExternalColumns[Country]"
-                      lineageId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Output].Columns[Country]" />
+                      cachedLength="40"
+                      cachedName="CompanyName"
+                      externalMetadataColumnId="Package\Add New Shipper\Add New Shipper.Inputs[OLE DB Destination Input].ExternalColumns[CompanyName]"
+                      lineageId="Package\Add New Shipper\Get Row Changes.Outputs[OLE DB Source Output].Columns[CompanyName]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
                     <externalMetadataColumn
-                      refId="Package\Add New DeliveryLocation\Add New DeliveryLocation.Inputs[OLE DB Destination Input].ExternalColumns[DeliveryLocationSK]"
+                      refId="Package\Add New Shipper\Add New Shipper.Inputs[OLE DB Destination Input].ExternalColumns[ShipperSK]"
                       dataType="i4"
-                      name="DeliveryLocationSK" />
+                      name="ShipperSK" />
                     <externalMetadataColumn
-                      refId="Package\Add New DeliveryLocation\Add New DeliveryLocation.Inputs[OLE DB Destination Input].ExternalColumns[City]"
-                      dataType="wstr"
-                      length="30"
-                      name="City" />
+                      refId="Package\Add New Shipper\Add New Shipper.Inputs[OLE DB Destination Input].ExternalColumns[ShipperID]"
+                      dataType="i4"
+                      name="ShipperID" />
                     <externalMetadataColumn
-                      refId="Package\Add New DeliveryLocation\Add New DeliveryLocation.Inputs[OLE DB Destination Input].ExternalColumns[Region]"
+                      refId="Package\Add New Shipper\Add New Shipper.Inputs[OLE DB Destination Input].ExternalColumns[CompanyName]"
                       dataType="wstr"
-                      length="30"
-                      name="Region" />
-                    <externalMetadataColumn
-                      refId="Package\Add New DeliveryLocation\Add New DeliveryLocation.Inputs[OLE DB Destination Input].ExternalColumns[PostalCode]"
-                      dataType="wstr"
-                      length="20"
-                      name="PostalCode" />
-                    <externalMetadataColumn
-                      refId="Package\Add New DeliveryLocation\Add New DeliveryLocation.Inputs[OLE DB Destination Input].ExternalColumns[Country]"
-                      dataType="wstr"
-                      length="30"
-                      name="Country" />
+                      length="80"
+                      name="CompanyName" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
               <outputs>
                 <output
-                  refId="Package\Add New DeliveryLocation\Add New DeliveryLocation.Outputs[OLE DB Destination Error Output]"
+                  refId="Package\Add New Shipper\Add New Shipper.Outputs[OLE DB Destination Error Output]"
                   exclusionGroup="1"
                   isErrorOut="true"
                   name="OLE DB Destination Error Output"
-                  synchronousInputId="Package\Add New DeliveryLocation\Add New DeliveryLocation.Inputs[OLE DB Destination Input]">
+                  synchronousInputId="Package\Add New Shipper\Add New Shipper.Inputs[OLE DB Destination Input]">
                   <outputColumns>
                     <outputColumn
-                      refId="Package\Add New DeliveryLocation\Add New DeliveryLocation.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      refId="Package\Add New Shipper\Add New Shipper.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
                       dataType="i4"
-                      lineageId="Package\Add New DeliveryLocation\Add New DeliveryLocation.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      lineageId="Package\Add New Shipper\Add New Shipper.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
                       name="ErrorCode"
                       specialFlags="1" />
                     <outputColumn
-                      refId="Package\Add New DeliveryLocation\Add New DeliveryLocation.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      refId="Package\Add New Shipper\Add New Shipper.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
                       dataType="i4"
-                      lineageId="Package\Add New DeliveryLocation\Add New DeliveryLocation.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      lineageId="Package\Add New Shipper\Add New Shipper.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
                       name="ErrorColumn"
                       specialFlags="2" />
                   </outputColumns>
@@ -232,7 +206,7 @@
               </outputs>
             </component>
             <component
-              refId="Package\Add New DeliveryLocation\Get Row Changes"
+              refId="Package\Add New Shipper\Get Row Changes"
               componentClassID="Microsoft.OLEDBSource"
               contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
               description="OLE DB Source"
@@ -256,7 +230,7 @@
                   dataType="System.String"
                   description="The SQL command to be executed."
                   name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">EXECUTE [dbo].[GetDeliveryLocationChangesByRowVersion] ?, ?</property>
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">EXECUTE [dbo].[GetShipperChangesByRowVersion] ?, ?</property>
                 <property
                   dataType="System.String"
                   description="The variable that contains the SQL command to be executed."
@@ -277,11 +251,11 @@
                 <property
                   dataType="System.String"
                   description="The mappings between the parameters in the SQL command and variables."
-                  name="ParameterMapping">"@startRow:Input",{C3C106EB-226A-4C8A-A278-37FE1DEED3C5};"@endRow:Input",{E9BD25D0-1A74-44D4-9847-F974AF5E1C7C};</property>
+                  name="ParameterMapping">"@startRow:Input",{EE6F8F98-10BE-4FC5-8149-A81828E5C5D2};"@endRow:Input",{327D4FAF-68B4-4FD4-9CE4-0B21CF9BD3F7};</property>
               </properties>
               <connections>
                 <connection
-                  refId="Package\Add New DeliveryLocation\Get Row Changes.Connections[OleDbConnection]"
+                  refId="Package\Add New Shipper\Get Row Changes.Connections[OleDbConnection]"
                   connectionManagerID="Package.ConnectionManagers[Source.NorthWindOLTP]"
                   connectionManagerRefId="Package.ConnectionManagers[Source.NorthWindOLTP]"
                   description="The OLE DB runtime connection used to access the database."
@@ -289,113 +263,68 @@
               </connections>
               <outputs>
                 <output
-                  refId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Output]"
+                  refId="Package\Add New Shipper\Get Row Changes.Outputs[OLE DB Source Output]"
                   name="OLE DB Source Output">
                   <outputColumns>
                     <outputColumn
-                      refId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Output].Columns[City]"
-                      dataType="wstr"
+                      refId="Package\Add New Shipper\Get Row Changes.Outputs[OLE DB Source Output].Columns[ShipperID]"
+                      dataType="i4"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
-                      externalMetadataColumnId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Output].ExternalColumns[City]"
-                      length="15"
-                      lineageId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Output].Columns[City]"
-                      name="City"
+                      externalMetadataColumnId="Package\Add New Shipper\Get Row Changes.Outputs[OLE DB Source Output].ExternalColumns[ShipperID]"
+                      lineageId="Package\Add New Shipper\Get Row Changes.Outputs[OLE DB Source Output].Columns[ShipperID]"
+                      name="ShipperID"
                       truncationRowDisposition="FailComponent" />
                     <outputColumn
-                      refId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Output].Columns[Region]"
+                      refId="Package\Add New Shipper\Get Row Changes.Outputs[OLE DB Source Output].Columns[CompanyName]"
                       dataType="wstr"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
-                      externalMetadataColumnId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Output].ExternalColumns[Region]"
-                      length="15"
-                      lineageId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Output].Columns[Region]"
-                      name="Region"
-                      truncationRowDisposition="FailComponent" />
-                    <outputColumn
-                      refId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Output].Columns[PostalCode]"
-                      dataType="wstr"
-                      errorOrTruncationOperation="Conversion"
-                      errorRowDisposition="FailComponent"
-                      externalMetadataColumnId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Output].ExternalColumns[PostalCode]"
-                      length="10"
-                      lineageId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Output].Columns[PostalCode]"
-                      name="PostalCode"
-                      truncationRowDisposition="FailComponent" />
-                    <outputColumn
-                      refId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Output].Columns[Country]"
-                      dataType="wstr"
-                      errorOrTruncationOperation="Conversion"
-                      errorRowDisposition="FailComponent"
-                      externalMetadataColumnId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Output].ExternalColumns[Country]"
-                      length="15"
-                      lineageId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Output].Columns[Country]"
-                      name="Country"
+                      externalMetadataColumnId="Package\Add New Shipper\Get Row Changes.Outputs[OLE DB Source Output].ExternalColumns[CompanyName]"
+                      length="40"
+                      lineageId="Package\Add New Shipper\Get Row Changes.Outputs[OLE DB Source Output].Columns[CompanyName]"
+                      name="CompanyName"
                       truncationRowDisposition="FailComponent" />
                   </outputColumns>
                   <externalMetadataColumns
                     isUsed="True">
                     <externalMetadataColumn
-                      refId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Output].ExternalColumns[City]"
-                      dataType="wstr"
-                      length="15"
-                      name="City" />
+                      refId="Package\Add New Shipper\Get Row Changes.Outputs[OLE DB Source Output].ExternalColumns[ShipperID]"
+                      dataType="i4"
+                      name="ShipperID" />
                     <externalMetadataColumn
-                      refId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Output].ExternalColumns[Region]"
+                      refId="Package\Add New Shipper\Get Row Changes.Outputs[OLE DB Source Output].ExternalColumns[CompanyName]"
                       dataType="wstr"
-                      length="15"
-                      name="Region" />
-                    <externalMetadataColumn
-                      refId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Output].ExternalColumns[PostalCode]"
-                      dataType="wstr"
-                      length="10"
-                      name="PostalCode" />
-                    <externalMetadataColumn
-                      refId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Output].ExternalColumns[Country]"
-                      dataType="wstr"
-                      length="15"
-                      name="Country" />
+                      length="40"
+                      name="CompanyName" />
                   </externalMetadataColumns>
                 </output>
                 <output
-                  refId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Error Output]"
+                  refId="Package\Add New Shipper\Get Row Changes.Outputs[OLE DB Source Error Output]"
                   isErrorOut="true"
                   name="OLE DB Source Error Output">
                   <outputColumns>
                     <outputColumn
-                      refId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[City]"
-                      dataType="wstr"
-                      length="15"
-                      lineageId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[City]"
-                      name="City" />
-                    <outputColumn
-                      refId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[Region]"
-                      dataType="wstr"
-                      length="15"
-                      lineageId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[Region]"
-                      name="Region" />
-                    <outputColumn
-                      refId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[PostalCode]"
-                      dataType="wstr"
-                      length="10"
-                      lineageId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[PostalCode]"
-                      name="PostalCode" />
-                    <outputColumn
-                      refId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[Country]"
-                      dataType="wstr"
-                      length="15"
-                      lineageId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[Country]"
-                      name="Country" />
-                    <outputColumn
-                      refId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      refId="Package\Add New Shipper\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[ShipperID]"
                       dataType="i4"
-                      lineageId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      lineageId="Package\Add New Shipper\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[ShipperID]"
+                      name="ShipperID" />
+                    <outputColumn
+                      refId="Package\Add New Shipper\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[CompanyName]"
+                      dataType="wstr"
+                      length="40"
+                      lineageId="Package\Add New Shipper\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[CompanyName]"
+                      name="CompanyName" />
+                    <outputColumn
+                      refId="Package\Add New Shipper\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Add New Shipper\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
                       name="ErrorCode"
                       specialFlags="1" />
                     <outputColumn
-                      refId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      refId="Package\Add New Shipper\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
                       dataType="i4"
-                      lineageId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      lineageId="Package\Add New Shipper\Get Row Changes.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
                       name="ErrorColumn"
                       specialFlags="2" />
                   </outputColumns>
@@ -404,7 +333,7 @@
               </outputs>
             </component>
             <component
-              refId="Package\Add New DeliveryLocation\Load staging"
+              refId="Package\Add New Shipper\Load staging"
               componentClassID="Microsoft.OLEDBDestination"
               contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
               description="OLE DB Destination"
@@ -419,7 +348,7 @@
                 <property
                   dataType="System.String"
                   description="Specifies the name of the database object used to open a rowset."
-                  name="OpenRowset">[staging].[deliverylocation]</property>
+                  name="OpenRowset">[staging].[shipper]</property>
                 <property
                   dataType="System.String"
                   description="Specifies the variable that contains the name of the database object used to open a rowset."
@@ -461,7 +390,7 @@
               </properties>
               <connections>
                 <connection
-                  refId="Package\Add New DeliveryLocation\Load staging.Connections[OleDbConnection]"
+                  refId="Package\Add New Shipper\Load staging.Connections[OleDbConnection]"
                   connectionManagerID="Package.ConnectionManagers[Target.NorthWindDW]"
                   connectionManagerRefId="Package.ConnectionManagers[Target.NorthWindDW]"
                   description="The OLE DB runtime connection used to access the database."
@@ -469,94 +398,68 @@
               </connections>
               <inputs>
                 <input
-                  refId="Package\Add New DeliveryLocation\Load staging.Inputs[OLE DB Destination Input]"
+                  refId="Package\Add New Shipper\Load staging.Inputs[OLE DB Destination Input]"
                   errorOrTruncationOperation="Insert"
                   errorRowDisposition="FailComponent"
                   hasSideEffects="true"
                   name="OLE DB Destination Input">
                   <inputColumns>
                     <inputColumn
-                      refId="Package\Add New DeliveryLocation\Load staging.Inputs[OLE DB Destination Input].Columns[DeliveryLocationSK]"
+                      refId="Package\Add New Shipper\Load staging.Inputs[OLE DB Destination Input].Columns[ShipperSK]"
                       cachedDataType="i4"
-                      cachedName="DeliveryLocationSK"
-                      externalMetadataColumnId="Package\Add New DeliveryLocation\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[DeliveryLocationSK]"
-                      lineageId="Package\Add New DeliveryLocation\Lookup.Outputs[Lookup Match Output].Columns[DeliveryLocationSK]" />
+                      cachedName="ShipperSK"
+                      externalMetadataColumnId="Package\Add New Shipper\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[ShipperSK]"
+                      lineageId="Package\Add New Shipper\Lookup.Outputs[Lookup Match Output].Columns[ShipperSK]" />
                     <inputColumn
-                      refId="Package\Add New DeliveryLocation\Load staging.Inputs[OLE DB Destination Input].Columns[City]"
-                      cachedDataType="wstr"
-                      cachedLength="15"
-                      cachedName="City"
-                      externalMetadataColumnId="Package\Add New DeliveryLocation\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[City]"
-                      lineageId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Output].Columns[City]" />
+                      refId="Package\Add New Shipper\Load staging.Inputs[OLE DB Destination Input].Columns[ShipperID]"
+                      cachedDataType="i4"
+                      cachedName="ShipperID"
+                      externalMetadataColumnId="Package\Add New Shipper\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[ShipperID]"
+                      lineageId="Package\Add New Shipper\Get Row Changes.Outputs[OLE DB Source Output].Columns[ShipperID]" />
                     <inputColumn
-                      refId="Package\Add New DeliveryLocation\Load staging.Inputs[OLE DB Destination Input].Columns[Region]"
+                      refId="Package\Add New Shipper\Load staging.Inputs[OLE DB Destination Input].Columns[CompanyName]"
                       cachedDataType="wstr"
-                      cachedLength="15"
-                      cachedName="Region"
-                      externalMetadataColumnId="Package\Add New DeliveryLocation\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[Region]"
-                      lineageId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Output].Columns[Region]" />
-                    <inputColumn
-                      refId="Package\Add New DeliveryLocation\Load staging.Inputs[OLE DB Destination Input].Columns[PostalCode]"
-                      cachedDataType="wstr"
-                      cachedLength="10"
-                      cachedName="PostalCode"
-                      externalMetadataColumnId="Package\Add New DeliveryLocation\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[PostalCode]"
-                      lineageId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Output].Columns[PostalCode]" />
-                    <inputColumn
-                      refId="Package\Add New DeliveryLocation\Load staging.Inputs[OLE DB Destination Input].Columns[Country]"
-                      cachedDataType="wstr"
-                      cachedLength="15"
-                      cachedName="Country"
-                      externalMetadataColumnId="Package\Add New DeliveryLocation\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[Country]"
-                      lineageId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Output].Columns[Country]" />
+                      cachedLength="40"
+                      cachedName="CompanyName"
+                      externalMetadataColumnId="Package\Add New Shipper\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[CompanyName]"
+                      lineageId="Package\Add New Shipper\Get Row Changes.Outputs[OLE DB Source Output].Columns[CompanyName]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
                     <externalMetadataColumn
-                      refId="Package\Add New DeliveryLocation\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[DeliveryLocationSK]"
+                      refId="Package\Add New Shipper\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[ShipperSK]"
                       dataType="i4"
-                      name="DeliveryLocationSK" />
+                      name="ShipperSK" />
                     <externalMetadataColumn
-                      refId="Package\Add New DeliveryLocation\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[City]"
-                      dataType="wstr"
-                      length="30"
-                      name="City" />
+                      refId="Package\Add New Shipper\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[ShipperID]"
+                      dataType="i4"
+                      name="ShipperID" />
                     <externalMetadataColumn
-                      refId="Package\Add New DeliveryLocation\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[Region]"
+                      refId="Package\Add New Shipper\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[CompanyName]"
                       dataType="wstr"
-                      length="30"
-                      name="Region" />
-                    <externalMetadataColumn
-                      refId="Package\Add New DeliveryLocation\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[PostalCode]"
-                      dataType="wstr"
-                      length="20"
-                      name="PostalCode" />
-                    <externalMetadataColumn
-                      refId="Package\Add New DeliveryLocation\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[Country]"
-                      dataType="wstr"
-                      length="30"
-                      name="Country" />
+                      length="80"
+                      name="CompanyName" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
               <outputs>
                 <output
-                  refId="Package\Add New DeliveryLocation\Load staging.Outputs[OLE DB Destination Error Output]"
+                  refId="Package\Add New Shipper\Load staging.Outputs[OLE DB Destination Error Output]"
                   exclusionGroup="1"
                   isErrorOut="true"
                   name="OLE DB Destination Error Output"
-                  synchronousInputId="Package\Add New DeliveryLocation\Load staging.Inputs[OLE DB Destination Input]">
+                  synchronousInputId="Package\Add New Shipper\Load staging.Inputs[OLE DB Destination Input]">
                   <outputColumns>
                     <outputColumn
-                      refId="Package\Add New DeliveryLocation\Load staging.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      refId="Package\Add New Shipper\Load staging.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
                       dataType="i4"
-                      lineageId="Package\Add New DeliveryLocation\Load staging.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      lineageId="Package\Add New Shipper\Load staging.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
                       name="ErrorCode"
                       specialFlags="1" />
                     <outputColumn
-                      refId="Package\Add New DeliveryLocation\Load staging.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      refId="Package\Add New Shipper\Load staging.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
                       dataType="i4"
-                      lineageId="Package\Add New DeliveryLocation\Load staging.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      lineageId="Package\Add New Shipper\Load staging.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
                       name="ErrorColumn"
                       specialFlags="2" />
                   </outputColumns>
@@ -565,7 +468,7 @@
               </outputs>
             </component>
             <component
-              refId="Package\Add New DeliveryLocation\Lookup"
+              refId="Package\Add New Shipper\Lookup"
               componentClassID="Microsoft.Lookup"
               contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
               description="Joins additional columns to the data flow by looking up values in a table."
@@ -578,14 +481,14 @@
                   description="Specifies the SQL statement that generates the lookup table."
                   expressionType="Notify"
                   name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [dbo].[DimDeliveryLocation]</property>
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [dbo].[DimShipper]</property>
                 <property
                   dataType="System.String"
                   description="Specifies a SQL statement that uses parameters to generate the lookup table."
                   expressionType="Notify"
                   name="SqlCommandParam"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [dbo].[DimDeliveryLocation]) [refTable]
-where [refTable].[City] = ?</property>
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [dbo].[DimShipper]) [refTable]
+where [refTable].[ShipperID] = ?</property>
                 <property
                   dataType="System.Int32"
                   description="Specifies the type of connection used to access the reference dataset."
@@ -620,7 +523,7 @@ where [refTable].[City] = ?</property>
                 <property
                   dataType="System.String"
                   description="The parameter map for the SQL command."
-                  name="ParameterMap">#{Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Output].Columns[City]};</property>
+                  name="ParameterMap">#{Package\Add New Shipper\Get Row Changes.Outputs[OLE DB Source Output].Columns[ShipperID]};</property>
                 <property
                   dataType="System.Int32"
                   description="Specifies the column code page to use when code page information is unavailable from the data source."
@@ -632,7 +535,7 @@ where [refTable].[City] = ?</property>
               </properties>
               <connections>
                 <connection
-                  refId="Package\Add New DeliveryLocation\Lookup.Connections[OleDbConnection]"
+                  refId="Package\Add New Shipper\Lookup.Connections[OleDbConnection]"
                   connectionManagerID="Package.ConnectionManagers[Target.NorthWindDW]"
                   connectionManagerRefId="Package.ConnectionManagers[Target.NorthWindDW]"
                   description="Connection manager used to access lookup data."
@@ -640,19 +543,19 @@ where [refTable].[City] = ?</property>
               </connections>
               <inputs>
                 <input
-                  refId="Package\Add New DeliveryLocation\Lookup.Inputs[Lookup Input]"
+                  refId="Package\Add New Shipper\Lookup.Inputs[Lookup Input]"
                   name="Lookup Input">
                   <inputColumns>
                     <inputColumn
-                      refId="Package\Add New DeliveryLocation\Lookup.Inputs[Lookup Input].Columns[City]"
-                      cachedDataType="wstr"
-                      cachedName="City"
-                      lineageId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Output].Columns[City]">
+                      refId="Package\Add New Shipper\Lookup.Inputs[Lookup Input].Columns[ShipperID]"
+                      cachedDataType="i4"
+                      cachedName="ShipperID"
+                      lineageId="Package\Add New Shipper\Get Row Changes.Outputs[OLE DB Source Output].Columns[ShipperID]">
                       <properties>
                         <property
                           dataType="System.String"
                           description="Specifies the column in the reference table that a column joins."
-                          name="JoinToReferenceColumn">City</property>
+                          name="JoinToReferenceColumn">ShipperID</property>
                         <property
                           dataType="System.Null"
                           description="Specifies the column in the reference table from which a column is copied."
@@ -665,54 +568,54 @@ where [refTable].[City] = ?</property>
               </inputs>
               <outputs>
                 <output
-                  refId="Package\Add New DeliveryLocation\Lookup.Outputs[Lookup Match Output]"
+                  refId="Package\Add New Shipper\Lookup.Outputs[Lookup Match Output]"
                   errorOrTruncationOperation="Lookup"
                   exclusionGroup="1"
                   name="Lookup Match Output"
-                  synchronousInputId="Package\Add New DeliveryLocation\Lookup.Inputs[Lookup Input]">
+                  synchronousInputId="Package\Add New Shipper\Lookup.Inputs[Lookup Input]">
                   <outputColumns>
                     <outputColumn
-                      refId="Package\Add New DeliveryLocation\Lookup.Outputs[Lookup Match Output].Columns[DeliveryLocationSK]"
+                      refId="Package\Add New Shipper\Lookup.Outputs[Lookup Match Output].Columns[ShipperSK]"
                       dataType="i4"
                       errorOrTruncationOperation="Copy Column"
-                      lineageId="Package\Add New DeliveryLocation\Lookup.Outputs[Lookup Match Output].Columns[DeliveryLocationSK]"
-                      name="DeliveryLocationSK"
+                      lineageId="Package\Add New Shipper\Lookup.Outputs[Lookup Match Output].Columns[ShipperSK]"
+                      name="ShipperSK"
                       truncationRowDisposition="FailComponent">
                       <properties>
                         <property
                           dataType="System.String"
                           description="Specifies the column in the reference table from which a column is copied."
-                          name="CopyFromReferenceColumn">DeliveryLocationSK</property>
+                          name="CopyFromReferenceColumn">ShipperSK</property>
                       </properties>
                     </outputColumn>
                   </outputColumns>
                   <externalMetadataColumns />
                 </output>
                 <output
-                  refId="Package\Add New DeliveryLocation\Lookup.Outputs[Lookup No Match Output]"
+                  refId="Package\Add New Shipper\Lookup.Outputs[Lookup No Match Output]"
                   description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when no-match behavior is set to &quot;Send rows with no match to the no-match output&quot;."
                   exclusionGroup="1"
                   name="Lookup No Match Output"
-                  synchronousInputId="Package\Add New DeliveryLocation\Lookup.Inputs[Lookup Input]">
+                  synchronousInputId="Package\Add New Shipper\Lookup.Inputs[Lookup Input]">
                   <externalMetadataColumns />
                 </output>
                 <output
-                  refId="Package\Add New DeliveryLocation\Lookup.Outputs[Lookup Error Output]"
+                  refId="Package\Add New Shipper\Lookup.Outputs[Lookup Error Output]"
                   exclusionGroup="1"
                   isErrorOut="true"
                   name="Lookup Error Output"
-                  synchronousInputId="Package\Add New DeliveryLocation\Lookup.Inputs[Lookup Input]">
+                  synchronousInputId="Package\Add New Shipper\Lookup.Inputs[Lookup Input]">
                   <outputColumns>
                     <outputColumn
-                      refId="Package\Add New DeliveryLocation\Lookup.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      refId="Package\Add New Shipper\Lookup.Outputs[Lookup Error Output].Columns[ErrorCode]"
                       dataType="i4"
-                      lineageId="Package\Add New DeliveryLocation\Lookup.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      lineageId="Package\Add New Shipper\Lookup.Outputs[Lookup Error Output].Columns[ErrorCode]"
                       name="ErrorCode"
                       specialFlags="1" />
                     <outputColumn
-                      refId="Package\Add New DeliveryLocation\Lookup.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      refId="Package\Add New Shipper\Lookup.Outputs[Lookup Error Output].Columns[ErrorColumn]"
                       dataType="i4"
-                      lineageId="Package\Add New DeliveryLocation\Lookup.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      lineageId="Package\Add New Shipper\Lookup.Outputs[Lookup Error Output].Columns[ErrorColumn]"
                       name="ErrorColumn"
                       specialFlags="2" />
                   </outputColumns>
@@ -723,20 +626,20 @@ where [refTable].[City] = ?</property>
           </components>
           <paths>
             <path
-              refId="Package\Add New DeliveryLocation.Paths[Lookup Match Output]"
-              endId="Package\Add New DeliveryLocation\Load staging.Inputs[OLE DB Destination Input]"
+              refId="Package\Add New Shipper.Paths[Lookup Match Output]"
+              endId="Package\Add New Shipper\Load staging.Inputs[OLE DB Destination Input]"
               name="Lookup Match Output"
-              startId="Package\Add New DeliveryLocation\Lookup.Outputs[Lookup Match Output]" />
+              startId="Package\Add New Shipper\Lookup.Outputs[Lookup Match Output]" />
             <path
-              refId="Package\Add New DeliveryLocation.Paths[Lookup No Match Output]"
-              endId="Package\Add New DeliveryLocation\Add New DeliveryLocation.Inputs[OLE DB Destination Input]"
+              refId="Package\Add New Shipper.Paths[Lookup No Match Output]"
+              endId="Package\Add New Shipper\Add New Shipper.Inputs[OLE DB Destination Input]"
               name="Lookup No Match Output"
-              startId="Package\Add New DeliveryLocation\Lookup.Outputs[Lookup No Match Output]" />
+              startId="Package\Add New Shipper\Lookup.Outputs[Lookup No Match Output]" />
             <path
-              refId="Package\Add New DeliveryLocation.Paths[OLE DB Source Output]"
-              endId="Package\Add New DeliveryLocation\Lookup.Inputs[Lookup Input]"
+              refId="Package\Add New Shipper.Paths[OLE DB Source Output]"
+              endId="Package\Add New Shipper\Lookup.Inputs[Lookup Input]"
               name="OLE DB Source Output"
-              startId="Package\Add New DeliveryLocation\Get Row Changes.Outputs[OLE DB Source Output]" />
+              startId="Package\Add New Shipper\Get Row Changes.Outputs[OLE DB Source Output]" />
           </paths>
         </pipeline>
       </DTS:ObjectData>
@@ -745,7 +648,7 @@ where [refTable].[City] = ?</property>
       DTS:refId="Package\Get Database RowVersion"
       DTS:CreationName="Microsoft.ExecuteSQLTask"
       DTS:Description="Execute SQL Task"
-      DTS:DTSID="{FB60B18E-275C-4679-BF13-8861184D481A}"
+      DTS:DTSID="{0CFD61BD-6429-4178-B958-FDB7B25676AA}"
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="Get Database RowVersion"
@@ -754,7 +657,7 @@ where [refTable].[City] = ?</property>
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{3866FAA3-CC80-444E-BC95-E643DCE9F2D5}"
+          SQLTask:Connection="{DC8E79D4-D5A3-4A0E-B52E-C4EC3E13EF9A}"
           SQLTask:SqlStatementSource="EXECUTE [dbo].[GetDatabaseRowVersion]"
           SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
           <SQLTask:ResultBinding
@@ -764,20 +667,20 @@ where [refTable].[City] = ?</property>
       </DTS:ObjectData>
     </DTS:Executable>
     <DTS:Executable
-      DTS:refId="Package\Get Last DeliveryLocation Change"
+      DTS:refId="Package\Get Last Shipper Change"
       DTS:CreationName="Microsoft.ExecuteSQLTask"
       DTS:Description="Execute SQL Task"
-      DTS:DTSID="{65585DF6-639C-430B-AB84-F3F18C65A567}"
+      DTS:DTSID="{43279EFD-2C2D-4DA7-9588-C5BC7DC5B961}"
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
-      DTS:ObjectName="Get Last DeliveryLocation Change"
+      DTS:ObjectName="Get Last Shipper Change"
       DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
       DTS:ThreadHint="0">
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{3F075429-F4B3-4AD1-A4A7-137F02E9E671}"
-          SQLTask:SqlStatementSource="EXECUTE [dbo].[GetLastPackageRowVersion] @tableName = 'DeliveryLocation'"
+          SQLTask:Connection="{9E217611-3A83-4C6D-901F-9A61FE397B93}"
+          SQLTask:SqlStatementSource="EXECUTE [dbo].[GetLastPackageRowVersion] @tableName = 'Shipper'"
           SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
           <SQLTask:ResultBinding
             SQLTask:ResultName="LastRowVersion"
@@ -789,7 +692,7 @@ where [refTable].[City] = ?</property>
       DTS:refId="Package\Initialize Staging Table"
       DTS:CreationName="Microsoft.ExecuteSQLTask"
       DTS:Description="Execute SQL Task"
-      DTS:DTSID="{91B2FC85-D16A-45A1-9158-B6C857D9DB16}"
+      DTS:DTSID="{7F7B8829-277C-4B19-B2C1-A8A54963AE1D}"
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="Initialize Staging Table"
@@ -798,32 +701,32 @@ where [refTable].[City] = ?</property>
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{3F075429-F4B3-4AD1-A4A7-137F02E9E671}"
-          SQLTask:SqlStatementSource="TRUNCATE TABLE [staging].[deliverylocation];" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          SQLTask:Connection="{9E217611-3A83-4C6D-901F-9A61FE397B93}"
+          SQLTask:SqlStatementSource="TRUNCATE TABLE [staging].[shipper];" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
     <DTS:Executable
-      DTS:refId="Package\Sync DeliveryLocation Data"
+      DTS:refId="Package\Sync Shipper Data"
       DTS:CreationName="Microsoft.ExecuteSQLTask"
       DTS:Description="Execute SQL Task"
-      DTS:DTSID="{BFD9EF70-4DAD-4EB7-8EEF-FF5012A94D08}"
+      DTS:DTSID="{726E74D8-6FEB-4DE8-B92B-BA287303C9D1}"
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
-      DTS:ObjectName="Sync DeliveryLocation Data"
+      DTS:ObjectName="Sync Shipper Data"
       DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
       DTS:ThreadHint="0">
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{3F075429-F4B3-4AD1-A4A7-137F02E9E671}"
-          SQLTask:SqlStatementSource="EXECUTE [dbo].[DW_MergeDimDeliveryLocation];" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          SQLTask:Connection="{9E217611-3A83-4C6D-901F-9A61FE397B93}"
+          SQLTask:SqlStatementSource="EXECUTE [dbo].[DW_MergeDimShipper];" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
     <DTS:Executable
       DTS:refId="Package\Update LastRowVersion"
       DTS:CreationName="Microsoft.ExecuteSQLTask"
       DTS:Description="Execute SQL Task"
-      DTS:DTSID="{8D09AECB-39E7-47B4-8972-56B994F8DD03}"
+      DTS:DTSID="{264767A7-D63B-43C7-BDB5-527C3DBC7372}"
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="Update LastRowVersion"
@@ -832,8 +735,8 @@ where [refTable].[City] = ?</property>
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{3F075429-F4B3-4AD1-A4A7-137F02E9E671}"
-          SQLTask:SqlStatementSource="EXECUTE [dbo].[UpdateLastPackageRowVersion] @tableName = 'DeliveryLocation', @lastRowVersion = ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          SQLTask:Connection="{9E217611-3A83-4C6D-901F-9A61FE397B93}"
+          SQLTask:SqlStatementSource="EXECUTE [dbo].[UpdateLastPackageRowVersion] @tableName = 'Shipper', @lastRowVersion = ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
           <SQLTask:ParameterBinding
             SQLTask:ParameterName="0"
             SQLTask:DtsVariableName="User::DBTSValue"
@@ -848,40 +751,40 @@ where [refTable].[City] = ?</property>
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint]"
       DTS:CreationName=""
-      DTS:DTSID="{D7E380DC-24AE-4025-974E-7CDF0A3338B3}"
+      DTS:DTSID="{11E89F5B-A029-4E3F-831D-DCADBD36F9A6}"
       DTS:From="Package\Get Database RowVersion"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint"
-      DTS:To="Package\Get Last DeliveryLocation Change" />
+      DTS:To="Package\Get Last Shipper Change" />
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
       DTS:CreationName=""
-      DTS:DTSID="{D2B660F0-26A2-4ED5-98EE-7EDA4EBA7022}"
-      DTS:From="Package\Get Last DeliveryLocation Change"
+      DTS:DTSID="{795B86B2-F1E4-41BD-BA20-FB85C35C656D}"
+      DTS:From="Package\Get Last Shipper Change"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 1"
       DTS:To="Package\Initialize Staging Table" />
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
       DTS:CreationName=""
-      DTS:DTSID="{76C6B609-F07F-433F-BCA7-5362784A0EF6}"
+      DTS:DTSID="{8B400F89-3732-4A45-920A-C0ACE98F29D2}"
       DTS:From="Package\Initialize Staging Table"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 2"
-      DTS:To="Package\Add New DeliveryLocation" />
+      DTS:To="Package\Add New Shipper" />
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
       DTS:CreationName=""
-      DTS:DTSID="{76F76A65-FFFF-499E-9C63-9344911374DD}"
-      DTS:From="Package\Add New DeliveryLocation"
+      DTS:DTSID="{02625486-5644-4A4B-A0B2-D777E83B7A9D}"
+      DTS:From="Package\Add New Shipper"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 3"
-      DTS:To="Package\Sync DeliveryLocation Data" />
+      DTS:To="Package\Sync Shipper Data" />
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
       DTS:CreationName=""
-      DTS:DTSID="{D5506B15-CEF8-4238-ACC1-3B28D2A981C7}"
-      DTS:From="Package\Sync DeliveryLocation Data"
+      DTS:DTSID="{781C9CC1-9A16-4501-9B55-DA5E6BCC1C70}"
+      DTS:From="Package\Sync Shipper Data"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 4"
       DTS:To="Package\Update LastRowVersion" />
@@ -900,7 +803,7 @@ where [refTable].[City] = ?</property>
         Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
           Size="210,42"
-          Id="Package\Add New DeliveryLocation"
+          Id="Package\Add New Shipper"
           TopLeft="370,315" />
         <NodeLayout
           Size="210,42"
@@ -908,7 +811,7 @@ where [refTable].[City] = ?</property>
           TopLeft="370,60" />
         <NodeLayout
           Size="210,42"
-          Id="Package\Get Last DeliveryLocation Change"
+          Id="Package\Get Last Shipper Change"
           TopLeft="370,145" />
         <NodeLayout
           Size="210,42"
@@ -916,7 +819,7 @@ where [refTable].[City] = ?</property>
           TopLeft="370,230" />
         <NodeLayout
           Size="210,42"
-          Id="Package\Sync DeliveryLocation Data"
+          Id="Package\Sync Shipper Data"
           TopLeft="370,400" />
         <NodeLayout
           Size="210,42"
@@ -1036,20 +939,20 @@ where [refTable].[City] = ?</property>
     </LayoutInfo>
   </Package>
   <TaskHost
-    design-time-name="Package\Add New DeliveryLocation">
+    design-time-name="Package\Add New Shipper">
     <LayoutInfo>
       <GraphLayout
         Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
           Size="162,42"
-          Id="Package\Add New DeliveryLocation\Get Row Changes"
+          Id="Package\Add New Shipper\Get Row Changes"
           TopLeft="428,95" />
         <NodeLayout
           Size="113,42"
-          Id="Package\Add New DeliveryLocation\Lookup"
+          Id="Package\Add New Shipper\Lookup"
           TopLeft="450,200" />
         <EdgeLayout
-          Id="Package\Add New DeliveryLocation.Paths[OLE DB Source Output]"
+          Id="Package\Add New Shipper.Paths[OLE DB Source Output]"
           TopLeft="507.75,137">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -1072,10 +975,10 @@ where [refTable].[City] = ?</property>
         </EdgeLayout>
         <NodeLayout
           Size="139,42"
-          Id="Package\Add New DeliveryLocation\Load staging"
+          Id="Package\Add New Shipper\Load staging"
           TopLeft="313,329" />
         <EdgeLayout
-          Id="Package\Add New DeliveryLocation.Paths[Lookup Match Output]"
+          Id="Package\Add New Shipper.Paths[Lookup Match Output]"
           TopLeft="506.5,242">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -1112,10 +1015,10 @@ where [refTable].[City] = ?</property>
         </EdgeLayout>
         <NodeLayout
           Size="174,42"
-          Id="Package\Add New DeliveryLocation\Add New DeliveryLocation"
+          Id="Package\Add New Shipper\Add New Shipper"
           TopLeft="548,326" />
         <EdgeLayout
-          Id="Package\Add New DeliveryLocation.Paths[Lookup No Match Output]"
+          Id="Package\Add New Shipper.Paths[Lookup No Match Output]"
           TopLeft="524,242">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -1154,7 +1057,7 @@ where [refTable].[City] = ?</property>
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\Add New DeliveryLocation\Add New DeliveryLocation">
+    design-time-name="Package\Add New Shipper\Add New Shipper">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -1167,7 +1070,7 @@ where [refTable].[City] = ?</property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Add New DeliveryLocation\Load staging">
+    design-time-name="Package\Add New Shipper\Load staging">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -1180,15 +1083,7 @@ where [refTable].[City] = ?</property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Add New DeliveryLocation\Get Row Changes">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Add New DeliveryLocation\Lookup">
+    design-time-name="Package\Add New Shipper\Lookup">
     <Properties>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
@@ -1198,13 +1093,21 @@ where [refTable].[City] = ?</property>
       <Property>
         <Name>UsedTableName</Name>
         <Value
-          type="q3:string">[dbo].[DimDeliveryLocation]</Value>
+          type="q3:string">[dbo].[DimShipper]</Value>
       </Property>
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
           type="q4:string">0</Value>
       </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Add New Shipper\Get Row Changes">
+    <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
       </Property>

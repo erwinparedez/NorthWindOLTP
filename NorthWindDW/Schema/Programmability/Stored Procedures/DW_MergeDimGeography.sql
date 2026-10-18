@@ -11,6 +11,6 @@ BEGIN
         [PostalCode] = s.[PostalCode],
         [Country] = s.[Country]
     FROM [dbo].[DimGeography] AS target
-    INNER JOIN [staging].[geography] AS s ON target.[GeographySK]=s.[GeographySK];
+        INNER JOIN [staging].[geography] AS s ON target.[GeographySK]=s.[GeographySK];
 END;
 GO

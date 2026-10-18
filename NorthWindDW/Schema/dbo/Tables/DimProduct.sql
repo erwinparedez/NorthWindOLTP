@@ -13,4 +13,3 @@ CREATE TABLE [dbo].[DimProduct] (
 GO
 CREATE UNIQUE NONCLUSTERED INDEX [UX_DimProduct_ProductID]
     ON [dbo].[DimProduct]([ProductID] ASC) WHERE ([ProductID] IS NOT NULL);
-

@@ -12,7 +12,7 @@
   DTS:ObjectName="DimCustomer"
   DTS:PackageType="5"
   DTS:VersionBuild="4"
-  DTS:VersionGUID="{5B966358-93B5-4A01-828C-A61ED722DB4D}">
+  DTS:VersionGUID="{11A7F3D3-D0AA-4B4A-AB09-6EF9338AB8A5}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -37,7 +37,7 @@
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=localhost;Initial Catalog=NorthWindDW;Provider=SQLOLEDB;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-DimCustomer-Target;" />
+          DTS:ConnectionString="Data Source=localhost;Initial Catalog=NorthWindDW;Provider=SQLOLEDB.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-DimCustomer-Target;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
@@ -989,27 +989,27 @@ where [refTable].[CustomerID] = ?</property>
       <GraphLayout
         Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
-          Size="210,42"
+          Size="209.6,41.6"
           Id="Package\Add New Customer"
           TopLeft="370,315" />
         <NodeLayout
-          Size="210,42"
+          Size="209.6,41.6"
           Id="Package\Get Database RowVersion"
           TopLeft="370,60" />
         <NodeLayout
-          Size="210,42"
+          Size="209.6,41.6"
           Id="Package\Get Last Customer Change"
           TopLeft="370,145" />
         <NodeLayout
-          Size="210,42"
+          Size="209.6,41.6"
           Id="Package\Initialize Staging Table"
           TopLeft="370,230" />
         <NodeLayout
-          Size="210,42"
+          Size="209.6,41.6"
           Id="Package\Sync Customer Data"
           TopLeft="370,400" />
         <NodeLayout
-          Size="210,42"
+          Size="209.6,41.6"
           Id="Package\Update LastRowVersion"
           TopLeft="370,485" />
         <EdgeLayout
@@ -1131,21 +1131,43 @@ where [refTable].[CustomerID] = ?</property>
       <GraphLayout
         Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
-          Size="139,42"
+          Size="139.2,41.6"
           Id="Package\Add New Customer\Load staging"
           TopLeft="313,329" />
         <NodeLayout
-          Size="174,42"
-          Id="Package\Add New Customer\Add New Customer"
-          TopLeft="548,326" />
+          Size="112.8,41.6"
+          Id="Package\Add New Customer\Lookup"
+          TopLeft="450,200" />
         <NodeLayout
-          Size="162,42"
+          Size="161.6,41.6"
           Id="Package\Add New Customer\Get Row Changes"
           TopLeft="428,95" />
         <NodeLayout
-          Size="113,42"
-          Id="Package\Add New Customer\Lookup"
-          TopLeft="450,200" />
+          Size="174.4,41.6"
+          Id="Package\Add New Customer\Add New Customer"
+          TopLeft="548,326" />
+        <EdgeLayout
+          Id="Package\Add New Customer.Paths[OLE DB Source Output]"
+          TopLeft="507.75,137">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,63"
+              Start="0,0"
+              End="0,55.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,55.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
         <EdgeLayout
           Id="Package\Add New Customer.Paths[Lookup No Match Output]"
           TopLeft="524,242">
@@ -1218,28 +1240,6 @@ where [refTable].[CustomerID] = ?</property>
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Add New Customer.Paths[OLE DB Source Output]"
-          TopLeft="507.75,137">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,63"
-              Start="0,0"
-              End="0,55.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,55.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
@@ -1253,27 +1253,6 @@ where [refTable].[CustomerID] = ?</property>
         <Name>TableInfoObjectType</Name>
         <Value
           type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Add New Customer\Add New Customer">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Add New Customer\Get Row Changes">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
@@ -1297,6 +1276,27 @@ where [refTable].[CustomerID] = ?</property>
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Add New Customer\Get Row Changes">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Add New Customer\Add New Customer">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
       </Property>
     </Properties>
   </PipelineComponentMetadata>

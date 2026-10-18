@@ -23,10 +23,10 @@ CREATE TABLE [dbo].[FactSales] (
     CONSTRAINT [FK_DimDate_RequiredDate] FOREIGN KEY ([RequiredDateSK]) REFERENCES [dbo].[DimDate] ([DateSK]),
     CONSTRAINT [FK_DimDate_ShippedDate] FOREIGN KEY ([ShippedDateSK]) REFERENCES [dbo].[DimDate] ([DateSK]),
     CONSTRAINT [FK_DimGeography] FOREIGN KEY ([GeographySK]) REFERENCES [dbo].[DimGeography] ([GeographySK]),
+    CONSTRAINT [FK_DimSupplier] FOREIGN KEY ([SupplierSK]) REFERENCES [dbo].[DimSupplier] ([SupplierSK]),
     CONSTRAINT [FK_DimEmployee] FOREIGN KEY ([EmployeeSK]) REFERENCES [dbo].[DimEmployee] ([EmployeeSK]),
     CONSTRAINT [FK_DimProduct] FOREIGN KEY ([ProductSK]) REFERENCES [dbo].[DimProduct] ([ProductSK]),
     CONSTRAINT [FK_DimShipper] FOREIGN KEY ([ShipperSK]) REFERENCES [dbo].[DimShipper] ([ShipperSK]),
-    CONSTRAINT [FK_DimSupplier] FOREIGN KEY ([SupplierSK]) REFERENCES [dbo].[DimSupplier] ([SupplierSK]),
     CONSTRAINT [UQ_FactSales_Order_Product] UNIQUE NONCLUSTERED ([OrderID] ASC, [ProductSK] ASC)
 );
 
@@ -74,4 +74,3 @@ CREATE NONCLUSTERED INDEX [IX_FactSales_RequiredDateSK]
 GO
 CREATE NONCLUSTERED INDEX [IX_FactSales_ShippedDateSK]
     ON [dbo].[FactSales]([ShippedDateSK] ASC);
-

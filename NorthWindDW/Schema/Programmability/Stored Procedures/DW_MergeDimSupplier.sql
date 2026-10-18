@@ -9,6 +9,6 @@ BEGIN
     SET [SupplierName] = s.[SupplierName],
         [SupplierCountry] = s.[SupplierCountry]
     FROM [dbo].[DimSupplier] AS target
-    INNER JOIN [staging].[supplier] AS s ON target.[SupplierSK]=s.[SupplierSK];
+        INNER JOIN [staging].[supplier] AS s ON target.[SupplierSK]=s.[SupplierSK];
 END;
 GO
