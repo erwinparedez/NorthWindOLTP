@@ -15,20 +15,7 @@
   DTS:VersionGUID="{63E5425D-274A-46FB-A36D-E399D3D5439F}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
-  <DTS:ConnectionManagers>
-    <DTS:ConnectionManager
-      DTS:refId="Package.ConnectionManagers[Target.NorthWindDW]"
-      DTS:CreationName="OLEDB"
-      DTS:DTSID="{AF8C1647-5959-4789-B2E9-72A156DD4DBC}"
-      DTS:ObjectName="Target.NorthWindDW">
-      <DTS:ObjectData>
-        <DTS:ConnectionManager
-          DTS:ConnectRetryCount="1"
-          DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=localhost;Initial Catalog=NorthWindDW;Provider=SQLOLEDB;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-Master-Target;" />
-      </DTS:ObjectData>
-    </DTS:ConnectionManager>
-  </DTS:ConnectionManagers>
+  <DTS:ConnectionManagers />
   <DTS:Variables />
   <DTS:Executables>
     <DTS:Executable
@@ -44,7 +31,7 @@
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{AF8C1647-5959-4789-B2E9-72A156DD4DBC}"
+          SQLTask:Connection="{9B61E34A-32F7-4184-9A25-F7E64B2931D8}"
           SQLTask:SqlStatementSource="EXEC dbo.RunNorthWindETL @tableName = 'Customer';" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>    <DTS:Executable
@@ -60,7 +47,7 @@
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{AF8C1647-5959-4789-B2E9-72A156DD4DBC}"
+          SQLTask:Connection="{9B61E34A-32F7-4184-9A25-F7E64B2931D8}"
           SQLTask:SqlStatementSource="EXEC dbo.RunNorthWindETL @tableName = 'Product';" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>    <DTS:Executable
@@ -76,7 +63,7 @@
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{AF8C1647-5959-4789-B2E9-72A156DD4DBC}"
+          SQLTask:Connection="{9B61E34A-32F7-4184-9A25-F7E64B2931D8}"
           SQLTask:SqlStatementSource="EXEC dbo.RunNorthWindETL @tableName = 'Employee';" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>    <DTS:Executable
@@ -92,7 +79,7 @@
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{AF8C1647-5959-4789-B2E9-72A156DD4DBC}"
+          SQLTask:Connection="{9B61E34A-32F7-4184-9A25-F7E64B2931D8}"
           SQLTask:SqlStatementSource="EXEC dbo.RunNorthWindETL @tableName = 'Shipper';" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>    <DTS:Executable
@@ -108,7 +95,7 @@
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{AF8C1647-5959-4789-B2E9-72A156DD4DBC}"
+          SQLTask:Connection="{9B61E34A-32F7-4184-9A25-F7E64B2931D8}"
           SQLTask:SqlStatementSource="EXEC dbo.RunNorthWindETL @tableName = 'Geography';" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>    <DTS:Executable
@@ -124,7 +111,7 @@
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{AF8C1647-5959-4789-B2E9-72A156DD4DBC}"
+          SQLTask:Connection="{9B61E34A-32F7-4184-9A25-F7E64B2931D8}"
           SQLTask:SqlStatementSource="EXEC dbo.RunNorthWindETL @tableName = 'Supplier';" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
@@ -141,7 +128,7 @@
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{AF8C1647-5959-4789-B2E9-72A156DD4DBC}"
+          SQLTask:Connection="{9B61E34A-32F7-4184-9A25-F7E64B2931D8}"
           SQLTask:SqlStatementSource="EXEC dbo.RunNorthWindETL @tableName = 'Sales';" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>

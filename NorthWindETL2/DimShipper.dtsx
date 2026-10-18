@@ -15,32 +15,7 @@
   DTS:VersionGUID="{461906A6-EBB9-4143-8DCF-FB8A89C892F3}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
-  <DTS:ConnectionManagers>
-    <DTS:ConnectionManager
-      DTS:refId="Package.ConnectionManagers[Source.NorthWindOLTP]"
-      DTS:CreationName="OLEDB"
-      DTS:DTSID="{DC8E79D4-D5A3-4A0E-B52E-C4EC3E13EF9A}"
-      DTS:ObjectName="Source.NorthWindOLTP">
-      <DTS:ObjectData>
-        <DTS:ConnectionManager
-          DTS:ConnectRetryCount="1"
-          DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=localhost;Initial Catalog=NorthWindOLTP;Provider=SQLOLEDB.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-DimShipper-Source;" />
-      </DTS:ObjectData>
-    </DTS:ConnectionManager>
-    <DTS:ConnectionManager
-      DTS:refId="Package.ConnectionManagers[Target.NorthWindDW]"
-      DTS:CreationName="OLEDB"
-      DTS:DTSID="{9E217611-3A83-4C6D-901F-9A61FE397B93}"
-      DTS:ObjectName="Target.NorthWindDW">
-      <DTS:ObjectData>
-        <DTS:ConnectionManager
-          DTS:ConnectRetryCount="1"
-          DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=localhost;Initial Catalog=NorthWindDW;Provider=SQLOLEDB.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-DimShipper-Target;" />
-      </DTS:ObjectData>
-    </DTS:ConnectionManager>
-  </DTS:ConnectionManagers>
+  <DTS:ConnectionManagers />
   <DTS:Variables>
     <DTS:Variable
       DTS:CreationName=""
@@ -135,8 +110,8 @@
               <connections>
                 <connection
                   refId="Package\Add New Shipper\Add New Shipper.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[Target.NorthWindDW]"
-                  connectionManagerRefId="Package.ConnectionManagers[Target.NorthWindDW]"
+                  connectionManagerID="{9B61E34A-32F7-4184-9A25-F7E64B2931D8}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Target.NorthWindDW]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -256,8 +231,8 @@
               <connections>
                 <connection
                   refId="Package\Add New Shipper\Get Row Changes.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[Source.NorthWindOLTP]"
-                  connectionManagerRefId="Package.ConnectionManagers[Source.NorthWindOLTP]"
+                  connectionManagerID="{4E5A8F93-78C1-4D3B-983C-28D8A31F7401}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Source.NorthWindOLTP]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -391,8 +366,8 @@
               <connections>
                 <connection
                   refId="Package\Add New Shipper\Load staging.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[Target.NorthWindDW]"
-                  connectionManagerRefId="Package.ConnectionManagers[Target.NorthWindDW]"
+                  connectionManagerID="{9B61E34A-32F7-4184-9A25-F7E64B2931D8}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Target.NorthWindDW]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -536,8 +511,8 @@ where [refTable].[ShipperID] = ?</property>
               <connections>
                 <connection
                   refId="Package\Add New Shipper\Lookup.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[Target.NorthWindDW]"
-                  connectionManagerRefId="Package.ConnectionManagers[Target.NorthWindDW]"
+                  connectionManagerID="{9B61E34A-32F7-4184-9A25-F7E64B2931D8}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Target.NorthWindDW]"
                   description="Connection manager used to access lookup data."
                   name="OleDbConnection" />
               </connections>
@@ -657,7 +632,7 @@ where [refTable].[ShipperID] = ?</property>
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{DC8E79D4-D5A3-4A0E-B52E-C4EC3E13EF9A}"
+          SQLTask:Connection="{4E5A8F93-78C1-4D3B-983C-28D8A31F7401}"
           SQLTask:SqlStatementSource="EXECUTE [dbo].[GetDatabaseRowVersion]"
           SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
           <SQLTask:ResultBinding
@@ -679,7 +654,7 @@ where [refTable].[ShipperID] = ?</property>
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{9E217611-3A83-4C6D-901F-9A61FE397B93}"
+          SQLTask:Connection="{9B61E34A-32F7-4184-9A25-F7E64B2931D8}"
           SQLTask:SqlStatementSource="EXECUTE [dbo].[GetLastPackageRowVersion] @tableName = 'Shipper'"
           SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
           <SQLTask:ResultBinding
@@ -701,7 +676,7 @@ where [refTable].[ShipperID] = ?</property>
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{9E217611-3A83-4C6D-901F-9A61FE397B93}"
+          SQLTask:Connection="{9B61E34A-32F7-4184-9A25-F7E64B2931D8}"
           SQLTask:SqlStatementSource="TRUNCATE TABLE [staging].[shipper];" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
@@ -718,7 +693,7 @@ where [refTable].[ShipperID] = ?</property>
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{9E217611-3A83-4C6D-901F-9A61FE397B93}"
+          SQLTask:Connection="{9B61E34A-32F7-4184-9A25-F7E64B2931D8}"
           SQLTask:SqlStatementSource="EXECUTE [dbo].[DW_MergeDimShipper];" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
@@ -735,7 +710,7 @@ where [refTable].[ShipperID] = ?</property>
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{9E217611-3A83-4C6D-901F-9A61FE397B93}"
+          SQLTask:Connection="{9B61E34A-32F7-4184-9A25-F7E64B2931D8}"
           SQLTask:SqlStatementSource="EXECUTE [dbo].[UpdateLastPackageRowVersion] @tableName = 'Shipper', @lastRowVersion = ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
           <SQLTask:ParameterBinding
             SQLTask:ParameterName="0"

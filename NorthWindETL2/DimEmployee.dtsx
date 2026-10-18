@@ -15,32 +15,7 @@
   DTS:VersionGUID="{525DCFD9-F10B-4143-9901-3FD366C7C104}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
-  <DTS:ConnectionManagers>
-    <DTS:ConnectionManager
-      DTS:refId="Package.ConnectionManagers[Source.NorthWindOLTP]"
-      DTS:CreationName="OLEDB"
-      DTS:DTSID="{ED1AC120-E1C9-442A-B7DF-C2BE4CD5C007}"
-      DTS:ObjectName="Source.NorthWindOLTP">
-      <DTS:ObjectData>
-        <DTS:ConnectionManager
-          DTS:ConnectRetryCount="1"
-          DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=localhost;Initial Catalog=NorthWindOLTP;Provider=SQLOLEDB.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-DimEmployee-Source;" />
-      </DTS:ObjectData>
-    </DTS:ConnectionManager>
-    <DTS:ConnectionManager
-      DTS:refId="Package.ConnectionManagers[Target.NorthWindDW]"
-      DTS:CreationName="OLEDB"
-      DTS:DTSID="{82723DE4-900D-4C89-B5B3-6E1C22F49A4F}"
-      DTS:ObjectName="Target.NorthWindDW">
-      <DTS:ObjectData>
-        <DTS:ConnectionManager
-          DTS:ConnectRetryCount="1"
-          DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=localhost;Initial Catalog=NorthWindDW;Provider=SQLOLEDB.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-DimEmployee-Target;" />
-      </DTS:ObjectData>
-    </DTS:ConnectionManager>
-  </DTS:ConnectionManagers>
+  <DTS:ConnectionManagers />
   <DTS:Variables>
     <DTS:Variable
       DTS:CreationName=""
@@ -135,8 +110,8 @@
               <connections>
                 <connection
                   refId="Package\Add New Employee\Add New Employee.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[Target.NorthWindDW]"
-                  connectionManagerRefId="Package.ConnectionManagers[Target.NorthWindDW]"
+                  connectionManagerID="{9B61E34A-32F7-4184-9A25-F7E64B2931D8}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Target.NorthWindDW]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -338,8 +313,8 @@
               <connections>
                 <connection
                   refId="Package\Add New Employee\Get Row Changes.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[Source.NorthWindOLTP]"
-                  connectionManagerRefId="Package.ConnectionManagers[Source.NorthWindOLTP]"
+                  connectionManagerID="{4E5A8F93-78C1-4D3B-983C-28D8A31F7401}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Source.NorthWindOLTP]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -617,8 +592,8 @@
               <connections>
                 <connection
                   refId="Package\Add New Employee\Load staging.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[Target.NorthWindDW]"
-                  connectionManagerRefId="Package.ConnectionManagers[Target.NorthWindDW]"
+                  connectionManagerID="{9B61E34A-32F7-4184-9A25-F7E64B2931D8}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Target.NorthWindDW]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -844,8 +819,8 @@ where [refTable].[EmployeeID] = ?</property>
               <connections>
                 <connection
                   refId="Package\Add New Employee\Lookup.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[Target.NorthWindDW]"
-                  connectionManagerRefId="Package.ConnectionManagers[Target.NorthWindDW]"
+                  connectionManagerID="{9B61E34A-32F7-4184-9A25-F7E64B2931D8}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Target.NorthWindDW]"
                   description="Connection manager used to access lookup data."
                   name="OleDbConnection" />
               </connections>
@@ -965,7 +940,7 @@ where [refTable].[EmployeeID] = ?</property>
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{ED1AC120-E1C9-442A-B7DF-C2BE4CD5C007}"
+          SQLTask:Connection="{4E5A8F93-78C1-4D3B-983C-28D8A31F7401}"
           SQLTask:SqlStatementSource="EXECUTE [dbo].[GetDatabaseRowVersion]"
           SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
           <SQLTask:ResultBinding
@@ -987,7 +962,7 @@ where [refTable].[EmployeeID] = ?</property>
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{82723DE4-900D-4C89-B5B3-6E1C22F49A4F}"
+          SQLTask:Connection="{9B61E34A-32F7-4184-9A25-F7E64B2931D8}"
           SQLTask:SqlStatementSource="EXECUTE [dbo].[GetLastPackageRowVersion] @tableName = 'Employee'"
           SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
           <SQLTask:ResultBinding
@@ -1009,7 +984,7 @@ where [refTable].[EmployeeID] = ?</property>
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{82723DE4-900D-4C89-B5B3-6E1C22F49A4F}"
+          SQLTask:Connection="{9B61E34A-32F7-4184-9A25-F7E64B2931D8}"
           SQLTask:SqlStatementSource="TRUNCATE TABLE [staging].[employee];" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
@@ -1026,7 +1001,7 @@ where [refTable].[EmployeeID] = ?</property>
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{82723DE4-900D-4C89-B5B3-6E1C22F49A4F}"
+          SQLTask:Connection="{9B61E34A-32F7-4184-9A25-F7E64B2931D8}"
           SQLTask:SqlStatementSource="EXECUTE [dbo].[DW_MergeDimEmployee];" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
@@ -1043,7 +1018,7 @@ where [refTable].[EmployeeID] = ?</property>
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{82723DE4-900D-4C89-B5B3-6E1C22F49A4F}"
+          SQLTask:Connection="{9B61E34A-32F7-4184-9A25-F7E64B2931D8}"
           SQLTask:SqlStatementSource="EXECUTE [dbo].[UpdateLastPackageRowVersion] @tableName = 'Employee', @lastRowVersion = ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
           <SQLTask:ParameterBinding
             SQLTask:ParameterName="0"
