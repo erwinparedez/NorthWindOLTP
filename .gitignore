@@ -1,22 +1,66 @@
+# ==========================================
+# Visual Studio / SSDT / SSIS .gitignore
+# ==========================================
 
-# Archivos temporales de Visual Studio
+# Archivos de usuario y entorno personal
 .vs/
-bin/
-obj/
 *.user
+*.dtproj.user
+*.sqlproj.user
 *.suo
+*.userprefs
+*.userosscache
+*.sln.docstates
 
-# Archivos temporales de SQL Server Database Project
+# Salidas de compilación y binarios
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+bld/
+*.dll
+*.pdb
+*.dacpac
+*.ispac
+
+# Archivos temporales de SQL Server Database Project (SSDT)
 *.dbmdl
-
 *.jfm
+*.refactorlog
 
-# Archivos temporales de compilación
+# Metadatos temporales de SSIS
+*.database
+
+# Conexiones locales y administradores de conexiones
+# (Para evitar subir nombres de servidor locales/credenciales personales)
+*.conmgr
+NorthWindETL2/*.conmgr
+[Cc]onnection [Mm]anagers/
+
+# Archivos de respaldo de base de datos
+*.bak
+
+# Archivos temporales de compilación y logs
 *.cache
 *.log
 UpgradeLog*.htm
 UpgradeLog*.xml
 scratch/
+TestResults/
 
 # Registros de importación de esquema de VS
 NorthWindDW/Registros de importaci*/
+NorthWindOLTP/Registros de importaci*/
+
+# Archivos de configuración de IDEs adicionales
+.idea/
+.vscode/
+
+# Archivos del sistema operativo
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
