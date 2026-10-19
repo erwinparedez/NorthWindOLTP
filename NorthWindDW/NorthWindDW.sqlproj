@@ -82,6 +82,7 @@
     <Build Include="Schema\dbo\Staging\staging.shipper.sql" />
     <Build Include="Schema\dbo\Staging\staging.employee.sql" />
     <Build Include="Schema\dbo\Staging\staging.geography.sql" />
+    <Build Include="NorthWindJob.sql" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Schema\Programmability\Stored Procedures" />
@@ -101,6 +102,5 @@
     <None Include="Scripts\PackageConfig.data.sql" />
     <None Include="Scripts\DWSeed.data.sql" />
     <None Include="Scripts\NorthWindETLProcedures.sql" />
-    <None Include="Scripts\NorthWindJob.sql" />
   </ItemGroup>
 </Project>

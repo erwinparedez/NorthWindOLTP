@@ -1,165 +1,192 @@
-USE [msdb]
+USE [msdb];
 GO
 
-BEGIN TRANSACTION
-DECLARE @ReturnCode INT
-SELECT @ReturnCode = 0
+SET NOCOUNT ON;
+SET XACT_ABORT ON;
 
-IF NOT EXISTS (SELECT name FROM msdb.dbo.syscategories WHERE name=N'[Uncategorized (Local)]' AND category_class=1)
-BEGIN
-    EXEC @ReturnCode = msdb.dbo.sp_add_category @class=N'JOB', @type=N'LOCAL', @name=N'[Uncategorized (Local)]'
-    IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
-END
+BEGIN TRY
+	BEGIN TRANSACTION;
 
-DECLARE @jobId BINARY(16)
-EXEC @ReturnCode =  msdb.dbo.sp_add_job @job_name=N'NorthWindJob', 
-		@enabled=1, 
-		@notify_level_eventlog=0, 
-		@notify_level_email=0, 
-		@notify_level_netsend=0, 
-		@notify_level_page=0, 
-		@delete_level=0, 
-		@description=N'NorthWind BI Incremental ETL Job executing star schema packages in sequence.', 
-		@category_name=N'[Uncategorized (Local)]', 
-		@owner_login_name=N'sa', @job_id = @jobId OUTPUT
-IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
+	DECLARE @ReturnCode INT;
+	DECLARE @JobId UNIQUEIDENTIFIER;
+	DECLARE @JobName SYSNAME;
+	DECLARE @PackageName SYSNAME;
+	DECLARE @Description NVARCHAR(512);
+	DECLARE @Command NVARCHAR(MAX);
 
--- Step 1: Load Customer
-EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'Load Customer', 
-		@step_id=1, 
-		@cmdexec_success_code=0, 
-		@on_success_action=3, 
-		@on_success_step_id=0, 
-		@on_fail_action=2, 
-		@on_fail_step_id=0, 
-		@retry_attempts=0, 
-		@retry_interval=0, 
-		@os_run_priority=0, @subsystem=N'SSIS', 
-		@command=N'/ISSERVER "\"\SSISDB\NorthWind\NorthWindETL2\DimCustomer.dtsx\"" /SERVER localhost /Par "\"$ServerOption::LOGGING_LEVEL(Int16)\"";1 /Par "\"$ServerOption::SYNCHRONIZED(Boolean)\"";True /CALLERINFO SQLAGENT /REPORTING E', 
-		@database_name=N'master', 
-		@flags=0
-IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
+	IF NOT EXISTS
+	(
+		SELECT 1
+		FROM msdb.dbo.syscategories
+		WHERE name = N'[Uncategorized (Local)]'
+		  AND category_class = 1
+	)
+	BEGIN
+		EXEC @ReturnCode = msdb.dbo.sp_add_category
+			@class = N'JOB',
+			@type = N'LOCAL',
+			@name = N'[Uncategorized (Local)]';
 
--- Step 2: Load Product
-EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'Load Product', 
-		@step_id=2, 
-		@cmdexec_success_code=0, 
-		@on_success_action=3, 
-		@on_success_step_id=0, 
-		@on_fail_action=2, 
-		@on_fail_step_id=0, 
-		@retry_attempts=0, 
-		@retry_interval=0, 
-		@os_run_priority=0, @subsystem=N'SSIS', 
-		@command=N'/ISSERVER "\"\SSISDB\NorthWind\NorthWindETL2\DimProduct.dtsx\"" /SERVER localhost /Par "\"$ServerOption::LOGGING_LEVEL(Int16)\"";1 /Par "\"$ServerOption::SYNCHRONIZED(Boolean)\"";True /CALLERINFO SQLAGENT /REPORTING E', 
-		@database_name=N'master', 
-		@flags=0
-IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
+		IF @ReturnCode <> 0
+			THROW 51000, 'Could not create the SQL Agent job category.', 1;
+	END;
 
--- Step 3: Load Supplier
-EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'Load Supplier', 
-		@step_id=3, 
-		@cmdexec_success_code=0, 
-		@on_success_action=3, 
-		@on_success_step_id=0, 
-		@on_fail_action=2, 
-		@on_fail_step_id=0, 
-		@retry_attempts=0, 
-		@retry_interval=0, 
-		@os_run_priority=0, @subsystem=N'SSIS', 
-		@command=N'/ISSERVER "\"\SSISDB\NorthWind\NorthWindETL2\DimSupplier.dtsx\"" /SERVER localhost /Par "\"$ServerOption::LOGGING_LEVEL(Int16)\"";1 /Par "\"$ServerOption::SYNCHRONIZED(Boolean)\"";True /CALLERINFO SQLAGENT /REPORTING E', 
-		@database_name=N'master', 
-		@flags=0
-IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
+	SELECT @JobId = job_id
+	FROM msdb.dbo.sysjobs
+	WHERE name = N'NorthWindJob';
 
--- Step 4: Load Employee
-EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'Load Employee', 
-		@step_id=4, 
-		@cmdexec_success_code=0, 
-		@on_success_action=3, 
-		@on_success_step_id=0, 
-		@on_fail_action=2, 
-		@on_fail_step_id=0, 
-		@retry_attempts=0, 
-		@retry_interval=0, 
-		@os_run_priority=0, @subsystem=N'SSIS', 
-		@command=N'/ISSERVER "\"\SSISDB\NorthWind\NorthWindETL2\DimEmployee.dtsx\"" /SERVER localhost /Par "\"$ServerOption::LOGGING_LEVEL(Int16)\"";1 /Par "\"$ServerOption::SYNCHRONIZED(Boolean)\"";True /CALLERINFO SQLAGENT /REPORTING E', 
-		@database_name=N'master', 
-		@flags=0
-IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
+	IF @JobId IS NOT NULL
+	BEGIN
+		EXEC @ReturnCode = msdb.dbo.sp_update_job
+			@job_id = @JobId,
+			@enabled = 0;
 
--- Step 5: Load Shipper
-EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'Load Shipper', 
-		@step_id=5, 
-		@cmdexec_success_code=0, 
-		@on_success_action=3, 
-		@on_success_step_id=0, 
-		@on_fail_action=2, 
-		@on_fail_step_id=0, 
-		@retry_attempts=0, 
-		@retry_interval=0, 
-		@os_run_priority=0, @subsystem=N'SSIS', 
-		@command=N'/ISSERVER "\"\SSISDB\NorthWind\NorthWindETL2\DimShipper.dtsx\"" /SERVER localhost /Par "\"$ServerOption::LOGGING_LEVEL(Int16)\"";1 /Par "\"$ServerOption::SYNCHRONIZED(Boolean)\"";True /CALLERINFO SQLAGENT /REPORTING E', 
-		@database_name=N'master', 
-		@flags=0
-IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
+		IF @ReturnCode <> 0
+			THROW 51007, 'Could not disable the previous aggregate NorthWindJob.', 1;
+	END;
 
--- Step 6: Load Geography
-EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'Load Geography', 
-		@step_id=6, 
-		@cmdexec_success_code=0, 
-		@on_success_action=3, 
-		@on_success_step_id=0, 
-		@on_fail_action=2, 
-		@on_fail_step_id=0, 
-		@retry_attempts=0, 
-		@retry_interval=0, 
-		@os_run_priority=0, @subsystem=N'SSIS', 
-		@command=N'/ISSERVER "\"\SSISDB\NorthWind\NorthWindETL2\DimGeography.dtsx\"" /SERVER localhost /Par "\"$ServerOption::LOGGING_LEVEL(Int16)\"";1 /Par "\"$ServerOption::SYNCHRONIZED(Boolean)\"";True /CALLERINFO SQLAGENT /REPORTING E', 
-		@database_name=N'master', 
-		@flags=0
-IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
+	DECLARE @Jobs TABLE
+	(
+		LoadOrder INT NOT NULL,
+		JobName SYSNAME NOT NULL,
+		PackageName SYSNAME NOT NULL,
+		Description NVARCHAR(512) NOT NULL
+	);
 
--- Step 7: Load Sales (Fact Table)
-EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'Load Sales', 
-		@step_id=7, 
-		@cmdexec_success_code=0, 
-		@on_success_action=1, 
-		@on_success_step_id=0, 
-		@on_fail_action=2, 
-		@on_fail_step_id=0, 
-		@retry_attempts=0, 
-		@retry_interval=0, 
-		@os_run_priority=0, @subsystem=N'SSIS', 
-		@command=N'/ISSERVER "\"\SSISDB\NorthWind\NorthWindETL2\FactSales.dtsx\"" /SERVER localhost /Par "\"$ServerOption::LOGGING_LEVEL(Int16)\"";1 /Par "\"$ServerOption::SYNCHRONIZED(Boolean)\"";True /CALLERINFO SQLAGENT /REPORTING E', 
-		@database_name=N'master', 
-		@flags=0
-IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
+	INSERT INTO @Jobs (LoadOrder, JobName, PackageName, Description)
+	VALUES
+		(1, N'NorthWind_ETL_DimCustomer', N'DimCustomer', N'Manual incremental load of DimCustomer.'),
+		(2, N'NorthWind_ETL_DimProduct', N'DimProduct', N'Manual incremental load of DimProduct.'),
+		(3, N'NorthWind_ETL_DimSupplier', N'DimSupplier', N'Manual incremental load of DimSupplier.'),
+		(4, N'NorthWind_ETL_DimEmployee', N'DimEmployee', N'Manual incremental load of DimEmployee.'),
+		(5, N'NorthWind_ETL_DimShipper', N'DimShipper', N'Manual incremental load of DimShipper.'),
+		(6, N'NorthWind_ETL_DimGeography', N'DimGeography', N'Manual incremental load of DimGeography.'),
+		(7, N'NorthWind_ETL_FactSales', N'FactSales', N'Manual incremental load of FactSales. Run after all dimension jobs.');
 
-EXEC @ReturnCode = msdb.dbo.sp_update_job @job_id = @jobId, @start_step_id = 1
-IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
+	DECLARE JobCursor CURSOR LOCAL FAST_FORWARD FOR
+		SELECT JobName, PackageName, Description
+		FROM @Jobs
+		ORDER BY LoadOrder;
 
-EXEC @ReturnCode = msdb.dbo.sp_add_jobschedule @job_id=@jobId, @name=N'Every 1 minute', 
-		@enabled=1, 
-		@freq_type=4, 
-		@freq_interval=1, 
-		@freq_subday_type=4, 
-		@freq_subday_interval=1, 
-		@freq_relative_interval=0, 
-		@freq_recurrence_factor=0, 
-		@active_start_date=20261011, 
-		@active_end_date=99991231, 
-		@active_start_time=0, 
-		@active_end_time=235959, 
-		@schedule_uid=N'11111111-2222-3333-4444-555555555555'
-IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
+	OPEN JobCursor;
+	FETCH NEXT FROM JobCursor INTO @JobName, @PackageName, @Description;
 
-EXEC @ReturnCode = msdb.dbo.sp_add_jobserver @job_id = @jobId, @server_name = N'(local)'
-IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
+	WHILE @@FETCH_STATUS = 0
+	BEGIN
+		SET @JobId = NULL;
+		SET @ReturnCode = 0;
 
-COMMIT TRANSACTION
-GOTO EndSave
-QuitWithRollback:
-    IF (@@TRANCOUNT > 0) ROLLBACK TRANSACTION
-EndSave:
+		SELECT @JobId = job_id
+		FROM msdb.dbo.sysjobs
+		WHERE name = @JobName;
+
+		IF @JobId IS NULL
+		BEGIN
+			EXEC @ReturnCode = msdb.dbo.sp_add_job
+				@job_name = @JobName,
+				@enabled = 1,
+				@description = @Description,
+				@category_name = N'[Uncategorized (Local)]',
+				@job_id = @JobId OUTPUT;
+
+			IF @ReturnCode <> 0
+				THROW 51001, 'Could not create a SQL Agent job.', 1;
+		END
+		ELSE
+		BEGIN
+			EXEC @ReturnCode = msdb.dbo.sp_update_job
+				@job_id = @JobId,
+				@enabled = 1,
+				@description = @Description,
+				@category_name = N'[Uncategorized (Local)]';
+
+			IF @ReturnCode <> 0
+				THROW 51002, 'Could not update a SQL Agent job.', 1;
+		END;
+
+		SET @Command = N'/ISSERVER "\"\SSISDB\NorthWind\NorthWindETL2\'
+			+ @PackageName
+			+ N'.dtsx\"" /SERVER localhost /Par "\"$ServerOption::LOGGING_LEVEL(Int16)\"";1 /Par "\"$ServerOption::SYNCHRONIZED(Boolean)\"";True /CALLERINFO SQLAGENT /REPORTING E';
+
+		SET @ReturnCode = 0;
+		IF EXISTS
+		(
+			SELECT 1
+			FROM msdb.dbo.sysjobsteps
+			WHERE job_id = @JobId
+			  AND step_id = 1
+		)
+		BEGIN
+			EXEC @ReturnCode = msdb.dbo.sp_update_jobstep
+				@job_id = @JobId,
+				@step_id = 1,
+				@step_name = N'Execute SSIS package',
+				@subsystem = N'SSIS',
+				@command = @Command,
+				@database_name = N'master',
+				@on_success_action = 1,
+				@on_fail_action = 2,
+				@retry_attempts = 0,
+				@retry_interval = 0;
+
+			IF @ReturnCode <> 0
+				THROW 51003, 'Could not update the SSIS job step.', 1;
+		END
+		ELSE
+		BEGIN
+			EXEC @ReturnCode = msdb.dbo.sp_add_jobstep
+				@job_id = @JobId,
+				@step_name = N'Execute SSIS package',
+				@step_id = 1,
+				@subsystem = N'SSIS',
+				@command = @Command,
+				@database_name = N'master',
+				@on_success_action = 1,
+				@on_fail_action = 2,
+				@retry_attempts = 0,
+				@retry_interval = 0;
+
+			IF @ReturnCode <> 0
+				THROW 51004, 'Could not create the SSIS job step.', 1;
+		END;
+
+		EXEC @ReturnCode = msdb.dbo.sp_update_job
+			@job_id = @JobId,
+			@start_step_id = 1;
+
+		IF @ReturnCode <> 0
+			THROW 51005, 'Could not set the SQL Agent job start step.', 1;
+
+		IF NOT EXISTS
+		(
+			SELECT 1
+			FROM msdb.dbo.sysjobservers
+			WHERE job_id = @JobId
+		)
+		BEGIN
+			EXEC @ReturnCode = msdb.dbo.sp_add_jobserver
+				@job_id = @JobId,
+				@server_name = N'(local)';
+
+			IF @ReturnCode <> 0
+				THROW 51006, 'Could not assign the SQL Agent job to this server.', 1;
+		END;
+
+		FETCH NEXT FROM JobCursor INTO @JobName, @PackageName, @Description;
+	END;
+
+	CLOSE JobCursor;
+	DEALLOCATE JobCursor;
+
+	COMMIT TRANSACTION;
+END TRY
+BEGIN CATCH
+	IF CURSOR_STATUS('local', 'JobCursor') >= 0
+		CLOSE JobCursor;
+	IF CURSOR_STATUS('local', 'JobCursor') > -3
+		DEALLOCATE JobCursor;
+	IF XACT_STATE() <> 0
+		ROLLBACK TRANSACTION;
+	THROW;
+END CATCH;
 GO
