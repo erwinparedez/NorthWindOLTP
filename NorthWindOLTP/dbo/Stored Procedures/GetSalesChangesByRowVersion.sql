@@ -20,10 +20,22 @@ BEGIN
         amounts.GrossSalesAmount,
         CONVERT(DECIMAL(19,4),amounts.GrossSalesAmount*amounts.Discount) AS DiscountAmount,
         CONVERT(DECIMAL(19,4),amounts.GrossSalesAmount*(1-amounts.Discount)) AS NetSalesAmount,
-        CONVERT(DECIMAL(19,4),COALESCE(o.Freight,0)/NULLIF(totals.LineCount,0)) AS FreightAllocated
+        CONVERT(DECIMAL(19,4),
+            CASE 
+                WHEN COALESCE(totals.OrderTotalGrossAmount, 0) > 0 
+                THEN (COALESCE(o.Freight, 0) * amounts.GrossSalesAmount) / totals.OrderTotalGrossAmount
+                ELSE COALESCE(o.Freight, 0) / NULLIF(totals.LineCount, 0)
+            END
+        ) AS FreightAllocated
     FROM dbo.Orders AS o
     INNER JOIN dbo.OrderDetails AS d ON d.OrderID=o.OrderID
-    CROSS APPLY (SELECT COUNT(*) AS LineCount FROM dbo.OrderDetails AS allLines WHERE allLines.OrderID=o.OrderID) AS totals
+    CROSS APPLY (
+        SELECT 
+            COUNT(*) AS LineCount,
+            SUM(CONVERT(DECIMAL(19,4), allLines.UnitPrice * allLines.Quantity)) AS OrderTotalGrossAmount
+        FROM dbo.OrderDetails AS allLines 
+        WHERE allLines.OrderID=o.OrderID
+    ) AS totals
     CROSS APPLY (SELECT CONVERT(DECIMAL(9,6),d.Discount) AS Discount,
         CONVERT(DECIMAL(19,4),d.UnitPrice*d.Quantity) AS GrossSalesAmount) AS amounts
     WHERE (o.[rowversion] > CONVERT(BINARY(8), @startRow) AND o.[rowversion] <= CONVERT(BINARY(8), @endRow))
