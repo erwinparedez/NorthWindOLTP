@@ -1,4 +1,4 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
   DTS:refId="Package"
   DTS:CreationDate="10/11/2026 10:10:00 PM"
@@ -1070,6 +1070,18 @@
                       cachedScale="4"
                       externalMetadataColumnId="Package\Add New Orders\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[FreightAllocated]"
                       lineageId="Package\Add New Orders\Get Sales.Outputs[OLE DB Source Output].Columns[FreightAllocated]" />
+                    <inputColumn
+                      refId="Package\Add New Orders\Load staging.Inputs[OLE DB Destination Input].Columns[GeographySK]"
+                      cachedDataType="i4"
+                      cachedName="GeographySK"
+                      externalMetadataColumnId="Package\Add New Orders\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[GeographySK]"
+                      lineageId="Package\Add New Orders\Lookup Geography.Outputs[Lookup Match Output].Columns[GeographySK]" />
+                    <inputColumn
+                      refId="Package\Add New Orders\Load staging.Inputs[OLE DB Destination Input].Columns[SupplierSK]"
+                      cachedDataType="i4"
+                      cachedName="SupplierSK"
+                      externalMetadataColumnId="Package\Add New Orders\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[SupplierSK]"
+                      lineageId="Package\Add New Orders\Lookup Product.Outputs[Lookup Match Output].Columns[SupplierSK]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
