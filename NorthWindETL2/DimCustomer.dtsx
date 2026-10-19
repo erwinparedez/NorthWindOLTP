@@ -11,11 +11,10 @@
   DTS:LocaleID="3082"
   DTS:ObjectName="DimCustomer"
   DTS:PackageType="5"
-  DTS:VersionBuild="4"
-  DTS:VersionGUID="{AF607CC2-736E-49B7-B8D2-9D96D67CB569}">
+  DTS:VersionBuild="5"
+  DTS:VersionGUID="{21CEE5D0-8FFD-4D50-90B5-6378D977FD79}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
-  <DTS:ConnectionManagers />
   <DTS:Variables>
     <DTS:Variable
       DTS:CreationName=""
