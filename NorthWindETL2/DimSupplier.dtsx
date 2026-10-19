@@ -1,4 +1,4 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
   DTS:refId="Package"
   DTS:CreationDate="10/11/2026 10:10:00 PM"
@@ -413,6 +413,12 @@
                   name="OLE DB Destination Input">
                   <inputColumns>
                     <inputColumn
+                      refId="Package\Add New Supplier\Load staging.Inputs[OLE DB Destination Input].Columns[SupplierSK]"
+                      cachedDataType="i4"
+                      cachedName="SupplierSK"
+                      externalMetadataColumnId="Package\Add New Supplier\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[SupplierSK]"
+                      lineageId="Package\Add New Supplier\Lookup.Outputs[Lookup Match Output].Columns[SupplierSK]" />
+                    <inputColumn
                       refId="Package\Add New Supplier\Load staging.Inputs[OLE DB Destination Input].Columns[SupplierID]"
                       cachedDataType="i4"
                       cachedName="SupplierID"
@@ -425,6 +431,13 @@
                       cachedName="SupplierName"
                       externalMetadataColumnId="Package\Add New Supplier\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[SupplierName]"
                       lineageId="Package\Add New Supplier\Get Row Changes.Outputs[OLE DB Source Output].Columns[SupplierName]" />
+                    <inputColumn
+                      refId="Package\Add New Supplier\Load staging.Inputs[OLE DB Destination Input].Columns[SupplierCountry]"
+                      cachedDataType="wstr"
+                      cachedLength="15"
+                      cachedName="SupplierCountry"
+                      externalMetadataColumnId="Package\Add New Supplier\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[SupplierCountry]"
+                      lineageId="Package\Add New Supplier\Get Row Changes.Outputs[OLE DB Source Output].Columns[SupplierCountry]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
