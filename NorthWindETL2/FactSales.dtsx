@@ -236,7 +236,7 @@
                       cachedDataType="i4"
                       cachedName="SupplierSK"
                       externalMetadataColumnId="Package\Add New Orders\Add New Sales.Inputs[OLE DB Destination Input].ExternalColumns[SupplierSK]"
-                      lineageId="Package\Add New Orders\Lookup Product.Outputs[Lookup Match Output].Columns[SupplierSK]" />
+                      lineageId="Package\Add New Orders\Lookup Supplier.Outputs[Lookup Match Output].Columns[SupplierSK]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -1081,7 +1081,7 @@
                       cachedDataType="i4"
                       cachedName="SupplierSK"
                       externalMetadataColumnId="Package\Add New Orders\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[SupplierSK]"
-                      lineageId="Package\Add New Orders\Lookup Product.Outputs[Lookup Match Output].Columns[SupplierSK]" />
+                      lineageId="Package\Add New Orders\Lookup Supplier.Outputs[Lookup Match Output].Columns[SupplierSK]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -1683,13 +1683,13 @@ where [refTable].[City] = ?</property>
                   description="Specifies the SQL statement that generates the lookup table."
                   expressionType="Notify"
                   name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT p.ProductID, p.ProductSK, COALESCE(s.SupplierSK, 0) AS SupplierSK FROM dbo.DimProduct AS p INNER JOIN NorthWindOLTP.dbo.Products AS o ON o.ProductID = p.ProductID LEFT JOIN dbo.DimSupplier AS s ON s.SupplierID = o.SupplierID;</property>
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT p.ProductID, p.ProductSK, o.SupplierID FROM dbo.DimProduct AS p INNER JOIN NorthWindOLTP.dbo.Products AS o ON o.ProductID = p.ProductID;</property>
                 <property
                   dataType="System.String"
                   description="Specifies a SQL statement that uses parameters to generate the lookup table."
                   expressionType="Notify"
                   name="SqlCommandParam"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT [refTable].[ProductID], [refTable].[ProductSK], [refTable].[SupplierSK] FROM (SELECT p.ProductID, p.ProductSK, COALESCE(s.SupplierSK, 0) AS SupplierSK FROM dbo.DimProduct AS p INNER JOIN NorthWindOLTP.dbo.Products AS o ON o.ProductID = p.ProductID LEFT JOIN dbo.DimSupplier AS s ON s.SupplierID = o.SupplierID) AS [refTable] WHERE [refTable].[ProductID] = ?;</property>
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT [refTable].[ProductID], [refTable].[ProductSK], [refTable].[SupplierID] FROM (SELECT p.ProductID, p.ProductSK, o.SupplierID FROM dbo.DimProduct AS p INNER JOIN NorthWindOLTP.dbo.Products AS o ON o.ProductID = p.ProductID) AS [refTable] WHERE [refTable].[ProductID] = ?;</property>
                 <property
                   dataType="System.Int32"
                   description="Specifies the type of connection used to access the reference dataset."
@@ -1720,7 +1720,7 @@ where [refTable].[City] = ?</property>
                 <property
                   dataType="System.String"
                   description="Indicates whether to reference metadata in an XML format."
-                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="ProductID" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="ProductSK" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="SupplierSK" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="ProductID" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="ProductSK" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="SupplierID" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
                 <property
                   containsID="true"
                   dataType="System.String"
@@ -1792,16 +1792,17 @@ where [refTable].[City] = ?</property>
                       </properties>
                     </outputColumn>
                     <outputColumn
-                      refId="Package\Add New Orders\Lookup Product.Outputs[Lookup Match Output].Columns[SupplierSK]"
+                      refId="Package\Add New Orders\Lookup Product.Outputs[Lookup Match Output].Columns[SupplierID]"
                       dataType="i4"
                       errorOrTruncationOperation="Copy Column"
-                      lineageId="Package\Add New Orders\Lookup Product.Outputs[Lookup Match Output].Columns[SupplierSK]"
-                      name="SupplierSK"
+                      lineageId="Package\Add New Orders\Lookup Product.Outputs[Lookup Match Output].Columns[SupplierID]"
+                      name="SupplierID"
                       truncationRowDisposition="FailComponent">
                       <properties>
                         <property
                           dataType="System.String"
-                          name="CopyFromReferenceColumn">SupplierSK</property>
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">SupplierID</property>
                       </properties>
                     </outputColumn>
                   </outputColumns>
@@ -1832,6 +1833,164 @@ where [refTable].[City] = ?</property>
                       refId="Package\Add New Orders\Lookup Product.Outputs[Lookup Error Output].Columns[ErrorColumn]"
                       dataType="i4"
                       lineageId="Package\Add New Orders\Lookup Product.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Add New Orders\Lookup Supplier"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table."
+              name="Lookup Supplier"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [dbo].[DimSupplier]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [dbo].[DimSupplier]) [refTable]
+where [refTable].[SupplierID] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="SupplierSK" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="SupplierID" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="SupplierName" dataType="DT_WSTR" length="80" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="SupplierCountry" dataType="DT_WSTR" length="30" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\Add New Orders\Lookup Product.Outputs[Lookup Match Output].Columns[SupplierID]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Add New Orders\Lookup Supplier.Connections[OleDbConnection]"
+                  connectionManagerID="{9B61E34A-32F7-4184-9A25-F7E64B2931D8}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Target.NorthWindDW]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Add New Orders\Lookup Supplier.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Add New Orders\Lookup Supplier.Inputs[Lookup Input].Columns[SupplierID]"
+                      cachedDataType="i4"
+                      cachedName="SupplierID"
+                      lineageId="Package\Add New Orders\Lookup Product.Outputs[Lookup Match Output].Columns[SupplierID]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">SupplierID</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Add New Orders\Lookup Supplier.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\Add New Orders\Lookup Supplier.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Add New Orders\Lookup Supplier.Outputs[Lookup Match Output].Columns[SupplierSK]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\Add New Orders\Lookup Supplier.Outputs[Lookup Match Output].Columns[SupplierSK]"
+                      name="SupplierSK"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">SupplierSK</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Add New Orders\Lookup Supplier.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\Add New Orders\Lookup Supplier.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Add New Orders\Lookup Supplier.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\Add New Orders\Lookup Supplier.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Add New Orders\Lookup Supplier.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Add New Orders\Lookup Supplier.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Add New Orders\Lookup Supplier.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Add New Orders\Lookup Supplier.Outputs[Lookup Error Output].Columns[ErrorColumn]"
                       name="ErrorColumn"
                       specialFlags="2" />
                   </outputColumns>
@@ -2183,9 +2342,14 @@ where [refTable].[ShipperID] = ?</property>
               startId="Package\Add New Orders\Lookup Sales.Outputs[Lookup Match Output]" />
             <path
               refId="Package\Add New Orders.Paths[Lookup Match Output5]"
-              endId="Package\Add New Orders\Lookup Sales.Inputs[Lookup Input]"
+              endId="Package\Add New Orders\Lookup Supplier.Inputs[Lookup Input]"
               name="Lookup Match Output"
               startId="Package\Add New Orders\Lookup Product.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\Add New Orders.Paths[Lookup Match Output6]"
+              endId="Package\Add New Orders\Lookup Sales.Inputs[Lookup Input]"
+              name="Lookup Match Output"
+              startId="Package\Add New Orders\Lookup Supplier.Outputs[Lookup Match Output]" />
             <path
               refId="Package\Add New Orders.Paths[Lookup No Match Output]"
               endId="Package\Add New Orders\Add New Sales.Inputs[OLE DB Destination Input]"
@@ -2500,25 +2664,17 @@ where [refTable].[ShipperID] = ?</property>
       <GraphLayout
         Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
-          Size="139,42"
-          Id="Package\Add New Orders\Load staging"
-          TopLeft="196.666666666667,652.222222222222" />
+          Size="162,42"
+          Id="Package\Add New Orders\Get Sales"
+          TopLeft="309,40" />
         <NodeLayout
           Size="165,42"
           Id="Package\Add New Orders\Lookup Customer"
-          TopLeft="308,110" />
+          TopLeft="307.5,110" />
         <NodeLayout
           Size="167,42"
           Id="Package\Add New Orders\Lookup Employee"
-          TopLeft="307,180" />
-        <NodeLayout
-          Size="143,42"
-          Id="Package\Add New Orders\Lookup Sales"
-          TopLeft="315.666666666667,533.333333333333" />
-        <NodeLayout
-          Size="154,42"
-          Id="Package\Add New Orders\Lookup Product"
-          TopLeft="313,388.888888888889" />
+          TopLeft="306.5,180" />
         <NodeLayout
           Size="156,42"
           Id="Package\Add New Orders\Lookup Shipper"
@@ -2526,108 +2682,94 @@ where [refTable].[ShipperID] = ?</property>
         <NodeLayout
           Size="197,42"
           Id="Package\Add New Orders\Lookup Geography"
-          TopLeft="292,320" />
+          TopLeft="291.5,320" />
+        <NodeLayout
+          Size="154,42"
+          Id="Package\Add New Orders\Lookup Product"
+          TopLeft="313,390" />
+        <NodeLayout
+          Size="158,42"
+          Id="Package\Add New Orders\Lookup Supplier"
+          TopLeft="311,460" />
+        <NodeLayout
+          Size="143,42"
+          Id="Package\Add New Orders\Lookup Sales"
+          TopLeft="318.5,530" />
+        <NodeLayout
+          Size="139,42"
+          Id="Package\Add New Orders\Load staging"
+          TopLeft="180.5,640" />
         <NodeLayout
           Size="152,42"
           Id="Package\Add New Orders\Add New Sales"
-          TopLeft="476.666666666667,662.222222222222" />
-        <NodeLayout
-          Size="162,42"
-          Id="Package\Add New Orders\Get Sales"
-          TopLeft="310,40" />
+          TopLeft="454,640" />
         <EdgeLayout
-          Id="Package\Add New Orders.Paths[Lookup No Match Output]"
-          TopLeft="409.666666666667,575.333333333333">
+          Id="Package\Add New Orders.Paths[OLE DB Source Output]"
+          TopLeft="390,82">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="143,86.8888888888889"
+              EndConnector="0,28"
               Start="0,0"
-              End="143,79.3888888888889">
+              End="0,20.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,31.3324112494237" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,31.3324112494237"
-                    Point2="0,35.3324112494237"
-                    Point3="4,35.3324112494237" />
+                    End="0,20.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Add New Orders.Paths[Lookup Match Output]"
+          TopLeft="390,152">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,28"
+              Start="0,0"
+              End="0,20.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
                   <mssgle:LineSegment
-                    End="139,35.3324112494237" />
-                  <mssgle:CubicBezierSegment
-                    Point1="139,35.3324112494237"
-                    Point2="143,35.3324112494237"
-                    Point3="143,39.3324112494237" />
-                  <mssgle:LineSegment
-                    End="143,79.3888888888889" />
+                    End="0,20.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="15.69361328125,40.3324112494237,111.6127734375,11.609375"
+              BoundingBox="-48.19138671875,4.4453125,96.3827734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Add New Orders.Paths[Lookup Match Output4]"
-          TopLeft="364.666666666667,575.333333333333">
+          Id="Package\Add New Orders.Paths[Lookup Match Output1]"
+          TopLeft="390,222">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-98.5000000000001,76.888888888889"
+              EndConnector="0,28"
               Start="0,0"
-              End="-98.5000000000001,69.388888888889">
+              End="0,20.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,27.26602120793" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,27.26602120793"
-                    Point2="0,31.26602120793"
-                    Point3="-4,31.26602120793" />
-                  <mssgle:LineSegment
-                    End="-94.5000000000001,31.26602120793" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-94.5000000000001,31.26602120793"
-                    Point2="-98.5000000000001,31.26602120793"
-                    Point3="-98.5000000000001,35.26602120793" />
-                  <mssgle:LineSegment
-                    End="-98.5000000000001,69.388888888889" />
+                    End="0,20.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-97.44138671875,36.26602120793,96.3827734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Add New Orders.Paths[Lookup Match Output3]"
-          TopLeft="390.25,362">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,26.8888888888889"
-              Start="0,0"
-              End="0,19.3888888888889">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,19.3888888888889" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-48.19138671875,3.88975694444446,96.3827734375,11.609375"
+              BoundingBox="-48.19138671875,4.4453125,96.3827734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -2656,8 +2798,8 @@ where [refTable].[ShipperID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Add New Orders.Paths[Lookup Match Output1]"
-          TopLeft="390.5,222">
+          Id="Package\Add New Orders.Paths[Lookup Match Output3]"
+          TopLeft="390,362">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -2677,111 +2819,125 @@ where [refTable].[ShipperID] = ?</property>
             <mssgm:EdgeLabel
               BoundingBox="-48.19138671875,4.4453125,96.3827734375,11.609375"
               RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Add New Orders.Paths[Lookup Match Output]"
-          TopLeft="390.5,152">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,28"
-              Start="0,0"
-              End="0,20.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,20.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-48.19138671875,4.4453125,96.3827734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Add New Orders.Paths[OLE DB Source Output]"
-          TopLeft="391,82">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,28"
-              Start="0,0"
-              End="0,20.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,20.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Add New Orders.Paths[Lookup Match Output5]"
-          TopLeft="313,409.888888888889">
+          TopLeft="390,432">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-0.777777777777601,62.2222222222222"
+              EndConnector="0,28"
               Start="0,0"
-              End="-8.2777777777776,62.2222222222222">
+              End="0,20.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="-19.2777777777776,0" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-19.2777777777776,0"
-                    Point2="-23.2777777777776,0"
-                    Point3="-23.2777777777776,4" />
-                  <mssgle:LineSegment
-                    End="-23.2777777777776,58.2222222222222" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-23.2777777777776,58.2222222222222"
-                    Point2="-23.2777777777776,62.2222222222222"
-                    Point3="-19.2777777777776,62.2222222222222" />
-                  <mssgle:LineSegment
-                    End="-8.2777777777776,62.2222222222222" />
+                    End="0,20.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-71.4691644965276,-17.609375,96.3827734375,11.609375"
+              BoundingBox="-48.19138671875,4.4453125,96.3827734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Add New Orders.Paths[Lookup Match Output6]"
-          TopLeft="389.194444444444,493.111111111111">
+          TopLeft="390,502">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,40.2222222222221"
+              EndConnector="0,28"
               Start="0,0"
-              End="0,32.7222222222221">
+              End="0,20.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,32.7222222222221" />
+                    End="0,20.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-48.19138671875,10.5564236111111,96.3827734375,11.609375"
+              BoundingBox="-48.19138671875,4.4453125,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Add New Orders.Paths[Lookup Match Output4]"
+          TopLeft="365,572">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-115,68"
+              Start="0,0"
+              End="-115,60.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,24" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,24"
+                    Point2="0,28"
+                    Point3="-4,28" />
+                  <mssgle:LineSegment
+                    End="-111,28" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-111,28"
+                    Point2="-115,28"
+                    Point3="-115,32" />
+                  <mssgle:LineSegment
+                    End="-115,60.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-105.69138671875,33,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Add New Orders.Paths[Lookup No Match Output]"
+          TopLeft="415,572">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="115,68"
+              Start="0,0"
+              End="115,60.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,24" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,24"
+                    Point2="0,28"
+                    Point3="4,28" />
+                  <mssgle:LineSegment
+                    End="111,28" />
+                  <mssgle:CubicBezierSegment
+                    Point1="111,28"
+                    Point2="115,28"
+                    Point3="115,32" />
+                  <mssgle:LineSegment
+                    End="115,60.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="1.69361328125,33,111.6127734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -2821,6 +2977,29 @@ where [refTable].[ShipperID] = ?</property>
         <Name>TableInfoObjectType</Name>
         <Value
           type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Add New Orders\Lookup Supplier">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[DimSupplier]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
