@@ -64,6 +64,7 @@ BEGIN
 		WHERE target.CustomerSK <> 0;
 		EXEC dbo.DW_MergeDimCustomer;
 		EXEC dbo.UpdateLastPackageRowVersion @tableName = 'Customer', @lastRowVersion = @endRow;
+		TRUNCATE TABLE staging.customer;
 		END;
 
 		IF @tableName = 'Product'
@@ -94,6 +95,7 @@ BEGIN
 		WHERE target.ProductSK <> 0;
 		EXEC dbo.DW_MergeDimProduct;
 		EXEC dbo.UpdateLastPackageRowVersion @tableName = 'Product', @lastRowVersion = @endRow;
+		TRUNCATE TABLE staging.product;
 		END;
 
 		IF @tableName = 'Supplier'
@@ -125,6 +127,7 @@ BEGIN
 
 		EXEC dbo.DW_MergeDimSupplier;
 		EXEC dbo.UpdateLastPackageRowVersion @tableName = 'Supplier', @lastRowVersion = @endRow;
+		TRUNCATE TABLE staging.supplier;
 		END;
 
 		IF @tableName = 'Employee'
@@ -155,6 +158,7 @@ BEGIN
 		WHERE target.EmployeeSK <> 0;
 		EXEC dbo.DW_MergeDimEmployee;
 		EXEC dbo.UpdateLastPackageRowVersion @tableName = 'Employee', @lastRowVersion = @endRow;
+		TRUNCATE TABLE staging.employee;
 		END;
 
 		IF @tableName = 'Shipper'
@@ -175,6 +179,7 @@ BEGIN
 		WHERE target.ShipperSK <> 0;
 		EXEC dbo.DW_MergeDimShipper;
 		EXEC dbo.UpdateLastPackageRowVersion @tableName = 'Shipper', @lastRowVersion = @endRow;
+		TRUNCATE TABLE staging.shipper;
 		END;
 
 		IF @tableName = 'Geography'
@@ -210,6 +215,7 @@ BEGIN
 		WHERE target.GeographySK <> 0;
 		EXEC dbo.DW_MergeDimGeography;
 		EXEC dbo.UpdateLastPackageRowVersion @tableName = @tableName, @lastRowVersion = @endRow;
+		TRUNCATE TABLE staging.geography;
 		END;
 
 		IF @tableName = 'Sales'
@@ -299,6 +305,7 @@ BEGIN
 		);
 		EXEC dbo.DW_MergeFactSales;
 		EXEC dbo.UpdateLastPackageRowVersion @tableName = 'Sales', @lastRowVersion = @endRow;
+		TRUNCATE TABLE staging.sales;
 		END;
 
 		COMMIT TRANSACTION;
