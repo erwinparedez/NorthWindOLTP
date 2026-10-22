@@ -746,6 +746,369 @@
         "toColumn": "SupplierSK"
       }
     ],
+    "perspectives": [
+      {
+        "name": "Ventas",
+        "tables": [
+          {
+            "name": "Customer",
+            "columns": [
+              {
+                "name": "City"
+              },
+              {
+                "name": "CompanyName"
+              },
+              {
+                "name": "Country"
+              }
+            ]
+          },
+          {
+            "name": "Date",
+            "columns": [
+              {
+                "name": "FullDate"
+              }
+            ]
+          },
+          {
+            "name": "Employee",
+            "columns": [
+              {
+                "name": "Country"
+              },
+              {
+                "name": "EmployeeName"
+              }
+            ]
+          },
+          {
+            "name": "FactSales",
+            "columns": [
+              {
+                "name": "Discount"
+              },
+              {
+                "name": "DiscountAmount"
+              },
+              {
+                "name": "GrossSalesAmount"
+              },
+              {
+                "name": "NetSalesAmount"
+              },
+              {
+                "name": "OrderDateSK"
+              },
+              {
+                "name": "Quantity"
+              },
+              {
+                "name": "RequiredDateSK"
+              },
+              {
+                "name": "ShippedDateSK"
+              },
+              {
+                "name": "ShipperSK"
+              },
+              {
+                "name": "SupplierSK"
+              }
+            ]
+          },
+          {
+            "name": "Product",
+            "columns": [
+              {
+                "name": "CategoryName"
+              },
+              {
+                "name": "ProductName"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "RRHH",
+        "tables": [
+          {
+            "name": "Employee",
+            "columns": [
+              {
+                "name": "City"
+              },
+              {
+                "name": "Country"
+              },
+              {
+                "name": "EmployeeName"
+              },
+              {
+                "name": "HireDate"
+              },
+              {
+                "name": "ManagerName"
+              },
+              {
+                "name": "Title"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Logistica",
+        "tables": [
+          {
+            "name": "Date",
+            "columns": [
+              {
+                "name": "CalendarQuarter"
+              },
+              {
+                "name": "CalendarSemester"
+              },
+              {
+                "name": "CalendarYear"
+              },
+              {
+                "name": "DateSK"
+              },
+              {
+                "name": "DayNameOfWeek"
+              },
+              {
+                "name": "DayNumberOfMonth"
+              },
+              {
+                "name": "DayNumberOfWeek"
+              },
+              {
+                "name": "DayNumberOfYear"
+              },
+              {
+                "name": "FullDate"
+              },
+              {
+                "name": "IsWeekend"
+              },
+              {
+                "name": "MonthName"
+              },
+              {
+                "name": "MonthNumberOfYear"
+              },
+              {
+                "name": "WeekNumberOfYear"
+              }
+            ]
+          },
+          {
+            "name": "FactSales",
+            "columns": [
+              {
+                "name": "CustomerSK"
+              },
+              {
+                "name": "Discount"
+              },
+              {
+                "name": "DiscountAmount"
+              },
+              {
+                "name": "EmployeeSK"
+              },
+              {
+                "name": "FreightAllocated"
+              },
+              {
+                "name": "GeographySK"
+              },
+              {
+                "name": "GrossSalesAmount"
+              },
+              {
+                "name": "NetSalesAmount"
+              },
+              {
+                "name": "OrderDateSK"
+              },
+              {
+                "name": "OrderID"
+              },
+              {
+                "name": "OrderLineSK"
+              },
+              {
+                "name": "ProductSK"
+              },
+              {
+                "name": "Quantity"
+              },
+              {
+                "name": "RequiredDateSK"
+              },
+              {
+                "name": "ShippedDateSK"
+              },
+              {
+                "name": "ShipperSK"
+              },
+              {
+                "name": "SupplierSK"
+              },
+              {
+                "name": "UnitPrice"
+              }
+            ]
+          },
+          {
+            "name": "Geography",
+            "columns": [
+              {
+                "name": "City"
+              },
+              {
+                "name": "Country"
+              },
+              {
+                "name": "GeographySK"
+              },
+              {
+                "name": "PostalCode"
+              },
+              {
+                "name": "Region"
+              }
+            ]
+          },
+          {
+            "name": "Shipper",
+            "columns": [
+              {
+                "name": "CompanyName"
+              },
+              {
+                "name": "ShipperID"
+              },
+              {
+                "name": "ShipperSK"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Proveedores",
+        "tables": [
+          {
+            "name": "FactSales",
+            "columns": [
+              {
+                "name": "CustomerSK"
+              },
+              {
+                "name": "Discount"
+              },
+              {
+                "name": "DiscountAmount"
+              },
+              {
+                "name": "EmployeeSK"
+              },
+              {
+                "name": "FreightAllocated"
+              },
+              {
+                "name": "GeographySK"
+              },
+              {
+                "name": "GrossSalesAmount"
+              },
+              {
+                "name": "NetSalesAmount"
+              },
+              {
+                "name": "OrderDateSK"
+              },
+              {
+                "name": "OrderID"
+              },
+              {
+                "name": "OrderLineSK"
+              },
+              {
+                "name": "ProductSK"
+              },
+              {
+                "name": "Quantity"
+              },
+              {
+                "name": "RequiredDateSK"
+              },
+              {
+                "name": "ShippedDateSK"
+              },
+              {
+                "name": "ShipperSK"
+              },
+              {
+                "name": "SupplierSK"
+              },
+              {
+                "name": "UnitPrice"
+              }
+            ]
+          },
+          {
+            "name": "Product",
+            "columns": [
+              {
+                "name": "CategoryID"
+              },
+              {
+                "name": "CategoryName"
+              },
+              {
+                "name": "Discontinued"
+              },
+              {
+                "name": "ProductID"
+              },
+              {
+                "name": "ProductName"
+              },
+              {
+                "name": "ProductSK"
+              },
+              {
+                "name": "QuantityPerUnit"
+              }
+            ]
+          },
+          {
+            "name": "Supplier",
+            "columns": [
+              {
+                "name": "SupplierCountry"
+              },
+              {
+                "name": "SupplierID"
+              },
+              {
+                "name": "SupplierName"
+              },
+              {
+                "name": "SupplierSK"
+              }
+            ]
+          }
+        ]
+      }
+    ],
     "annotations": [
       {
         "name": "ClientCompatibilityLevel",
