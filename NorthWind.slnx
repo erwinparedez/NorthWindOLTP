@@ -22,4 +22,9 @@
     <Build />
     <Deploy />
   </Project>
+  <Project Path="NorthWindOLAP/NorthWindOLAP/NorthWindOLAP.smproj" Type="6870e480-7721-4708-bfb8-9ae898aa21b3" Id="8ce414bb-95b2-4c99-9e03-51ba72086e22">
+    <BuildType Project="Development" />
+    <Platform Project="x86" />
+    <Deploy />
+  </Project>
 </Solution>
