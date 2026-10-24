@@ -6,7 +6,7 @@
     "dataSources": [
       {
         "name": "NorthWindOLAP",
-        "connectionString": "Provider=SQLOLEDB;Data Source=LAPTOP-P4NJ82SE;Initial Catalog=NorthWindDW;Persist Security Info=false;User ID=sa",
+        "connectionString": "Provider=SQLOLEDB;Data Source=DESKTOP-A0CP3D4;Initial Catalog=NorthWindDW;Persist Security Info=false;User ID=sa",
         "impersonationMode": "impersonateServiceAccount",
         "annotations": [
           {

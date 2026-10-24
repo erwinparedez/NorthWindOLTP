@@ -1,182 +1,80 @@
-﻿<?xml version="1.0"?>
-<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
-  DTS:refId="Package"
-  DTS:CreationDate="10/11/2026 10:10:00 PM"
-  DTS:CreationName="Microsoft.Package"
-  DTS:CreatorComputerName="YE"
-  DTS:CreatorName="YE\olive"
-  DTS:DTSID="{2F66B54B-3100-4590-89F5-25C13DD45CB9}"
-  DTS:ExecutableType="Microsoft.Package"
-  DTS:LastModifiedProductVersion="17.0.1016.0"
-  DTS:LocaleID="3082"
-  DTS:ObjectName="Package"
-  DTS:PackageType="5"
-  DTS:VersionBuild="1"
-  DTS:VersionGUID="{63E5425D-274A-46FB-A36D-E399D3D5439F}">
-  <DTS:Property
-    DTS:Name="PackageFormatVersion">8</DTS:Property>
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts" DTS:refId="Package" DTS:CreationDate="10/11/2026 10:10:00 PM" DTS:CreationName="Microsoft.Package" DTS:CreatorComputerName="YE" DTS:CreatorName="YE\olive" DTS:DTSID="{2F66B54B-3100-4590-89F5-25C13DD45CB9}" DTS:ExecutableType="Microsoft.Package" DTS:LastModifiedProductVersion="17.0.1016.0" DTS:LocaleID="3082" DTS:ObjectName="Package" DTS:PackageType="5" DTS:VersionBuild="2" DTS:VersionGUID="{C134B02B-FE10-4DB2-9ADC-6789E1CD1132}">
+  <DTS:Property DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers />
   <DTS:Variables />
   <DTS:Executables>
-    <DTS:Executable
-      DTS:refId="Package\Load DimCustomer"
-      DTS:CreationName="Microsoft.ExecuteSQLTask"
-      DTS:Description="Execute SQL Task"
-      DTS:DTSID="{2428DB13-48DD-480E-A0A3-5DB9E5836531}"
-      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
-      DTS:LocaleID="-1"
-      DTS:ObjectName="Load DimCustomer"
-      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-      DTS:ThreadHint="0">
+    <DTS:Executable DTS:refId="Package\Load DimCustomer" DTS:CreationName="Microsoft.ExecutePackageTask" DTS:Description="Execute child package DimCustomer.dtsx" DTS:DTSID="{2428DB13-48DD-480E-A0A3-5DB9E5836531}" DTS:ExecutableType="Microsoft.ExecutePackageTask" DTS:LocaleID="-1" DTS:ObjectName="Load DimCustomer" DTS:ThreadHint="0" DTS:FailParentOnFailure="True">
       <DTS:Variables />
       <DTS:ObjectData>
-        <SQLTask:SqlTaskData
-          SQLTask:Connection="{9B61E34A-32F7-4184-9A25-F7E64B2931D8}"
-          SQLTask:SqlStatementSource="EXEC dbo.RunNorthWindETL @tableName = 'Customer';" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
-      </DTS:ObjectData>
-    </DTS:Executable>    <DTS:Executable
-      DTS:refId="Package\Load DimProduct"
-      DTS:CreationName="Microsoft.ExecuteSQLTask"
-      DTS:Description="Execute SQL Task"
-      DTS:DTSID="{55B2BF69-F5D5-47DA-818B-74F610DDBCE3}"
-      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
-      DTS:LocaleID="-1"
-      DTS:ObjectName="Load DimProduct"
-      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-      DTS:ThreadHint="0">
-      <DTS:Variables />
-      <DTS:ObjectData>
-        <SQLTask:SqlTaskData
-          SQLTask:Connection="{9B61E34A-32F7-4184-9A25-F7E64B2931D8}"
-          SQLTask:SqlStatementSource="EXEC dbo.RunNorthWindETL @tableName = 'Product';" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
-      </DTS:ObjectData>
-    </DTS:Executable>    <DTS:Executable
-      DTS:refId="Package\Load DimEmployee"
-      DTS:CreationName="Microsoft.ExecuteSQLTask"
-      DTS:Description="Execute SQL Task"
-      DTS:DTSID="{51DFE1C4-386F-4074-8ED5-DFB1FBC74D83}"
-      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
-      DTS:LocaleID="-1"
-      DTS:ObjectName="Load DimEmployee"
-      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-      DTS:ThreadHint="0">
-      <DTS:Variables />
-      <DTS:ObjectData>
-        <SQLTask:SqlTaskData
-          SQLTask:Connection="{9B61E34A-32F7-4184-9A25-F7E64B2931D8}"
-          SQLTask:SqlStatementSource="EXEC dbo.RunNorthWindETL @tableName = 'Employee';" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
-      </DTS:ObjectData>
-    </DTS:Executable>    <DTS:Executable
-      DTS:refId="Package\Load DimShipper"
-      DTS:CreationName="Microsoft.ExecuteSQLTask"
-      DTS:Description="Execute SQL Task"
-      DTS:DTSID="{E651B110-E9BE-41A1-BF79-583E321892E8}"
-      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
-      DTS:LocaleID="-1"
-      DTS:ObjectName="Load DimShipper"
-      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-      DTS:ThreadHint="0">
-      <DTS:Variables />
-      <DTS:ObjectData>
-        <SQLTask:SqlTaskData
-          SQLTask:Connection="{9B61E34A-32F7-4184-9A25-F7E64B2931D8}"
-          SQLTask:SqlStatementSource="EXEC dbo.RunNorthWindETL @tableName = 'Shipper';" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
-      </DTS:ObjectData>
-    </DTS:Executable>    <DTS:Executable
-      DTS:refId="Package\Load DimGeography"
-      DTS:CreationName="Microsoft.ExecuteSQLTask"
-      DTS:Description="Execute SQL Task"
-      DTS:DTSID="{CEC1A9DC-BAB7-4241-8A6C-D8CC55B83688}"
-      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
-      DTS:LocaleID="-1"
-      DTS:ObjectName="Load DimGeography"
-      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-      DTS:ThreadHint="0">
-      <DTS:Variables />
-      <DTS:ObjectData>
-        <SQLTask:SqlTaskData
-          SQLTask:Connection="{9B61E34A-32F7-4184-9A25-F7E64B2931D8}"
-          SQLTask:SqlStatementSource="EXEC dbo.RunNorthWindETL @tableName = 'Geography';" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
-      </DTS:ObjectData>
-    </DTS:Executable>    <DTS:Executable
-      DTS:refId="Package\Load DimSupplier"
-      DTS:CreationName="Microsoft.ExecuteSQLTask"
-      DTS:Description="Execute SQL Task"
-      DTS:DTSID="{D8B4D45E-1E48-4FE2-9C14-2B4E5D430C19}"
-      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
-      DTS:LocaleID="-1"
-      DTS:ObjectName="Load DimSupplier"
-      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-      DTS:ThreadHint="0">
-      <DTS:Variables />
-      <DTS:ObjectData>
-        <SQLTask:SqlTaskData
-          SQLTask:Connection="{9B61E34A-32F7-4184-9A25-F7E64B2931D8}"
-          SQLTask:SqlStatementSource="EXEC dbo.RunNorthWindETL @tableName = 'Supplier';" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+        <ExecutePackageTask>
+          <UseProjectReference>True</UseProjectReference>
+          <PackageName>DimCustomer.dtsx</PackageName>
+        </ExecutePackageTask>
       </DTS:ObjectData>
     </DTS:Executable>
-    <DTS:Executable
-      DTS:refId="Package\Load FactSales"
-      DTS:CreationName="Microsoft.ExecuteSQLTask"
-      DTS:Description="Execute SQL Task"
-      DTS:DTSID="{857A7516-A9BE-4D58-B3A2-1ACC7F0026CC}"
-      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
-      DTS:LocaleID="-1"
-      DTS:ObjectName="Load FactSales"
-      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-      DTS:ThreadHint="0">
+    <DTS:Executable DTS:refId="Package\Load DimProduct" DTS:CreationName="Microsoft.ExecutePackageTask" DTS:Description="Execute child package DimProduct.dtsx" DTS:DTSID="{55B2BF69-F5D5-47DA-818B-74F610DDBCE3}" DTS:ExecutableType="Microsoft.ExecutePackageTask" DTS:LocaleID="-1" DTS:ObjectName="Load DimProduct" DTS:ThreadHint="0" DTS:FailParentOnFailure="True">
       <DTS:Variables />
       <DTS:ObjectData>
-        <SQLTask:SqlTaskData
-          SQLTask:Connection="{9B61E34A-32F7-4184-9A25-F7E64B2931D8}"
-          SQLTask:SqlStatementSource="EXEC dbo.RunNorthWindETL @tableName = 'Sales';" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+        <ExecutePackageTask>
+          <UseProjectReference>True</UseProjectReference>
+          <PackageName>DimProduct.dtsx</PackageName>
+        </ExecutePackageTask>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable DTS:refId="Package\Load DimEmployee" DTS:CreationName="Microsoft.ExecutePackageTask" DTS:Description="Execute child package DimEmployee.dtsx" DTS:DTSID="{51DFE1C4-386F-4074-8ED5-DFB1FBC74D83}" DTS:ExecutableType="Microsoft.ExecutePackageTask" DTS:LocaleID="-1" DTS:ObjectName="Load DimEmployee" DTS:ThreadHint="0" DTS:FailParentOnFailure="True">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <ExecutePackageTask>
+          <UseProjectReference>True</UseProjectReference>
+          <PackageName>DimEmployee.dtsx</PackageName>
+        </ExecutePackageTask>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable DTS:refId="Package\Load DimShipper" DTS:CreationName="Microsoft.ExecutePackageTask" DTS:Description="Execute child package DimShipper.dtsx" DTS:DTSID="{E651B110-E9BE-41A1-BF79-583E321892E8}" DTS:ExecutableType="Microsoft.ExecutePackageTask" DTS:LocaleID="-1" DTS:ObjectName="Load DimShipper" DTS:ThreadHint="0" DTS:FailParentOnFailure="True">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <ExecutePackageTask>
+          <UseProjectReference>True</UseProjectReference>
+          <PackageName>DimShipper.dtsx</PackageName>
+        </ExecutePackageTask>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable DTS:refId="Package\Load DimGeography" DTS:CreationName="Microsoft.ExecutePackageTask" DTS:Description="Execute child package DimGeography.dtsx" DTS:DTSID="{CEC1A9DC-BAB7-4241-8A6C-D8CC55B83688}" DTS:ExecutableType="Microsoft.ExecutePackageTask" DTS:LocaleID="-1" DTS:ObjectName="Load DimGeography" DTS:ThreadHint="0" DTS:FailParentOnFailure="True">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <ExecutePackageTask>
+          <UseProjectReference>True</UseProjectReference>
+          <PackageName>DimGeography.dtsx</PackageName>
+        </ExecutePackageTask>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable DTS:refId="Package\Load DimSupplier" DTS:CreationName="Microsoft.ExecutePackageTask" DTS:Description="Execute child package DimSupplier.dtsx" DTS:DTSID="{D8B4D45E-1E48-4FE2-9C14-2B4E5D430C19}" DTS:ExecutableType="Microsoft.ExecutePackageTask" DTS:LocaleID="-1" DTS:ObjectName="Load DimSupplier" DTS:ThreadHint="0" DTS:FailParentOnFailure="True">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <ExecutePackageTask>
+          <UseProjectReference>True</UseProjectReference>
+          <PackageName>DimSupplier.dtsx</PackageName>
+        </ExecutePackageTask>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable DTS:refId="Package\Load FactSales" DTS:CreationName="Microsoft.ExecutePackageTask" DTS:Description="Execute child package FactSales.dtsx" DTS:DTSID="{857A7516-A9BE-4D58-B3A2-1ACC7F0026CC}" DTS:ExecutableType="Microsoft.ExecutePackageTask" DTS:LocaleID="-1" DTS:ObjectName="Load FactSales" DTS:ThreadHint="0" DTS:FailParentOnFailure="True">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <ExecutePackageTask>
+          <UseProjectReference>True</UseProjectReference>
+          <PackageName>FactSales.dtsx</PackageName>
+        </ExecutePackageTask>
       </DTS:ObjectData>
     </DTS:Executable>
   </DTS:Executables>
   <DTS:PrecedenceConstraints>
-    <DTS:PrecedenceConstraint
-      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
-      DTS:CreationName=""
-      DTS:DTSID="{A9ED6A60-D983-444C-9971-56884902C5A2}"
-      DTS:From="Package\Load DimCustomer"
-      DTS:LogicalAnd="True"
-      DTS:ObjectName="Constraint 1"
-      DTS:To="Package\Load DimProduct" />    <DTS:PrecedenceConstraint
-      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
-      DTS:CreationName=""
-      DTS:DTSID="{CE43315E-B677-4604-91E1-0BAB9D68DF07}"
-      DTS:From="Package\Load DimProduct"
-      DTS:LogicalAnd="True"
-      DTS:ObjectName="Constraint 2"
-      DTS:To="Package\Load DimSupplier" />    <DTS:PrecedenceConstraint
-      DTS:refId="Package.PrecedenceConstraints[Constraint 2b]"
-      DTS:CreationName=""
-      DTS:DTSID="{F7E41C90-B84F-4C21-A9D7-1C5C782F4E99}"
-      DTS:From="Package\Load DimSupplier"
-      DTS:LogicalAnd="True"
-      DTS:ObjectName="Constraint 2b"
-      DTS:To="Package\Load DimEmployee" />    <DTS:PrecedenceConstraint
-      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
-      DTS:CreationName=""
-      DTS:DTSID="{BA329EE6-F340-48E6-B1AD-F2DCF086014E}"
-      DTS:From="Package\Load DimEmployee"
-      DTS:LogicalAnd="True"
-      DTS:ObjectName="Constraint 3"
-      DTS:To="Package\Load DimShipper" />    <DTS:PrecedenceConstraint
-      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
-      DTS:CreationName=""
-      DTS:DTSID="{C7B78989-8162-4FAB-BD89-A12010B9893B}"
-      DTS:From="Package\Load DimShipper"
-      DTS:LogicalAnd="True"
-      DTS:ObjectName="Constraint 4"
-      DTS:To="Package\Load DimGeography" />    <DTS:PrecedenceConstraint
-      DTS:refId="Package.PrecedenceConstraints[Constraint 5]"
-      DTS:CreationName=""
-      DTS:DTSID="{EBB69972-DAE0-4BD8-832B-7E4447EBB9B9}"
-      DTS:From="Package\Load DimGeography"
-      DTS:LogicalAnd="True"
-      DTS:ObjectName="Constraint 5"
-      DTS:To="Package\Load FactSales" />
+    <DTS:PrecedenceConstraint DTS:refId="Package.PrecedenceConstraints[Constraint 1]" DTS:CreationName="" DTS:DTSID="{A9ED6A60-D983-444C-9971-56884902C5A2}" DTS:From="Package\Load DimCustomer" DTS:LogicalAnd="True" DTS:ObjectName="Constraint 1" DTS:To="Package\Load DimProduct" />
+    <DTS:PrecedenceConstraint DTS:refId="Package.PrecedenceConstraints[Constraint 2]" DTS:CreationName="" DTS:DTSID="{CE43315E-B677-4604-91E1-0BAB9D68DF07}" DTS:From="Package\Load DimProduct" DTS:LogicalAnd="True" DTS:ObjectName="Constraint 2" DTS:To="Package\Load DimSupplier" />
+    <DTS:PrecedenceConstraint DTS:refId="Package.PrecedenceConstraints[Constraint 2b]" DTS:CreationName="" DTS:DTSID="{F7E41C90-B84F-4C21-A9D7-1C5C782F4E99}" DTS:From="Package\Load DimSupplier" DTS:LogicalAnd="True" DTS:ObjectName="Constraint 2b" DTS:To="Package\Load DimEmployee" />
+    <DTS:PrecedenceConstraint DTS:refId="Package.PrecedenceConstraints[Constraint 3]" DTS:CreationName="" DTS:DTSID="{BA329EE6-F340-48E6-B1AD-F2DCF086014E}" DTS:From="Package\Load DimEmployee" DTS:LogicalAnd="True" DTS:ObjectName="Constraint 3" DTS:To="Package\Load DimShipper" />
+    <DTS:PrecedenceConstraint DTS:refId="Package.PrecedenceConstraints[Constraint 4]" DTS:CreationName="" DTS:DTSID="{C7B78989-8162-4FAB-BD89-A12010B9893B}" DTS:From="Package\Load DimShipper" DTS:LogicalAnd="True" DTS:ObjectName="Constraint 4" DTS:To="Package\Load DimGeography" />
+    <DTS:PrecedenceConstraint DTS:refId="Package.PrecedenceConstraints[Constraint 5]" DTS:CreationName="" DTS:DTSID="{EBB69972-DAE0-4BD8-832B-7E4447EBB9B9}" DTS:From="Package\Load DimGeography" DTS:LogicalAnd="True" DTS:ObjectName="Constraint 5" DTS:To="Package\Load FactSales" />
   </DTS:PrecedenceConstraints>
   <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
 <Objects
