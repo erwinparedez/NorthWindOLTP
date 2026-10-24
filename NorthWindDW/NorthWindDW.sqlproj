@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -64,6 +64,7 @@
     <Folder Include="Schema\dbo\Staging" />
     <Folder Include="Schema\Schema de staging" />
     <Folder Include="Schema\Programmability\" />
+    <Folder Include="Scripts\Jobs\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Schema\dbo\Tables\DimCustomer.sql" />
@@ -101,7 +102,7 @@
     <None Include="Scripts\PackageConfig.data.sql" />
     <None Include="Scripts\DWSeed.data.sql" />
     <None Include="Scripts\NorthWindETLProcedures.sql" />
-    <None Include="Scripts\NorthWindJob.sql" />
-    <None Include="Scripts\NorthWindManualJobs.sql" />
+    <None Include="Scripts\Jobs\NorthWindJob.sql" />
+    <None Include="Scripts\Jobs\NorthWindManualJobs.sql" />
   </ItemGroup>
 </Project>
